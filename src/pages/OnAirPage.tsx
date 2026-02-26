@@ -48,17 +48,17 @@ function getMemberAvatar(memberId: string): string {
   return `/idols/${memberId}/profile.jpg`;
 }
 
-// タレント別 말풍선 색상
+// タレント別吹き出し色
 const MEMBER_COLORS: Record<string, { bg: string; name: string }> = {
-  mizyu:   { bg: '#FFE0EE', name: '#C2185B' },  // MIZYU ピンク
-  rin:     { bg: '#E8F5E9', name: '#1B5E20' },  // RIN グリーン
-  suzuka:  { bg: '#FFF3E0', name: '#E65100' },  // SUZUKA オレンジ
-  kanon:   { bg: '#E3F2FD', name: '#1565C0' },  // KANON ブルー
-  nako:    { bg: '#FCE4EC', name: '#AD1457' },  // 奈子 ピンク
-  nana:    { bg: '#FFFDE7', name: '#F57F17' },  // 奈々 イエロー
-  taiyo:   { bg: '#E1F5FE', name: '#01579B' },  // 太陽 スカイブルー
-  yoshiaki:{ bg: '#EDE7F6', name: '#4527A0' },  // よしあき パープル
-  michi:   { bg: '#FCE4EC', name: '#880E4F' },  // ミチ フューシャ
+  mizyu:    { bg: '#FFE4EE', name: '#FF6B9D' },
+  rin:      { bg: '#F3E8FF', name: '#9B59B6' },
+  suzuka:   { bg: '#FFF3E0', name: '#E67E22' },
+  kanon:    { bg: '#E3F2FD', name: '#3498DB' },
+  nako:     { bg: '#FCE4EC', name: '#E91E63' },
+  nana:     { bg: '#FFFDE7', name: '#F9A825' },
+  taiyo:    { bg: '#E1F5FE', name: '#0288D1' },
+  yoshiaki: { bg: '#EDE7F6', name: '#673AB7' },
+  michi:    { bg: '#FCE4EC', name: '#C2185B' },
 };
 function getMemberColor(memberId: string) {
   return MEMBER_COLORS[memberId] ?? { bg: '#EDE9FE', name: '#7C3AED' };

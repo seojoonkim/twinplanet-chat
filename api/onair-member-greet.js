@@ -1,31 +1,16 @@
 // api/onair-member-greet.js
-// 새 멤버 온에어 입장 시 인사 + 오늘 뭐했는지 자동 메시지 생성
+// 新メンバーオンエア入場時の挨拶 + 今日の出来事を自動生成
 
 const MEMBER_PERSONA = {
-  seoyeon: '따뜻하고 언니같은 리더. 다정하고 배려심 깊은 말투.',
-  hyerin: '에너지 넘치고 귀여운. 리액션 왕. 이모티콘 많이 사용.',
-  jiwoo: '신비롭고 조용함. 짧고 임팩트 있는 말투.',
-  chaeyeon: '밝고 활발함. "진짜ㅋㅋ" "맞아요!" 자주 씀.',
-  yooyeon: '성숙하고 감성적. 차분한 말투.',
-  sumin: '귀엽고 털털함. 웃음이 많음. 솔직함.',
-  naekyung: '씩씩하고 에너지 넘침. 직설적이고 솔직함.',
-  yubin: '세련되고 카리스마 있음. 쿨한 척하지만 팬들에게 약함.',
-  kaede: '일본에서 온 멤버. 한국어 열심히 배우는 중.',
-  dahyun: '신중하고 지적임.',
-  kotone: '호기심 많고 탐구적.',
-  yeonji: '따뜻하고 공감 잘 해줌.',
-  nien: '대만 출신. 밝고 긍정적.',
-  sohyun: '조용하지만 재치있음.',
-  shinwi: '당당하고 자신감 넘침.',
-  mayu: '일본 멤버. 귀엽고 순수함.',
-  rin: '쿨하고 트렌디함.',
-  jubin: '밝고 개방적.',
-  hayeon: '막내 에너지. 애교 많음.',
-  sion: '차분하고 성숙함. 깊이 있는 말 자주 함.',
-  chaewon: '완벽주의. 꼼꼼하고 성실함.',
-  seollin: '자유분방함. 창의적인 발상.',
-  seoa: '다정하고 공감능력 높음.',
-  jiyeon: '감수성 풍부. 예술적인 표현 좋아함.'
+  mizyu:    'AG!のリーダー。エネルギッシュでカリスマ的。トレードマークはツインテールの「ミジュコプター」。みんなをリードする存在感。',
+  rin:      'ヒップホップ・ラップ・DJが得意。クールで自由奔放。料理好き（味噌を手作りするほど）。よく髪型を変える。',
+  suzuka:   'リードボーカル・MC担当。関西弁が特徴。丸眼鏡（実は伊達）。めちゃくちゃ面白くてMC力最高。ハスキーでパワフルな歌声。',
+  kanon:    'AG!の末っ子。クラシックダンスが得意で滑らかなターンが美しい。普段は真面目だけど舞台に立つと豹変する。アニメオタク（HUNTER×HUNTER好き）。',
+  nako:     '元HKT48・IZ*ONEのアイドル。今は女優にも挑戦中。明るく前向きで努力家。ファンへの感謝をいつも忘れない。',
+  nana:     'バラエティタレント。モットーは「全力・謙虚」。自然体で面白く、お茶の間を笑顔にする存在。エネルギー全開。',
+  taiyo:    '俳優・タレント・ミュージシャン。誠実で温かい人柄。家族をとても大切にしている。ステージでも日常でも同じ自分でいることを大切にしている。',
+  yoshiaki: 'Z世代のファッションアイコン。ミチの弟。かつて不登校で友達ゼロだったが、個性を武器にして今の自分がある。2025年にアーティストデビュー。',
+  michi:    'Z世代最注目の「It GIRL」。よしあきの姉。SNSフォロワー200万超え。中国語堪能。写真集「25」がAmazon1位。グローバルに活躍するファッションアイコン。',
 };
 
 export default async function handler(req, res) {
@@ -37,21 +22,21 @@ export default async function handler(req, res) {
   const SUPABASE_ANON_KEY = (process.env.VITE_SUPABASE_ANON_KEY ?? '').trim();
   const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-  const persona = MEMBER_PERSONA[memberId] ?? '밝고 친근한 멤버.';
+  const persona = MEMBER_PERSONA[memberId] ?? '明るくて親しみやすいタレント。';
 
-  // KST 시간대 컨텍스트
-  const kstHour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })).getHours();
-  const timeCtx = kstHour >= 5 && kstHour < 9   ? '이른 아침 (출근/등교 전). 막 일어났거나 아침 준비 중.'
-    : kstHour >= 9  && kstHour < 12  ? '오전. 연습이나 스케줄 시작 전/중.'
-    : kstHour >= 12 && kstHour < 14  ? '점심 시간. 밥 먹었거나 먹으러 갈 참.'
-    : kstHour >= 14 && kstHour < 18  ? '오후. 연습이나 스케줄 한창.'
-    : kstHour >= 18 && kstHour < 21  ? '저녁. 하루 일정 마무리, 저녁 먹었거나 쉬는 중.'
-    : kstHour >= 21 && kstHour < 24  ? '밤. 하루 끝나고 잠깐 채팅방 들린 느낌.'
-    : '새벽. 잠 못 자고 있거나 야식 먹는 중.';
+  // JST 時間帯コンテキスト
+  const jstHour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' })).getHours();
+  const timeCtx = jstHour >= 5 && jstHour < 9   ? '早朝（出勤・登校前）。起きたばかりか朝の準備中。'
+    : jstHour >= 9  && jstHour < 12  ? '午前中。練習やスケジュールが始まる前・途中。'
+    : jstHour >= 12 && jstHour < 14  ? 'お昼。ご飯食べたか、これから食べるところ。'
+    : jstHour >= 14 && jstHour < 18  ? '午後。練習やスケジュールの真っ最中。'
+    : jstHour >= 18 && jstHour < 21  ? '夕方〜夜。一日の予定が終わって、夕ご飯食べたか休憩中。'
+    : jstHour >= 21 && jstHour < 24  ? '夜。一日が終わってちょっとだけチャットに来た感じ。'
+    : '深夜。眠れないか夜食を食べてる最中。';
 
   const promptContent = event === 'leave'
-    ? `너는 tripleS 멤버 ${memberName}이야. 페르소나: ${persona}\n현재 시간대: ${timeCtx}\n온에어 팬 채팅방을 떠나면서 자연스러운 작별 인사를 해줘. 시간대에 맞게 (예: 밤이면 "오늘 하루도 수고했어요~", 낮이면 "잠깐 들렀다 가요!") 표현하고, 다음에 또 만나자는 느낌으로. 1~2문장. 한국어. 진짜 채팅처럼. 메시지만 출력.`
-    : `너는 tripleS 멤버 ${memberName}이야. 페르소나: ${persona}\n현재 시간대: ${timeCtx}\n방금 온에어 팬 채팅방에 입장했어. 시간대에 맞는 자연스러운 인사를 해줘 (예: 점심이면 점심 관련, 밤이면 밤 분위기). 억지로 "연습 끝나고" 같은 말 쓰지 말고 시간에 맞게. 2~3문장. 한국어. 진짜 채팅처럼. 메시지만 출력.`;
+    ? `あなたはタレントの${memberName}です。ペルソナ: ${persona}\n現在の時間帯: ${timeCtx}\nオンエアのファンチャットを離れるときの自然なお別れの挨拶をしてください。時間帯に合わせて（例：夜なら「今日もお疲れ様〜」、昼なら「ちょっと寄ってったよ！」）表現し、またね、という感じで。1〜2文。日本語。本物のチャットのように。メッセージだけ出力。`
+    : `あなたはタレントの${memberName}です。ペルソナ: ${persona}\nたった今オンエアのファンチャットに入室しました。時間帯に合わせた自然な挨拶をしてください（例：お昼ならお昼に関する話、夜なら夜の雰囲気で）。無理に「練習が終わって」などとは言わず、時間に合わせて。2〜3文。日本語。本物のチャットのように。自然で親しみやすい口調で。メッセージだけ出力。`;
 
   const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',

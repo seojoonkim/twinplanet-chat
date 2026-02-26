@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '').trim();
 
     // 1. GitHub에서 최신 feed 가져오기
-    const feedUrl = 'https://raw.githubusercontent.com/seojoonkim/triples-chat/main/public/community-feed.json';
+    const feedUrl = 'https://raw.githubusercontent.com/seojoonkim/twinplanet-chat/main/public/community-feed.json';
     const feedHeaders = { 'Cache-Control': 'no-cache' };
     if (ghToken) feedHeaders['Authorization'] = `token ${ghToken}`;
     const feedRes = await fetch(feedUrl, { headers: feedHeaders });

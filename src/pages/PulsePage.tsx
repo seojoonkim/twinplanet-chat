@@ -38,32 +38,33 @@ type View = 'list' | 'detail' | 'write';
 
 const cardShadow = { boxShadow: '0 2px 16px rgba(109,40,217,0.08), 0 1px 4px rgba(109,40,217,0.04)' };
 const IDOL_NICKNAMES = [
-  '코스모스_별빛',
-  '서연이좋아',
-  '혜린맘',
-  '채연덕후',
-  '지우팬',
-  '수민짱',
-  '유연러버',
-  '트리플에스마스터',
-  '별빛스밍',
-  '코딱지',
-  '제발컴백',
-  '우주덕',
-  '나경이사랑해',
-  '유빈응원단',
+  'AG_ファイター',
+  'ミジュコプター愛好家',
+  'SUZUKA推し',
+  'RIN_ヒップホップ',
+  'KANON_クラシック',
+  '奈子の応援団',
+  '奈々さん大好き',
+  '太陽くんファン',
+  'よしあき_ファッション',
+  'ミチのIt_GIRL',
+  'TWIN_PLANET_love',
+  'AG_セーラー服',
+  'オトナブルー中毒',
+  '首振りダンス練習中',
+  'TWIN_PLANET_global',
 ];
 const CUTE_PASSWORDS = [
-  '별빛123',
-  '하트999',
-  '보라해777',
-  '코스모스♡',
-  '스밍중456',
-  '덕질중888',
-  '트리플에스💜',
-  '팬심폭발321',
-  '응원해555',
-  '최애최애999',
+  'star123',
+  'heart999',
+  'limegreen777',
+  'cosmos♡',
+  'stream456',
+  'otaku888',
+  'TWINPLANET💚',
+  'fanpower321',
+  'cheering555',
+  'oshi_love999',
 ];
 const LS_NAME_KEY = 'pulse_author_name';
 const LS_PW_KEY = 'pulse_author_password';
@@ -76,11 +77,11 @@ function timeAgo(iso: string): string {
   const mins = Math.floor(diff / 60000);
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
-  if (mins < 2) return '방금';
-  if (mins < 60) return `${mins}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  return new Date(iso).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' });
+  if (mins < 2) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days < 7) return `${days}d ago`;
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 function getHeaders(): Record<string, string> {
@@ -101,10 +102,10 @@ function isConfigMissing() {
 
 const PulsePage = () => {
   const defaultNickname = useMemo(() => {
-    return localStorage.getItem(LS_NAME_KEY) || IDOL_NICKNAMES[Math.floor(Math.random() * IDOL_NICKNAMES.length)] || '코스모스_별빛';
+    return localStorage.getItem(LS_NAME_KEY) || IDOL_NICKNAMES[Math.floor(Math.random() * IDOL_NICKNAMES.length)] || 'TWIN_PLANET_love';
   }, []);
   const defaultPassword = useMemo(() => {
-    return localStorage.getItem(LS_PW_KEY) || CUTE_PASSWORDS[Math.floor(Math.random() * CUTE_PASSWORDS.length)] || '별빛123';
+    return localStorage.getItem(LS_PW_KEY) || CUTE_PASSWORDS[Math.floor(Math.random() * CUTE_PASSWORDS.length)] || 'star123';
   }, []);
 
   const [view, setView] = useState<View>('list');
@@ -113,8 +114,8 @@ const PulsePage = () => {
   const [comments, setComments] = useState<PulseComment[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [writeForm, setWriteForm] = useState<WriteFormState>(() => {
-    const initialNickname = defaultNickname || '코스모스_별빛';
-    const initialPassword = defaultPassword || '별빛123';
+    const initialNickname = defaultNickname || 'TWIN_PLANET_love';
+    const initialPassword = defaultPassword || 'star123';
 
     return {
       author_name: initialNickname,
@@ -140,12 +141,12 @@ const PulsePage = () => {
         },
       );
       if (!res.ok) {
-        throw new Error(`게시글을 불러오지 못했습니다 (${res.status})`);
+        throw new Error(`Failed to load posts (${res.status})`);
       }
       const data = (await res.json()) as PulsePost[];
       setPosts(data);
     } catch (error) {
-      alert(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
+      alert(error instanceof Error ? error.message : 'An unknown error occurred.');
     } finally {
       setLoading(false);
     }
@@ -161,12 +162,12 @@ const PulsePage = () => {
         },
       );
       if (!res.ok) {
-        throw new Error(`댓글을 불러오지 못했습니다 (${res.status})`);
+        throw new Error(`Failed to load comments (${res.status})`);
       }
       const data = (await res.json()) as PulseComment[];
       setComments(data);
     } catch (error) {
-      alert(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
+      alert(error instanceof Error ? error.message : 'An unknown error occurred.');
     }
   };
 
@@ -190,11 +191,11 @@ const PulsePage = () => {
 
   const submitPost = async () => {
     if (!writeForm.author_name.trim() || !writeForm.title.trim() || !writeForm.content.trim()) {
-      alert('닉네임, 제목, 본문은 필수 입력값입니다.');
+      alert('Nickname, title, and content are required.');
       return;
     }
     if (isConfigMissing()) {
-      alert('Supabase 환경변수가 설정되지 않았습니다.');
+      alert('Supabase environment variables are not configured.');
       return;
     }
 
@@ -210,7 +211,7 @@ const PulsePage = () => {
         }),
       });
       if (!res.ok) {
-        throw new Error(`게시글 등록 실패 (${res.status})`);
+        throw new Error(`Failed to submit post (${res.status})`);
       }
       localStorage.setItem(LS_NAME_KEY, writeForm.author_name.trim());
       localStorage.setItem(LS_PW_KEY, writeForm.author_password.trim());
@@ -223,7 +224,7 @@ const PulsePage = () => {
       setView('list');
       await fetchPosts();
     } catch (error) {
-      alert(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
+      alert(error instanceof Error ? error.message : 'An unknown error occurred.');
     }
   };
 
