@@ -3,7 +3,7 @@ export default async function handler(req, res) {
   res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=600');
 
   const API_KEY = process.env.YOUTUBE_API_KEY;
-  const CHANNEL_ID = 'UCRa4EDGJEMpUfMRBRJKXbIg';
+  const CHANNEL_ID = 'UCp0iCvHGMwyfPHpYq7n2sPw';
 
   if (!API_KEY) {
     return res.status(500).json({ error: 'YOUTUBE_API_KEY not set' });
