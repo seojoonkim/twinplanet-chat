@@ -2,6 +2,7 @@ export interface RoomMember {
   id: string;
   name: string;
   fullName: string;
+  sNumber?: number;
   color: string;
   bg: string;
   role: string;
