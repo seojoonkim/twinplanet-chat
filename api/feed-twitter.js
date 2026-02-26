@@ -15,9 +15,9 @@ export default async function handler(req, res) {
   if (!RAPIDAPI_KEY) return res.status(500).json({ error: 'RAPIDAPI_KEY not set' });
 
   try {
-    // Try Twitter241 API (RapidAPI)
+    // twitter241 search-v2: from:japanleaders Latest (official ATARASHII GAKKO! account)
     const response = await fetch(
-      'https://twitter241.p.rapidapi.com/user-tweets?username=ATARASHIIGAKKO&count=20',
+      'https://twitter241.p.rapidapi.com/search-v2?query=from%3Ajapanleaders&type=Latest&count=20',
       {
         headers: {
           'X-RapidAPI-Key': RAPIDAPI_KEY,
@@ -32,15 +32,16 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // twitter241 response structure: data.result.timeline.instructions[].entries
+    // twitter241 search-v2 response structure: data.result.timeline.instructions[].entries
     const instructions = data?.result?.timeline?.instructions || [];
     const entries = instructions.flatMap(inst => inst.entries || []);
 
     const tweets = entries
       .filter(e => e?.content?.itemContent?.tweet_results?.result?.legacy)
       .map(e => {
-        const legacy = e.content.itemContent.tweet_results.result.legacy;
-        const user = e.content.itemContent.tweet_results.result.core?.user_results?.result?.legacy;
+        const tweetResult = e.content.itemContent.tweet_results.result;
+        const legacy = tweetResult.legacy;
+        const user = tweetResult.core?.user_results?.result?.legacy;
         const media = legacy.extended_entities?.media || legacy.entities?.media || [];
         const images = media
           .filter(m => m.type === 'photo' || m.type === 'video' || m.type === 'animated_gif')
@@ -55,7 +56,7 @@ export default async function handler(req, res) {
           id: legacy.id_str || e.entryId,
           text: cleanText,
           createdAt: legacy.created_at,
-          url: `https://x.com/ATARASHIIGAKKO/status/${legacy.id_str}`,
+          url: `https://x.com/japanleaders/status/${legacy.id_str}`,
           likes: legacy.favorite_count || 0,
           retweets: legacy.retweet_count || 0,
           images,
