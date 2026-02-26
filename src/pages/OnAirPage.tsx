@@ -50,8 +50,7 @@ function getMemberAvatar(memberId: string): string {
 
 // タレント別 말풍선 색상
 const MEMBER_COLORS: Record<string, { bg: string; name: string }> = {
-  'atarashii-gakko': { bg: '#FAFFD6', name: '#7B8000' },  // AG! ライム
-  mizyu:   { bg: '#FAFFD6', name: '#7B8000' },  // MIZYU ライム
+  mizyu:   { bg: '#FFE0EE', name: '#C2185B' },  // MIZYU ピンク
   rin:     { bg: '#E8F5E9', name: '#1B5E20' },  // RIN グリーン
   suzuka:  { bg: '#FFF3E0', name: '#E65100' },  // SUZUKA オレンジ
   kanon:   { bg: '#E3F2FD', name: '#1565C0' },  // KANON ブルー

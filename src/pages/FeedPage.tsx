@@ -65,7 +65,6 @@ function seededRng(seed: number) {
 
 // ── タレントラベル ────────────────────────────────────────────
 const S_NUMBERS: Record<string, string> = {
-  'atarashii-gakko': 'AG!',
   mizyu:    'MIZYU',
   rin:      'RIN',
   suzuka:   'SUZUKA',
@@ -80,8 +79,7 @@ const S_NUMBERS: Record<string, string> = {
 const MEMBER_ORDER = Object.keys(S_NUMBERS);
 
 const MEMBER_KEYWORDS: Record<string, string[]> = {
-  'atarashii-gakko': ['AG!', 'ATARASHII GAKKO', '新しい学校', 'リーダーズ', '아타라시이'],
-  mizyu:    ['MIZYU', 'ミジュ', '미쥬'],
+  mizyu:    ['MIZYU', 'ミジュ', '미쥬', 'AG!', 'ATARASHII GAKKO'],
   rin:      ['RIN', '린', 'りん'],
   suzuka:   ['SUZUKA', 'スズカ', '스즈카'],
   kanon:    ['KANON', 'かのん', '카논'],
@@ -132,8 +130,7 @@ function detectTags(title: string, body: string): Tags {
 
 // ── 포스터(업로더) 감지 ───────────────────────────────────────
 const MEMBER_NAME_PATTERNS: [string, RegExp][] = [
-  ['atarashii-gakko', /#AG|#ATARASHIIGAKKO|#新しい学校/i],
-  ['mizyu',    /#MIZYU|#mizyu|#ミジュ/i],
+  ['mizyu',    /#MIZYU|#mizyu|#ミジュ|#AG|#ATARASHIIGAKKO|#新しい学校/i],
   ['rin',      /#RIN\b|#rin\b|#りん/i],
   ['suzuka',   /#SUZUKA|#suzuka|#スズカ/i],
   ['kanon',    /#KANON|#kanon|#かのん/i],

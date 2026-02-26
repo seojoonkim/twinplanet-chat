@@ -105,7 +105,7 @@ const REACTIONS: { key: ReactionKey; emoji: string; label: string }[] = [
   { key: 'star', emoji: '✨', label: '최고' },
 ];
 
-const ALL_IDOL_IDS = ['atarashii-gakko','nako','nana','taiyo','yoshiaki','michi','mizyu','rin','suzuka','kanon'];
+const ALL_IDOL_IDS = ['mizyu','rin','suzuka','kanon','nako','nana','taiyo','yoshiaki','michi'];
 
 function memberImgSrc(id: string): string {
   return id === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${id}/profile.jpg`;

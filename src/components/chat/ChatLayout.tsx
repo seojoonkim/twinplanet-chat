@@ -28,11 +28,29 @@ function pick<T>(arr: T[]): T {
 
 // タレント別 時間帯挨拶 (TWIN PLANET)
 const TRIPLES_GREETINGS: Record<string, Record<'morning' | 'afternoon' | 'evening' | 'night', { first: string[]; returning: string[] }>> = {
-  'atarashii-gakko': {
-    morning: { first: ['おはよう！AG!だよ～ 朝から来てくれたんだ！嬉しい✨'], returning: ['おはよう！今日も一緒に頑張ろ🔥'] },
-    afternoon: { first: ['来てくれたんだ！AG!だよ～ ここで話せるの嬉しいな😊 名前なんていうの？'], returning: ['来てくれた！今日どうだった？'] },
-    evening: { first: ['夕方に来てくれたんだね。AG!だよ！お疲れ様✨ 今日はどんな日だった？'], returning: ['お疲れ！ご飯食べた？'] },
-    night: { first: ['こんな時間に！AG!だよ。眠れない？一緒にいるよ🌙'], returning: ['また来てくれた！こんな時間に何してたの？'] },
+  'mizyu': {
+    morning: { first: ['おはよう！MIZYUだよ～ 朝から来てくれたんだ！嬉しい✨ミジュコプター飛ばすよ！'], returning: ['おはよう！今日も一緒に頑張ろ🔥'] },
+    afternoon: { first: ['来てくれたんだ！MIZYUだよ！ここで話せるの嬉しいな😊 名前なんていうの？'], returning: ['来てくれた！今日どうだった？'] },
+    evening: { first: ['夕方に来てくれたんだね。MIZYUだよ！お疲れ様✨ 今日はどんな日だった？'], returning: ['お疲れ！ご飯食べた？'] },
+    night: { first: ['こんな時間に！MIZYUだよ。眠れない？一緒にいるよ🌙'], returning: ['また来てくれた！こんな時間に何してたの？'] },
+  },
+  'rin': {
+    morning: { first: ['おはよ。RINだ。朝から来るとは…いいね。名前は？'], returning: ['おはよ。今日も自分らしくいこ。'] },
+    afternoon: { first: ['よ。RINだよ。ここ来てくれたんだ。何話したい？'], returning: ['また来たな。今日どうだった？'] },
+    evening: { first: ['夕方か。RINだよ。今日一日どうだった？'], returning: ['お疲れ。ゆっくりしな。'] },
+    night: { first: ['夜遅いな。RINだ。眠れない？音楽でも聴こ。'], returning: ['また来たんだ。夜更かし仲間だな笑'] },
+  },
+  'suzuka': {
+    morning: { first: ['おはよー！SUZUKAやで！朝から来てくれたん？嬉しいわー！名前なんていうの？'], returning: ['おはよ！今日も元気にいこ！😄'] },
+    afternoon: { first: ['来てくれたんや！SUZUKAやで！ここで話せんの最高やん！😊 名前教えてー！'], returning: ['また来てくれた！嬉しいわー！今日どうやった？'] },
+    evening: { first: ['夕方やね！SUZUKAだよ！お疲れ様やん✨ 今日はどんな日やった？'], returning: ['お疲れ！ご飯食べた？うちお腹すいてきたわ笑'] },
+    night: { first: ['こんな時間に！SUZUKAやで。眠れへん？一緒にいるよ🌙'], returning: ['また来てくれたんやー！こんな時間に何してたの？'] },
+  },
+  'kanon': {
+    morning: { first: ['おはようございます。KANONです。朝から来てくれたんですね。名前を教えてもらえますか？'], returning: ['おはようございます。今日も一日頑張りましょう。'] },
+    afternoon: { first: ['来てくれたんですね。KANONです。ここで話せるの嬉しいです。何を話しましょうか？'], returning: ['また来てくれた。今日はどうでしたか？'] },
+    evening: { first: ['夕方に来てくれたんですね。KANONです。一日お疲れ様でした。'], returning: ['お疲れ様でした。今日どんな日でしたか？'] },
+    night: { first: ['こんな時間に。KANONです。眠れないんですか？一緒にいますよ🌙'], returning: ['また来てくれた。夜更かしは…ほどほどにしてくださいね笑'] },
   },
   nako: {
     morning: { first: ['おはよう！奈子だよ～✨ 朝から来てくれてありがとう！名前教えて🌸'], returning: ['おはよう！今日も一日頑張ろうね！'] },
