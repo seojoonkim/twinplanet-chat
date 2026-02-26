@@ -19,8 +19,8 @@ export default async function handler(req, res) {
   const { userMessage, userNickname } = req.body ?? {};
   if (!userMessage) return res.status(400).json({ error: 'userMessage required' });
 
-  const SUPABASE_URL = (process.env.VITE_SUPABASE_URL ?? '').trim();
-  const SUPABASE_ANON_KEY = (process.env.VITE_SUPABASE_ANON_KEY ?? '').trim();
+  const SUPABASE_URL = (process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL ?? '').trim();
+  const SUPABASE_ANON_KEY = (process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY ?? '').trim();
   const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
   const sbHeaders = {

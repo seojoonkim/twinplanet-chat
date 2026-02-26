@@ -144,10 +144,10 @@ export default function SiteFooter() {
 
       <div className="text-center text-xs text-gray-400 flex flex-col gap-2">
         <a
-          href="mailto:wav@triples.chat"
+          href="mailto:hello@twinplanet.chat"
           className="text-violet-500 hover:text-violet-700 transition-colors font-medium"
         >
-          wav@triples.chat
+          hello@twinplanet.chat
         </a>
         <span>Made with 💜</span>
       </div>

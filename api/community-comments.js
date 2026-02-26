@@ -2,9 +2,9 @@ export default async function handler(req, res) {
   const { post_id } = req.query;
   if (!post_id) return res.status(400).json({ error: 'post_id required' });
 
-  const supabaseUrl = (process.env.VITE_SUPABASE_URL || '').trim();
+  const supabaseUrl = (process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL || '').trim();
   const serviceKey = (process.env.SUPABASE_SERVICE_KEY || '').trim();
-  const anonKey = (process.env.VITE_SUPABASE_ANON_KEY || '').trim();
+  const anonKey = (process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY || '').trim();
   const key = serviceKey || anonKey;
 
   if (!supabaseUrl || !key) {

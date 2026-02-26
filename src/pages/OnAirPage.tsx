@@ -349,13 +349,13 @@ export default function OnAirPage() {
             {/* Tab Bar */}
             <div className="flex mb-0 border-b border-gray-200">
               {([
-                { tab: 'onair',     path: '/',          label: '온에어' },
-                { tab: 'feed',      path: '/feed',      label: '피드' },
-                { tab: 'group',     path: '/rooms',     label: '수다방' },
-                { tab: 'solo',      path: '/chat',      label: '1:1 챗' },
-                { tab: 'diary',     path: '/diary',     label: '일기장' },
-                { tab: 'community', path: '/community', label: '레이더' },
-                { tab: 'pulse',     path: '/pulse',     label: '펄스' },
+                { tab: 'onair',     path: '/',          label: 'ON AIR' },
+                { tab: 'feed',      path: '/feed',      label: 'FEED' },
+                { tab: 'group',     path: '/rooms',     label: 'CHAT' },
+                { tab: 'solo',      path: '/chat',      label: 'CHAT' },
+                { tab: 'diary',     path: '/diary',     label: 'DIARY' },
+                { tab: 'community', path: '/community', label: 'RADAR' },
+                { tab: 'pulse',     path: '/pulse',     label: 'RADAR' },
               ] as { tab: Tab; path: string; label: string }[]).map(({ tab, path, label }) => {
                 const active = activeTab === tab;
                 return (
