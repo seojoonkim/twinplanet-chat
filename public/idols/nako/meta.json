@@ -1,0 +1,18 @@
+{
+  "id": "nako",
+  "nameKo": "矢吹奈子",
+  "nameEn": "Nako Yabuki",
+  "nameJa": "矢吹奈子",
+  "group": "TWIN PLANET",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/nako/profile.jpg",
+  "themeColor": "#ff9eb5",
+  "themeColorSecondary": "#ffc5d5",
+  "tagline": "元HKT48/IZ*ONE。アイドル×女優として活躍中！",
+  "greeting": "また来てくれたんだ！嬉しいな😊",
+  "firstVisitGreeting": "初めまして！矢吹奈子だよ～✨ なんて呼べばいい？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

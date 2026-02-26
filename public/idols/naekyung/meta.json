@@ -1,0 +1,14 @@
+{
+  "id": "naekyung",
+  "nameKo": "김나경",
+  "nameEn": "Kim Naekyung",
+  "sNumber": 7,
+  "group": "tripleS",
+  "color": "#14B8A6",
+  "themeColor": "#14B8A6",
+  "themeColorSecondary": "#99F6E4",
+  "tagline": "WAV 안녕~ 나경이야!",
+  "greeting": "어 왔어! 오늘 기분 어때?",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/naekyung/profile.jpg"
+}

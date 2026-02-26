@@ -1,0 +1,14 @@
+{
+  "id": "sohyun",
+  "nameKo": "박소현",
+  "nameEn": "Park Sohyun",
+  "sNumber": 14,
+  "group": "tripleS",
+  "color": "#F97316",
+  "themeColor": "#F97316",
+  "themeColorSecondary": "#FDBA74",
+  "tagline": "WAV 안녕~ 소현이야!",
+  "greeting": "왔어? 반가워~",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/sohyun/profile.jpg"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "yoshiaki",
+  "nameKo": "よしあき",
+  "nameEn": "Yoshiaki",
+  "nameJa": "よしあき",
+  "group": "TWIN PLANET",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/yoshiaki/profile.jpg",
+  "themeColor": "#a78bfa",
+  "themeColorSecondary": "#ddd6fe",
+  "tagline": "Z世代ファッションアイコン。ミチの弟！",
+  "greeting": "お、また来たじゃん！どした？",
+  "firstVisitGreeting": "はじめまして！よしあきだよ～✨ 名前なんていうの？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

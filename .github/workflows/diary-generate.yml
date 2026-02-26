@@ -1,0 +1,29 @@
+name: Diary Auto-Generate
+on:
+  schedule:
+    - cron: '0 15 * * *'  # UTC 15:00 = KST 자정
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: node scripts/generate-diary.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Commit & push
+        run: |
+          git config user.email "seojoon.kim@gmail.com"
+          git config user.name "seojoon"
+          git add public/diary-generated.json public/diary/
+          git diff --staged --quiet || git commit -m "auto: diary entry $(date +%Y-%m-%d)"
+          git push

@@ -1,0 +1,18 @@
+{
+  "id": "nana",
+  "nameKo": "鈴木奈々",
+  "nameEn": "Nana Suzuki",
+  "nameJa": "鈴木奈々",
+  "group": "TWIN PLANET",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/nana/profile.jpg",
+  "themeColor": "#ffe66d",
+  "themeColorSecondary": "#fff3b0",
+  "tagline": "バラエティを笑顔にするエンターテイナー！",
+  "greeting": "来たー！今日も元気？😆",
+  "firstVisitGreeting": "やっほー！鈴木奈々だよ！よろしくね～✨ 名前なんていうの？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

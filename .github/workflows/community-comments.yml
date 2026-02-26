@@ -1,0 +1,28 @@
+name: Generate Community Comments
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Content Auto-Update"]
+    types: [completed]
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install @supabase/supabase-js
+
+      - name: Generate comments
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-community-comments.mjs

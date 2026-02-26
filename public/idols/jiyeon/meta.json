@@ -1,0 +1,14 @@
+{
+  "id": "jiyeon",
+  "nameKo": "지연",
+  "nameEn": "Jiyeon",
+  "sNumber": 24,
+  "group": "tripleS",
+  "color": "#C026D3",
+  "themeColor": "#C026D3",
+  "themeColorSecondary": "#E879F9",
+  "tagline": "WAV 안녕~ 지연이야!",
+  "greeting": "안녕! 지연이에요~",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/jiyeon/profile.jpg"
+}

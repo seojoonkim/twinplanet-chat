@@ -1,0 +1,14 @@
+{
+  "id": "jiwoo",
+  "nameKo": "이지우",
+  "nameEn": "Lee Jiwoo",
+  "sNumber": 3,
+  "group": "tripleS",
+  "color": "#EC4899",
+  "themeColor": "#EC4899",
+  "themeColorSecondary": "#F9A8D4",
+  "tagline": "WAV 안녕~ 지우야! 오늘도 화이팅!",
+  "greeting": "어 왔어~ 무슨 일이야?",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/jiwoo/profile.jpg"
+}

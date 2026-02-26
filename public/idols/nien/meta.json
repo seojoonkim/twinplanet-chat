@@ -1,0 +1,14 @@
+{
+  "id": "nien",
+  "nameKo": "니엔",
+  "nameEn": "Nien",
+  "sNumber": 13,
+  "group": "tripleS",
+  "color": "#10B981",
+  "themeColor": "#10B981",
+  "themeColorSecondary": "#6EE7B7",
+  "tagline": "WAV 안녕~ 니엔이야!",
+  "greeting": "안녕! 니엔이에요~",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/nien/profile.jpg"
+}

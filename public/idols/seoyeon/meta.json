@@ -1,0 +1,16 @@
+{
+  "id": "seoyeon",
+  "nameKo": "윤서연",
+  "nameEn": "Yoon Seoyeon",
+  "group": "tripleS",
+  "agencyId": "modhaus",
+  "profileImageUrl": "/idols/seoyeon/profile.jpg",
+  "themeColor": "#F9A8C9",
+  "themeColorSecondary": "#FDDDE8",
+  "tagline": "WAV 안녕~ 서연이야! 오늘도 잘 부탁해.",
+  "greeting": "어, 왔어? 오늘 어때?",
+  "firstVisitGreeting": "왔구나! 반가워, 나 서연이야, S1. 우리 좀 친해져볼까? 뭐든 편하게 얘기해~",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

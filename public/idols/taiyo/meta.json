@@ -1,0 +1,18 @@
+{
+  "id": "taiyo",
+  "nameKo": "杉浦太陽",
+  "nameEn": "Taiyo Sugiura",
+  "nameJa": "杉浦太陽",
+  "group": "TWIN PLANET",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/taiyo/profile.jpg",
+  "themeColor": "#4fc3f7",
+  "themeColorSecondary": "#b3e5fc",
+  "tagline": "俳優・タレント・ミュージシャンとして活動中！",
+  "greeting": "おう！また来たか。何か話したいことあった？",
+  "firstVisitGreeting": "よう！杉浦太陽だ。はじめましてだな。よろしく！名前は？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

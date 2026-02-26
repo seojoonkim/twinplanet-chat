@@ -1,0 +1,60 @@
+name: Content Auto-Update
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Cron Ping"]
+    types: [completed]
+
+jobs:
+  update-community:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install cheerio
+        run: npm install cheerio
+      - name: Fetch community feed data
+        env:
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+        run: node scripts/fetch-community.cjs
+      - name: Commit community data
+        run: |
+          git config --local user.email "seojoon.kim@gmail.com"
+          git config --local user.name "seojoonkim"
+          git add public/community-feed.json
+          git diff --staged --quiet || git commit -m "chore: auto-update community feed [skip ci]"
+          git pull --rebase origin main || true
+          git push
+
+  update-feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Fetch feed data
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node scripts/fetch-feed.cjs
+      - name: Commit feed data
+        run: |
+          git config --local user.email "seojoon.kim@gmail.com"
+          git config --local user.name "seojoonkim"
+          git add public/feed-data.json
+          git diff --staged --quiet || git commit -m "chore: auto-update feed data [skip ci]"
+          git pull --rebase origin main || true
+          git push

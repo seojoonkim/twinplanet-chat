@@ -1,0 +1,14 @@
+{
+  "id": "hayeon",
+  "nameKo": "정하연",
+  "nameEn": "Jung Hayeon",
+  "sNumber": 19,
+  "group": "tripleS",
+  "color": "#FF8C42",
+  "themeColor": "#FF8C42",
+  "themeColorSecondary": "#FFBD8A",
+  "tagline": "WAV 안녕~ 하연이야!",
+  "greeting": "안녕! 하연이에요~",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/hayeon/profile.jpg"
+}

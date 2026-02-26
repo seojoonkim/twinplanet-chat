@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: 'Pretendard Variable', 'Apple SD Gothic Neo', sans-serif; }
+  .root {
+    width: 1200px; height: 630px;
+    background: linear-gradient(135deg, #3b0764 0%, #6d28d9 40%, #9333ea 65%, #db2777 100%);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: space-between;
+    padding: 52px 0 56px;
+  }
+  /* 멤버 사진 배경 그리드 */
+  .photos {
+    position: absolute; inset: 0;
+    display: flex; flex-wrap: wrap; align-content: flex-start;
+    gap: 4px; padding: 4px;
+    opacity: 0.22;
+    filter: saturate(0.7);
+  }
+  .photos img {
+    width: 118px; height: 118px;
+    object-fit: cover; object-position: top center;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  /* 그라디언트 오버레이 */
+  .overlay {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(88,28,135,0.55) 0%, transparent 70%),
+      linear-gradient(to bottom, rgba(59,7,100,0.5) 0%, rgba(59,7,100,0.15) 50%, rgba(219,39,119,0.45) 100%);
+  }
+  /* 로고 */
+  .logo-wrap {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+  }
+  .logo-wrap img {
+    width: 100px; height: auto;
+    filter: brightness(0) invert(1) drop-shadow(0 4px 24px rgba(255,255,255,0.4));
+  }
+  /* 타이틀 */
+  .title-wrap {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .title {
+    font-size: 64px; font-weight: 900; letter-spacing: -1px;
+    color: #fff;
+    text-shadow: 0 2px 32px rgba(0,0,0,0.4);
+    line-height: 1;
+  }
+  .subtitle {
+    font-size: 22px; font-weight: 500;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.3);
+  }
+  /* 멤버 아바타 행 */
+  .avatars {
+    position: relative; z-index: 10;
+    display: flex; gap: 0; margin: 0;
+  }
+  .avatars img {
+    width: 64px; height: 64px;
+    border-radius: 50%; object-fit: cover; object-position: top center;
+    border: 3px solid rgba(255,255,255,0.85);
+    margin-left: -14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .avatars img:first-child { margin-left: 0; }
+</style>
+</head>
+<body>
+<div class="root">
+  <!-- 배경 멤버 사진 타일 -->
+  <div class="photos">
+    <img src="/idols/chaeyeon/profile.jpg"/>
+    <img src="/idols/chaewon/profile.jpg"/>
+    <img src="/idols/yooyeon/profile.jpg"/>
+    <img src="/idols/seoyeon/profile.jpg"/>
+    <img src="/idols/hyerin/profile.jpg"/>
+    <img src="/idols/sumin/profile.jpg"/>
+    <img src="/idols/jiwoo/profile.jpg"/>
+    <img src="/idols/kaede/profile.jpg"/>
+    <img src="/idols/naekyung/profile.jpg"/>
+    <img src="/idols/kotone/profile.jpg"/>
+    <img src="/idols/dahyun/profile.jpg"/>
+    <img src="/idols/hayeon/profile.jpg"/>
+    <img src="/idols/sohyun/profile.jpg"/>
+    <img src="/idols/yubin/profile.jpg"/>
+    <img src="/idols/rin/profile.jpg"/>
+    <img src="/idols/seoa/profile.jpg"/>
+    <img src="/idols/mayu/profile.jpg"/>
+    <img src="/idols/nien/profile.jpg"/>
+    <img src="/idols/jiyeon/profile.jpg"/>
+    <img src="/idols/yeonji/profile.jpg"/>
+    <img src="/idols/shinwi/profile.jpg"/>
+    <img src="/idols/seollin/profile.jpg"/>
+    <img src="/idols/sion/profile.jpg"/>
+    <img src="/idols/jubin/profile.jpg"/>
+    <img src="/idols/chaeyeon/profile.jpg"/>
+    <img src="/idols/chaewon/profile.jpg"/>
+    <img src="/idols/yooyeon/profile.jpg"/>
+    <img src="/idols/seoyeon/profile.jpg"/>
+    <img src="/idols/hyerin/profile.jpg"/>
+    <img src="/idols/sumin/profile.jpg"/>
+    <img src="/idols/jiwoo/profile.jpg"/>
+    <img src="/idols/kaede/profile.jpg"/>
+    <img src="/idols/naekyung/profile.jpg"/>
+    <img src="/idols/kotone/profile.jpg"/>
+    <img src="/idols/dahyun/profile.jpg"/>
+    <img src="/idols/hayeon/profile.jpg"/>
+    <img src="/idols/sohyun/profile.jpg"/>
+    <img src="/idols/yubin/profile.jpg"/>
+    <img src="/idols/rin/profile.jpg"/>
+    <img src="/idols/seoa/profile.jpg"/>
+    <img src="/idols/mayu/profile.jpg"/>
+    <img src="/idols/nien/profile.jpg"/>
+  </div>
+  <!-- 오버레이 -->
+  <div class="overlay"></div>
+
+  <!-- 상단: 로고 -->
+  <div class="logo-wrap">
+    <img src="/logo.png" alt="tripleS"/>
+  </div>
+
+  <!-- 중단: 멤버 아바타 행 -->
+  <div class="avatars">
+    <img src="/idols/chaeyeon/profile.jpg"/>
+    <img src="/idols/chaewon/profile.jpg"/>
+    <img src="/idols/yooyeon/profile.jpg"/>
+    <img src="/idols/seoyeon/profile.jpg"/>
+    <img src="/idols/hyerin/profile.jpg"/>
+    <img src="/idols/sumin/profile.jpg"/>
+    <img src="/idols/jiwoo/profile.jpg"/>
+    <img src="/idols/kaede/profile.jpg"/>
+    <img src="/idols/naekyung/profile.jpg"/>
+  </div>
+
+  <!-- 하단: 타이틀 -->
+  <div class="title-wrap">
+    <div class="title">tripleS chat</div>
+    <div class="subtitle">WAV와 함께하는 채팅</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "id": "michi",
+  "nameKo": "ミチ",
+  "nameEn": "Michi",
+  "nameJa": "ミチ",
+  "group": "TWIN PLANET",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/michi/profile.jpg",
+  "themeColor": "#f472b6",
+  "themeColorSecondary": "#fbcfe8",
+  "tagline": "Z世代が注目するIt GIRL。よしあきの姉！",
+  "greeting": "また来たんだ～！何かあった？",
+  "firstVisitGreeting": "はじめまして！ミチだよ✨ なんて呼べばいい？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

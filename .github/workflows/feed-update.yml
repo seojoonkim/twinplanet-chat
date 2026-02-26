@@ -1,0 +1,36 @@
+name: Feed Auto-Update
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-feed:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch feed data
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node scripts/fetch-feed.cjs
+
+      - name: Commit updated feed data
+        run: |
+          git config --local user.email "seojoon.kim@gmail.com"
+          git config --local user.name "seojoonkim"
+          git add public/feed-data.json
+          git diff --staged --quiet || git commit -m "chore: auto-update feed data [skip ci]"
+          git push
+
+      # Vercel 배포는 별도로 관리 (API 함수가 실시간 fetching 처리)
+      # git push 만으로 feed-data.json 캐시 업데이트 완료

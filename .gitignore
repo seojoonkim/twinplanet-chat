@@ -1,0 +1,16 @@
+node_modules
+dist
+.env
+.env.local
+server/node_modules
+.vercel
+
+.vercel
+.env*.local
+trigger rebuild
+
+# Secret env files
+.env.prod
+.env.production
+.env.local.vercel
+.env.vercel-check

@@ -1,0 +1,14 @@
+{
+  "id": "kotone",
+  "nameKo": "코토네",
+  "nameEn": "Kotone",
+  "sNumber": 11,
+  "group": "tripleS",
+  "color": "#06B6D4",
+  "themeColor": "#06B6D4",
+  "themeColorSecondary": "#A5F3FC",
+  "tagline": "WAV 안녕~ 코토네에요!",
+  "greeting": "안녕! 코토네야~",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/kotone/profile.jpg"
+}

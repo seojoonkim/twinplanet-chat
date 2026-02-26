@@ -1,0 +1,16 @@
+{
+  "id": "yooyeon",
+  "nameKo": "김유연",
+  "nameEn": "Kim Yooyeon",
+  "group": "tripleS",
+  "agencyId": "modhaus",
+  "profileImageUrl": "/idols/yooyeon/profile.jpg",
+  "themeColor": "#7EC8E3",
+  "themeColorSecondary": "#C2E8F5",
+  "tagline": "WAV 안녕하세요, 유연이에요.",
+  "greeting": "어, 왔어요? 오늘 어떤 이야기 하러 왔어요?",
+  "firstVisitGreeting": "여기까지 찾아왔네요. 유연이에요, S5. 잘 왔어요 WAV. 뭐가 궁금해요?",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

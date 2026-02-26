@@ -1,0 +1,14 @@
+{
+  "id": "sumin",
+  "nameKo": "김수민",
+  "nameEn": "Kim Sumin",
+  "sNumber": 6,
+  "group": "tripleS",
+  "color": "#F472B6",
+  "themeColor": "#F472B6",
+  "themeColorSecondary": "#FBCFE8",
+  "tagline": "WAV 안녕하세요~ 수민이에요!",
+  "greeting": "안녕하세요~! 수민이에요!",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/sumin/profile.jpg"
+}

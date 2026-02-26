@@ -1,0 +1,14 @@
+{
+  "id": "yeonji",
+  "nameKo": "곽연지",
+  "nameEn": "Kwak Yeonji",
+  "sNumber": 12,
+  "group": "tripleS",
+  "color": "#A855F7",
+  "themeColor": "#A855F7",
+  "themeColorSecondary": "#D8B4FE",
+  "tagline": "WAV 안녕~ 연지야!",
+  "greeting": "안녕! 뭐하고 있었어?",
+  "isBuiltIn": true,
+  "profileImageUrl": "/idols/yeonji/profile.jpg"
+}
