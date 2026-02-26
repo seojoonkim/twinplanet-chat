@@ -16,9 +16,9 @@ export default async function handler(req, res) {
   if (!BEARER) return res.status(500).json({ error: 'TWITTER_BEARER_TOKEN not set' });
 
   try {
-    // 1. Get user ID for @triplescosmos
+    // 1. Get user ID for @ATARASHIIGAKKO
     const userRes = await fetch(
-      'https://api.twitter.com/2/users/by/username/triplescosmos?user.fields=id,name,profile_image_url',
+      'https://api.twitter.com/2/users/by/username/ATARASHIIGAKKO?user.fields=id,name,profile_image_url',
       { headers: { Authorization: `Bearer ${BEARER}` } }
     );
     const userData = await userRes.json();
@@ -104,7 +104,7 @@ export default async function handler(req, res) {
         id: tweet.id,
         text: originalText || decodeEntities(tweet.text || ''),
         createdAt: tweet.created_at,
-        url: `https://x.com/triplescosmos/status/${tweet.id}`,
+        url: `https://x.com/ATARASHIIGAKKO/status/${tweet.id}`,
         likes: tweet.public_metrics?.like_count || 0,
         retweets: tweet.public_metrics?.retweet_count || 0,
         media,

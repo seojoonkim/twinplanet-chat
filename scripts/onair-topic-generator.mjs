@@ -44,13 +44,13 @@ async function fetchRecentMessages() {
 
 function getTimeBasedTopic() {
   const hour = new Date().getHours();
-  if (hour >= 6 && hour < 9) return '아침 루틴';
-  if (hour >= 9 && hour < 12) return '오전 연습';
-  if (hour >= 12 && hour < 14) return '점심 메뉴';
-  if (hour >= 14 && hour < 17) return '오후 일정';
-  if (hour >= 17 && hour < 19) return '저녁 계획';
-  if (hour >= 19 && hour < 22) return '오늘 하루';
-  return '밤의 이야기';
+  if (hour >= 6 && hour < 9) return '朝のルーティン';
+  if (hour >= 9 && hour < 12) return '午前の練習';
+  if (hour >= 12 && hour < 14) return 'ランチメニュー';
+  if (hour >= 14 && hour < 17) return '午後のスケジュール';
+  if (hour >= 17 && hour < 19) return '夕方の計画';
+  if (hour >= 19 && hour < 22) return '今日一日';
+  return '夜の話';
 }
 
 async function generateTopic(sessions, messages) {
@@ -59,13 +59,13 @@ async function generateTopic(sessions, messages) {
   let prompt;
   if (messages.length === 0) {
     const timeTopic = getTimeBasedTopic();
-    prompt = `tripleS 멤버(${memberNames})가 온에어 채팅 중입니다. 지금 시각 기반 주제: "${timeTopic}". 이 맥락에서 대화 주제 한 줄을 8자 이내 한국어로 생성해주세요. 예: "오늘 점심 메뉴", "연습 스케줄", "최근 드라마". 주제만 출력하고 따옴표나 부연 설명 없이 답하세요.`;
+    prompt = `TWIN PLANETタレント(${memberNames})がオンエアチャット中です。現在の時間帯に基づくトピック: "${timeTopic}"。このコンテキストで会話テーマを10文字以内の日本語で1行生成してください。例: "今日のランチ", "練習スケジュール", "最近のドラマ"。テーマのみを出力し、引用符や補足説明なしで答えてください。`;
   } else {
     const msgText = messages
       .map((m) => `${m.author_name}: ${m.content}`)
       .reverse()
       .join('\n');
-    prompt = `다음은 tripleS 멤버(${memberNames})의 최근 채팅 내용입니다:\n\n${msgText}\n\n이 대화의 주제를 8자 이내 한국어 한 줄로 요약해주세요. 예: "오늘 점심 메뉴", "연습 스케줄", "최근 드라마", "음악 추천". 주제만 출력하고 따옴표나 부연 설명 없이 답하세요.`;
+    prompt = `以下はTWIN PLANETタレント(${memberNames})の最近のチャット内容です:\n\n${msgText}\n\nこの会話のテーマを10文字以内の日本語1行で要約してください。例: "今日のランチ", "練習スケジュール", "最近のドラマ", "音楽のおすすめ"。テーマのみを出力し、引用符や補足説明なしで答えてください。`;
   }
 
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -90,10 +90,10 @@ async function generateTopic(sessions, messages) {
 
   const data = await res.json();
   let topic = data?.choices?.[0]?.message?.content?.trim() ?? '';
-  // 따옴표 제거
+  // 引用符を除去
   topic = topic.replace(/^["'"']|["'"']$/g, '').trim();
-  // 8자 초과 시 자르기
-  if (topic.length > 10) topic = topic.slice(0, 8);
+  // 10文字超過時に切り取り
+  if (topic.length > 12) topic = topic.slice(0, 10);
   return topic || getTimeBasedTopic();
 }
 

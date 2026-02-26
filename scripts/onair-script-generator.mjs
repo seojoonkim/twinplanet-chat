@@ -38,13 +38,13 @@ const headers = {
 
 // KST 시간대 컨텍스트
 const kstHour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })).getHours();
-const TIME_CTX = kstHour >= 5  && kstHour < 9  ? '이른 아침. 막 일어났거나 아침 준비 중.'
-  : kstHour >= 9  && kstHour < 12 ? '오전. 연습이나 스케줄 시작 전/중.'
-  : kstHour >= 12 && kstHour < 14 ? '점심 시간. 밥 먹었거나 먹으러 갈 참.'
-  : kstHour >= 14 && kstHour < 18 ? '오후. 연습이나 스케줄 한창.'
-  : kstHour >= 18 && kstHour < 21 ? '저녁. 하루 일정 마무리, 저녁 먹었거나 쉬는 중.'
-  : kstHour >= 21                  ? '밤. 하루 끝나고 잠깐 채팅방 들린 느낌.'
-  : '새벽. 잠 못 자고 있거나 야식 먹는 중.';
+const TIME_CTX = kstHour >= 5  && kstHour < 9  ? '早朝。起きたばかりか朝の準備中。'
+  : kstHour >= 9  && kstHour < 12 ? '午前。練習やスケジュール開始前/中。'
+  : kstHour >= 12 && kstHour < 14 ? 'お昼。ご飯食べたか食べに行くところ。'
+  : kstHour >= 14 && kstHour < 18 ? '午後。練習やスケジュール真っ只中。'
+  : kstHour >= 18 && kstHour < 21 ? '夕方。1日の予定を終えて、夕食後か休憩中。'
+  : kstHour >= 21                  ? '夜。1日が終わってちょっとチャットに寄った感じ。'
+  : '深夜。眠れなかったり夜食食べてたり。';
 
 // 1. 현재 활성 3명 조회
 async function getActiveSessions() {
@@ -104,58 +104,58 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
   const lastAuthorId = lastAuthorMatch ? lastAuthorMatch[1] : null;
   const lastAuthorName = lastAuthorId ? MEMBER_NAME[lastAuthorId] : null;
 
-  const systemPrompt = `너는 tripleS 아이돌 라디오 방송 대본 작가야. 실제 예능 라디오처럼 웃기고 재미있고 자연스러운 대화를 써야 해.
+  const systemPrompt = `あなたはTWIN PLANETタレントのラジオ番組台本ライターです。本物のバラエティラジオのように面白く自然な会話を書いてください。
 
-🚨 절대 규칙 (위반 1개라도 있으면 전체 무효):
-1. 연속 발화 ZERO TOLERANCE: 배열 index[N].author == index[N-1].author이면 무조건 틀린 대본.
-2. 첫 번째 발언자: "${lastAuthorName || '없음'}"(${lastAuthorId || '?'}) 이 아닌 다른 사람. 이 사람이 index[0]에 오면 틀린 대본.
-3. 모든 대사 100% 한국어. 외국어 단어 삽입 절대 금지.
-4. 반드시 이전 대화에서 나온 내용을 언급하면서 연결. 뜬금없이 새 이야기 시작 금지.
+🚨 絶対ルール（1つでも違反したら全体無効）:
+1. 連続発話 ZERO TOLERANCE: 配列 index[N].author == index[N-1].author は絶対NG。
+2. 最初の発言者: "${lastAuthorName || 'なし'}"(${lastAuthorId || '?'}) 以外の人。この人がindex[0]に来たら無効。
+3. すべてのセリフ100% 日本語。外国語単語の挿入絶対禁止。
+4. 必ず前の会話の内容を受けて続けること。唐突に新しい話を始めるのは禁止。
 
-🎭 재미 요소 (필수 — 없으면 퀄리티 부족):
-- 다른 멤버를 이름 부르며 놀리기: "야 [이름] 그게 말이 돼?ㅋㅋ", "[이름] 언니 또 저러네~"
-- 과장 리액션: "헐 진짜요?!?!", "어머 세상에~", "ㅋㅋㅋ 저 지금 너무 웃겨요"
-- 서로 이어받기: "[이름]이 말한 것처럼~", "맞아 아까 [이름]이 그랬잖아요"
-- 청취자 참여 유도: "여러분은 어떠세요?", "댓글 남겨주세요!"
-- 밀고 당기기: A가 말하면 B가 태클, C가 중재하는 흐름
+🎭 面白さ要素（必須 — なければクオリティ不足）:
+- メンバーの名前を呼んでいじる: "え、[名前]それどういうこと？笑", "[名前]さんまたそれ言ってる〜"
+- 大げさなリアクション: "えっ本当に！？", "もう信じられない〜", "笑いすぎてやばい"
+- 受け継ぎ: "[名前]が言ったみたいに〜", "さっき[名前]が言ってたじゃないですか"
+- リスナー巻き込み: "みなさんはどうですか？", "コメントで教えてください！"
+- 押し引き: Aが言ったらBがツッコミ、Cが仲裁する流れ
 
-🎙️ 라디오 말투:
-- 각 멤버 고유 말투 유지 (페르소나 참고)
-- 1턴당 2~4문장 (짧으면 심심함, 재미 없음)
-- 이전 발언 내용 직접 인용: "아까 [내용] 얘기했잖아요"
+🎙️ ラジオ話し方:
+- 各メンバーの個性ある話し方を維持（ペルソナ参照）
+- 1ターン2〜4文（短すぎると面白くない）
+- 前の発言を直接引用: "さっきの[内容]の話ですけど"
 
-출연 멤버:
+出演メンバー:
 ${memberDescriptions}
 
-현재 시간대: ${TIME_CTX}
-케미: yoshiaki↔michi 姉弟コンビ; nako↔nana 前向きコンビ; mizyu/rin/suzuka/kanon AG!4人ケミ; taiyo 落ち着き担当`;
+現在の時間帯: ${TIME_CTX}
+ケミ: yoshiaki↔michi 姉弟コンビ; nako↔nana 前向きコンビ; mizyu/rin/suzuka/kanon AG!4人ケミ; taiyo 落ち着き担当`;
 
   const topicChangeRule = shouldChangeTopic
-    ? `⚠️ 화제 전환 필수 (7~9번째 턴 중 정확히 1회):
-- 자연스럽게 "[이름]아 그러고 보니까 [새주제] 얘기 한번 해볼까?" 식으로
-- 해당 턴에만: "topic_change": true, "new_topic": "새주제(8자이내)" 추가
-- 전환 이후 나머지 턴은 완전히 새 주제만, 이전 주제 언급 금지`
-    : `화제 전환 없음: 현재 주제를 더 깊고 재미있게 파고들기. topic_change 사용 금지.`;
+    ? `⚠️ 話題転換必須（7〜9ターン目の中で正確に1回）:
+- 自然に「[名前]ちゃん、そういえば[新トピック]の話しない？」みたいに
+- そのターンのみ: "topic_change": true, "new_topic": "新トピック(8文字以内)" を追加
+- 転換後の残りのターンは完全に新しいトピックのみ、前のトピックへの言及禁止`
+    : `話題転換なし: 今のトピックをより深く面白く掘り下げること。topic_change使用禁止。`;
 
-  const userPrompt = `[직전 대화 — 반드시 이어받아야 함]:
-${recentConvo || '(이제 막 방송 시작)'}
+  const userPrompt = `[直前の会話 — 必ず続けること]:
+${recentConvo || '(放送開始直後)'}
 
-[마지막 발언자]: ${lastAuthorName || '없음'}(${lastAuthorId || '?'}) → index[0]에 오면 안 됨!
+[最後の発言者]: ${lastAuthorName || 'なし'}(${lastAuthorId || '?'}) → index[0]に来てはいけない！
 
-위 대화에 이어서 더 재미있게 15턴 생성. 앞서 나온 내용을 멤버들이 기억하고 언급해야 함.
+上記の会話に続けて、さらに面白く15ターン生成。前に出た内容をメンバーが覚えて言及すること。
 
-구조 규칙:
-- 출연: ${authorIds.join(', ')} 만 사용
-- 3명이 각각 4~5회 발언 (균등하게)
-- ❌ 연속 발화 절대 금지 ❌ (다시 한 번: index[N].author ≠ index[N-1].author)
-- 1턴당 2~4문장 (너무 짧으면 안 됨, 충분히 길게)
-- 서로 이름 부르며 놀리기/태클/맞장구 필수 (매 3턴마다 1회 이상)
-- 이전에 나온 에피소드/발언 직접 언급 (매 5턴마다 1회)
-- 전체 한국어만
+構成ルール:
+- 出演: ${authorIds.join(', ')} のみ使用
+- 3人がそれぞれ4〜5回発言（均等に）
+- ❌ 連続発話絶対禁止 ❌（再度: index[N].author ≠ index[N-1].author）
+- 1ターン2〜4文（短すぎたらNG、十分な長さで）
+- お互いの名前を呼んでいじる/ツッコミ/相槌必須（3ターンごとに1回以上）
+- 前に出たエピソード/発言を直接言及（5ターンごとに1回）
+- すべて日本語のみ
 ${topicChangeRule}
 
-JSON 배열만 출력 (다른 텍스트 없이):
-[{"author":"멤버id","content":"대사..."},...]`;
+JSON配列のみ出力（他のテキストなし）:
+[{"author":"メンバーid","content":"セリフ..."},...]`;
 
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',

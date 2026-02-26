@@ -114,50 +114,22 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
 // TWIN PLANET グループ チャットルーム
 export const GROUP_ROOMS: GroupRoom[] = [
   {
-    id: 'all',
-    title: 'TWIN PLANET みんなで',
-    subtitle: 'MIZYU・RIN・SUZUKA・KANON・奈子・奈々・太陽・よしあき・ミチ 全員集合',
-    gradient: 'linear-gradient(135deg, #FF6B9D, #3498DB)',
-    memberIds: ['mizyu', 'rin', 'suzuka', 'kanon', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'],
-    topics: [
-      { id: 'all_intro', emoji: '👋', label: '自己紹介タイム', starter: 'みんな自己紹介してみて！それぞれの個性が爆発する自己紹介、期待してます！' },
-      { id: 'all_collab', emoji: '🎵', label: 'コラボしたい！', starter: 'TWIN PLANET タレント同士でコラボするとしたら誰と何をやってみたい？' },
-      { id: 'all_fav', emoji: '⭐', label: '最近のお気に入り', starter: '最近ハマってること、好きなもの、なんでもシェアして！' },
-      { id: 'all_japan', emoji: '🇯🇵', label: '日本の好きなところ', starter: '日本のどんなところが好き？食べ物・文化・場所、なんでも！' },
-      { id: 'all_dream', emoji: '🌟', label: '夢・目標', starter: 'これからやりたいこと、夢、目標を教えて！みんなで応援し合おう！' },
-    ],
-  },
-  {
     id: 'ag',
-    title: 'AG! メンバーでトーク',
-    subtitle: 'MIZYU・RIN・SUZUKA・KANON 4人でトーク',
-    gradient: 'linear-gradient(135deg, #FF6B9D, #E67E22, #9B59B6, #3498DB)',
+    title: 'ATARASHII GAKKO!',
+    subtitle: 'MIZYU · RIN · SUZUKA · KANON',
+    gradient: 'linear-gradient(135deg, #dcff00, #FF6B9D)',
     memberIds: ['mizyu', 'rin', 'suzuka', 'kanon'],
     topics: [
-      { id: 'ag_energy', emoji: '🔥', label: 'AG!エネルギー爆発', starter: '今一番テンションが上がってることを教えて！みんなのパワー見せて！' },
-      { id: 'ag_dance', emoji: '💃', label: 'ダンス・パフォーマンス', starter: '最近のライブやパフォーマンスで一番興奮したシーンは？' },
-      { id: 'ag_hamidaseru', emoji: '✨', label: 'はみ出そう！', starter: '「はみ出す」って自分にとってどういう意味？今日どんなふうにはみ出した？' },
-      { id: 'ag_music', emoji: '🎵', label: '音楽・アート', starter: '今聴いてる曲や影響を受けたアーティストは？AG!の音楽の原点も聞きたい！' },
-      { id: 'ag_4nin', emoji: '🤝', label: '4人のケミ', starter: 'MIZYU・RIN・SUZUKA・KANON 4人の中で一番おもしろいエピソードを教えて！' },
-    ],
-  },
-  {
-    id: 'fashion',
-    title: 'ファッション部',
-    subtitle: 'よしあき＆ミチのZ世代スタイル研究室',
-    gradient: 'linear-gradient(135deg, #a78bfa, #f472b6)',
-    memberIds: ['yoshiaki', 'michi'],
-    topics: [
-      { id: 'fashion_style', emoji: '👗', label: 'マイスタイル', starter: '今のファッションの個人的なテーマやこだわりを教えて！' },
-      { id: 'fashion_inspo', emoji: '📸', label: 'インスピレーション', starter: 'ファッションのインスピレーションはどこから？人・映画・アート・街？' },
-      { id: 'fashion_brand', emoji: '🛍️', label: '好きなブランド', starter: '最近気になってるブランドやアイテムは？Z世代トレンド教えて！' },
-      { id: 'fashion_sibling', emoji: '👫', label: '兄妹ファッション', starter: 'よしあきとミチが姉弟でコーデしたら？どんなスタイルになりそう？' },
-      { id: 'fashion_tips', emoji: '💡', label: 'おしゃれになるコツ', starter: 'おしゃれ初心者にアドバイスするとしたら？まず何から始めるべき？' },
+      { id: 'ag_intro', emoji: '👋', label: 'メンバー紹介', starter: 'みんな自己紹介してみて！個性爆発の自己紹介期待してます！' },
+      { id: 'ag_dance', emoji: '💃', label: 'ダンスの話', starter: '最近練習してる振り付けや、好きな曲の話をしよう！' },
+      { id: 'ag_style', emoji: '👗', label: 'セーラー服スタイル', starter: 'AG!のセーラー服スタイルについて語ろう！コンセプトの意味とか。' },
+      { id: 'ag_world', emoji: '🌍', label: '世界ツアーの話', starter: 'コーチェラ、Jimmy Kimmel、海外ツアー…一番印象的な公演はどこ？' },
+      { id: 'ag_music', emoji: '🎵', label: 'オトナブルー', starter: 'TikTokで大バズりしたオトナブルー！あの首振りダンスどうやって生まれたの？' },
     ],
   },
 ];
 
-export const DEFAULT_ROOM_ID = 'all';
+export const DEFAULT_ROOM_ID = 'ag';
 
 // ─── ヘルパー関数 ────────────────────────────────────────────────
 

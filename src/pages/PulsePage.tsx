@@ -267,7 +267,7 @@ const PulsePage = () => {
         className="px-4 pt-4 pb-3 border-b border-violet-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
         style={{ background: '#F5F3FF' }}
       >
-        <h1 className="text-sm font-normal text-gray-900">WAV 자유게시판 ✏️</h1>
+        <h1 className="text-sm font-normal text-gray-900">TWIN PLANET 자유게시판 ✏️</h1>
         <button
           onClick={() => setView('write')}
           className="text-xs font-semibold text-violet-600 bg-violet-50 hover:bg-violet-100 px-2.5 py-1 rounded-full transition-colors border border-violet-200"

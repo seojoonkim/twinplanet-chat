@@ -44,13 +44,13 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 // KST 시간대 컨텍스트
 const kstHour = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' })).getHours();
-const TIME_CTX = kstHour >= 5  && kstHour < 9  ? '이른 아침. 막 일어났거나 아침 준비 중.'
-  : kstHour >= 9  && kstHour < 12 ? '오전. 연습이나 스케줄 시작 전/중.'
-  : kstHour >= 12 && kstHour < 14 ? '점심 시간. 밥 먹었거나 먹으러 갈 참.'
-  : kstHour >= 14 && kstHour < 18 ? '오후. 연습이나 스케줄 한창.'
-  : kstHour >= 18 && kstHour < 21 ? '저녁. 하루 일정 마무리, 저녁 먹었거나 쉬는 중.'
-  : kstHour >= 21                  ? '밤. 하루 끝나고 잠깐 채팅방 들린 느낌.'
-  : '새벽. 잠 못 자고 있거나 야식 먹는 중.';
+const TIME_CTX = kstHour >= 5  && kstHour < 9  ? '早朝。起きたばかりか朝の準備中。'
+  : kstHour >= 9  && kstHour < 12 ? '午前。練習やスケジュール開始前/中。'
+  : kstHour >= 12 && kstHour < 14 ? 'お昼。ご飯食べたか食べに行くところ。'
+  : kstHour >= 14 && kstHour < 18 ? '午後。練習やスケジュール真っ只中。'
+  : kstHour >= 18 && kstHour < 21 ? '夕方。1日の予定を終えて、夕食後か休憩中。'
+  : kstHour >= 21                  ? '夜。1日が終わってちょっとチャットに寄った感じ。'
+  : '深夜。眠れなかったり夜食食べてたり。';
 
 async function generateMessage(prompt, maxTokens = 150) {
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {

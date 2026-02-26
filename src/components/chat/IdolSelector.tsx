@@ -87,15 +87,15 @@ export default function IdolSelector({ idols }: Props) {
           </div>
         </div>
 
-        {/* 탭 — 순서: 피드 / 수다방 / 1:1챗 / 일기장 */}
+        {/* Tabs — order: ON AIR / FEED / CHAT / 1:1 Chat / DIARY / RADAR / Pulse */}
         {(() => {
           const tabs = [
-            { tab: 'onair',     path: '/',          label: '온에어' },
-            { tab: 'feed',      path: '/feed',      label: '피드' },
-            { tab: 'group',     path: '/rooms',     label: '수다방' },
+            { tab: 'onair',     path: '/',          label: 'ON AIR' },
+            { tab: 'feed',      path: '/feed',      label: 'FEED' },
+            { tab: 'group',     path: '/rooms',     label: 'CHAT' },
             { tab: 'solo',      path: '/chat',      label: '1:1 챗' },
-            { tab: 'diary',     path: '/diary',     label: '일기장' },
-            { tab: 'community', path: '/community', label: '레이더' },
+            { tab: 'diary',     path: '/diary',     label: 'DIARY' },
+            { tab: 'community', path: '/community', label: 'RADAR' },
             { tab: 'pulse',     path: '/pulse',     label: '펄스' },
           ] as { tab: Tab; path: string; label: string }[];
           return (
