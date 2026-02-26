@@ -48,32 +48,18 @@ function getMemberAvatar(memberId: string): string {
   return `/idols/${memberId}/profile.jpg`;
 }
 
-// 멤버별 고유 말풍선 색상
+// タレント別 말풍선 색상
 const MEMBER_COLORS: Record<string, { bg: string; name: string }> = {
-  seoyeon: { bg: '#FFE4EC', name: '#C2185B' },  // 로즈핑크
-  hyerin:  { bg: '#FFF3E0', name: '#E65100' },  // 딥오렌지
-  jiwoo:   { bg: '#E0F7FA', name: '#00695C' },  // 틸
-  chaeyeon:{ bg: '#FFFDE7', name: '#F57F17' },  // 옐로우
-  yooyeon: { bg: '#E3F2FD', name: '#1565C0' },  // 블루
-  sumin:   { bg: '#F1F8E9', name: '#33691E' },  // 라임그린
-  naekyung:{ bg: '#FFEBEE', name: '#B71C1C' },  // 레드
-  yubin:   { bg: '#EDE7F6', name: '#4527A0' },  // 딥퍼플
-  kaede:   { bg: '#FDE7F3', name: '#AD1457' },  // 핫핑크
-  dahyun:  { bg: '#E8EAF6', name: '#283593' },  // 인디고
-  kotone:  { bg: '#FBE9E7', name: '#BF360C' },  // 딥오렌지2
-  yeonji:  { bg: '#F3E5F5', name: '#6A1B9A' },  // 퍼플
-  nien:    { bg: '#E0F2F1', name: '#004D40' },  // 에메랄드
-  sohyun:  { bg: '#FFF8E1', name: '#E65100' },  // 앰버
-  shinwi:  { bg: '#ECEFF1', name: '#263238' },  // 블루그레이
-  mayu:    { bg: '#FCE4EC', name: '#880E4F' },  // 핑크
-  rin:     { bg: '#E8F5E9', name: '#1B5E20' },  // 그린
-  jubin:   { bg: '#E1F5FE', name: '#01579B' },  // 스카이블루
-  hayeon:  { bg: '#F9F0FF', name: '#6A1B9A' },  // 라벤더
-  sion:    { bg: '#E1F9F6', name: '#006064' },  // 시안
-  chaewon: { bg: '#FFF0F5', name: '#880E4F' },  // 라일락
-  seollin: { bg: '#FFF5F0', name: '#BF360C' },  // 코랄
-  seoa:    { bg: '#F0FFF0', name: '#2E7D32' },  // 연두
-  jiyeon:  { bg: '#F0F8FF', name: '#1A237E' },  // 알리스블루
+  'atarashii-gakko': { bg: '#FAFFD6', name: '#7B8000' },  // AG! ライム
+  mizyu:   { bg: '#FAFFD6', name: '#7B8000' },  // MIZYU ライム
+  rin:     { bg: '#E8F5E9', name: '#1B5E20' },  // RIN グリーン
+  suzuka:  { bg: '#FFF3E0', name: '#E65100' },  // SUZUKA オレンジ
+  kanon:   { bg: '#E3F2FD', name: '#1565C0' },  // KANON ブルー
+  nako:    { bg: '#FCE4EC', name: '#AD1457' },  // 奈子 ピンク
+  nana:    { bg: '#FFFDE7', name: '#F57F17' },  // 奈々 イエロー
+  taiyo:   { bg: '#E1F5FE', name: '#01579B' },  // 太陽 スカイブルー
+  yoshiaki:{ bg: '#EDE7F6', name: '#4527A0' },  // よしあき パープル
+  michi:   { bg: '#FCE4EC', name: '#880E4F' },  // ミチ フューシャ
 };
 function getMemberColor(memberId: string) {
   return MEMBER_COLORS[memberId] ?? { bg: '#EDE9FE', name: '#7C3AED' };
@@ -353,12 +339,12 @@ export default function OnAirPage() {
                 onClick={() => navigate('/')}
                 className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
               >
-                <img src="/logo.png" alt="tripleS chat" className="w-[30px] h-[30px] logo-glow" />
-                <h1 className="text-[27px] font-black tracking-tight shimmer-text">tripleS chat</h1>
+                <img src="/logo.png" alt="TWIN PLANET chat" className="w-[30px] h-[30px] logo-glow" />
+                <h1 className="text-[27px] font-black tracking-tight shimmer-text">TWIN PLANET chat</h1>
                 <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full">Beta</span>
               </button>
               <p className="text-sm font-normal tracking-tight bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
-                24명의 AI 멤버들과 함께하는 tripleS의 모든 것 ✨
+                TWIN PLANET タレントとのリアルタイムチャット ✨
               </p>
             </div>
             {/* Tab Bar */}

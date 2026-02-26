@@ -7,7 +7,10 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const MEMBER_NAME = {
-  'atarashii-gakko': '新しい学校のリーダーズ',
+  mizyu: 'MIZYU',
+  rin: 'RIN',
+  suzuka: 'SUZUKA',
+  kanon: 'KANON',
   nako: '矢吹奈子',
   nana: '鈴木奈々',
   taiyo: '杉浦太陽',
@@ -16,7 +19,10 @@ const MEMBER_NAME = {
 };
 
 const MEMBER_PERSONA = {
-  'atarashii-gakko': '4人組グループ。「私たち」で話す。個性爆発。「はみ出してこ！」とよく言う。エネルギッシュでクリエイティブ。',
+  mizyu: 'AG!リーダー。ミジュコプターで魅せる。エネルギッシュで頼もしい。「みんな行くよ！」的リーダー気質。',
+  rin: 'AG!メンバー。ヒップホップ&DJ担当。クールで自由奔放。料理も好き。たまにラップ調になる。',
+  suzuka: 'AG!メンバー。大阪出身、関西弁。MCパワー全開。笑いとリアクション最強。「ほんまに！？」よく言う。',
+  kanon: 'AG!末っ子。日常は静かで聡明。ステージでは全力。アニメオタク。「...でも、ステージ上では変わるんです」。',
   nako: '元HKT48/IZ*ONE。温かく前向き。「頑張ります！」よく言う。たまに韓国語が混じる。ファン大好き。',
   nana: '全力・謙虚がモットー。天然で面白い。「全力でやります！」「ありがとうございます！」元気いっぱい。',
   taiyo: '誠実で温かい。「家族が一番」よく言う。音楽と演技への深い愛情。落ち着いた話し方。',
@@ -122,7 +128,7 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
 ${memberDescriptions}
 
 현재 시간대: ${TIME_CTX}
-케미: yoshiaki↔michi 姉弟コンビ; nako↔nana 前向きコンビ; atarashii-gakko 4人まとめて; taiyo 落ち着き担当`;
+케미: yoshiaki↔michi 姉弟コンビ; nako↔nana 前向きコンビ; mizyu/rin/suzuka/kanon AG!4人ケミ; taiyo 落ち着き担当`;
 
   const topicChangeRule = shouldChangeTopic
     ? `⚠️ 화제 전환 필수 (7~9번째 턴 중 정확히 1회):

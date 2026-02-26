@@ -8,9 +8,9 @@ export interface FeedSource {
 }
 
 export const FEED_SOURCES: FeedSource[] = [
-  // ATARASHII GAKKO!
-  { id: 'leaders-yt', talentId: 'atarashii-gakko', platform: 'youtube', channelId: 'UCRa4EDGJEMpUfMRBRJKXbIg', displayName: 'ATARASHII GAKKO! Official' },
-  { id: 'leaders-tw', talentId: 'atarashii-gakko', platform: 'twitter', handle: 'ATARASHIIGAKKO', displayName: '新しい学校のリーダーズ' },
+  // ATARASHII GAKKO! (グループ公式 → MIZYU)
+  { id: 'leaders-yt', talentId: 'mizyu', platform: 'youtube', channelId: 'UCRa4EDGJEMpUfMRBRJKXbIg', displayName: 'ATARASHII GAKKO! Official' },
+  { id: 'leaders-tw', talentId: 'mizyu', platform: 'twitter', handle: 'ATARASHIIGAKKO', displayName: '新しい学校のリーダーズ' },
   // Nako Yabuki
   { id: 'nako-tw', talentId: 'nako', platform: 'twitter', handle: 'yabuki_nako', displayName: '矢吹奈子' },
   // Nana Suzuki
@@ -23,4 +23,4 @@ export const FEED_SOURCES: FeedSource[] = [
   { id: 'taiyo-tw', talentId: 'taiyo', platform: 'twitter', handle: 'sugiura_taiyo', displayName: '杉浦太陽' },
 ];
 
-export const DEFAULT_FEED_TALENT_ID = 'atarashii-gakko';
+export const DEFAULT_FEED_TALENT_ID = 'mizyu';

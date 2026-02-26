@@ -63,42 +63,33 @@ function seededRng(seed: number) {
   };
 }
 
-// ── S번호 ────────────────────────────────────────────────────
+// ── タレントラベル ────────────────────────────────────────────
 const S_NUMBERS: Record<string, string> = {
-  seoyeon:'S1',hyerin:'S2',jiwoo:'S3',chaeyeon:'S4',yooyeon:'S5',
-  sumin:'S6',naekyung:'S7',yubin:'S8',kaede:'S9',dahyun:'S10',
-  kotone:'S11',yeonji:'S12',nien:'S13',sohyun:'S14',shinwi:'S15',
-  mayu:'S16',rin:'S17',jubin:'S18',hayeon:'S19',sion:'S20',
-  chaewon:'S21',seollin:'S22',seoa:'S23',jiyeon:'S24',
+  'atarashii-gakko': 'AG!',
+  mizyu:    'MIZYU',
+  rin:      'RIN',
+  suzuka:   'SUZUKA',
+  kanon:    'KANON',
+  nako:     '奈子',
+  nana:     '奈々',
+  taiyo:    '太陽',
+  yoshiaki: 'よしあき',
+  michi:    'ミチ',
 };
 
 const MEMBER_ORDER = Object.keys(S_NUMBERS);
 
 const MEMBER_KEYWORDS: Record<string, string[]> = {
-  seoyeon:  ['서연', '윤서연'],
-  hyerin:   ['혜린', '정혜린'],
-  jiwoo:    ['지우', '이지우'],
-  chaeyeon: ['채연', '김채연'],
-  yooyeon:  ['유연', '김유연'],
-  sumin:    ['수민', '김수민'],
-  naekyung: ['나경', '김나경'],
-  yubin:    ['유빈', '공유빈'],
-  kaede:    ['카에데'],
-  dahyun:   ['다현', '서다현'],
-  kotone:   ['코토네'],
-  yeonji:   ['연지', '곽연지'],
-  nien:     ['니엔'],
-  sohyun:   ['소현', '박소현'],
-  shinwi:   ['신위'],
-  mayu:     ['마유'],
-  rin:      ['린'],
-  jubin:    ['주빈'],
-  seollin:  ['설린'],
-  seoa:     ['서아'],
-  sion:     ['시온'],
-  hayeon:   ['하연'],
-  jiyeon:   ['지연'],
-  chaewon:  ['채원'],
+  'atarashii-gakko': ['AG!', 'ATARASHII GAKKO', '新しい学校', 'リーダーズ', '아타라시이'],
+  mizyu:    ['MIZYU', 'ミジュ', '미쥬'],
+  rin:      ['RIN', '린', 'りん'],
+  suzuka:   ['SUZUKA', 'スズカ', '스즈카'],
+  kanon:    ['KANON', 'かのん', '카논'],
+  nako:     ['奈子', '矢吹奈子', 'nako', 'なこ', '나코'],
+  nana:     ['奈々', '鈴木奈々', 'nana', 'なな', '나나'],
+  taiyo:    ['太陽', '杉浦太陽', 'taiyo', 'たいよう', '타이요'],
+  yoshiaki: ['よしあき', 'yoshiaki', '요시아키', 'ONSENSE'],
+  michi:    ['ミチ', 'michi', '미치', 'よしミチ'],
 };
 
 function detectMemberTags(text: string): string[] {
@@ -141,6 +132,17 @@ function detectTags(title: string, body: string): Tags {
 
 // ── 포스터(업로더) 감지 ───────────────────────────────────────
 const MEMBER_NAME_PATTERNS: [string, RegExp][] = [
+  ['atarashii-gakko', /#AG|#ATARASHIIGAKKO|#新しい学校/i],
+  ['mizyu',    /#MIZYU|#mizyu|#ミジュ/i],
+  ['rin',      /#RIN\b|#rin\b|#りん/i],
+  ['suzuka',   /#SUZUKA|#suzuka|#スズカ/i],
+  ['kanon',    /#KANON|#kanon|#かのん/i],
+  ['nako',     /#nako|#奈子|#矢吹奈子/i],
+  ['nana',     /#nana|#鈴木奈々|#suzukinana/i],
+  ['taiyo',    /#taiyo|#太陽|#杉浦太陽/i],
+  ['yoshiaki', /#yoshiaki|#よしあき|#ONSENSE/i],
+  ['michi',    /#michi|#ミチ|#よしミチ/i],
+  // legacy placeholder to avoid empty array
   ['seoyeon',  /#seoyeon|#서연|#SeoYeon|#소연/i],
   ['hyerin',   /#hyerin|#혜린|#HyeRin/i],
   ['jiwoo',    /#jiwoo|#지우|#JiWoo/i],

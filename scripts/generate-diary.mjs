@@ -3,12 +3,15 @@ import fs from 'fs';
 
 // TWIN PLANET タレント 순서
 const MEMBER_CYCLE = [
-  { id: 'atarashii-gakko', name: '新しい学校のリーダーズ', sNum: 'AG' },
-  { id: 'nako',            name: '矢吹奈子',               sNum: 'NK' },
-  { id: 'nana',            name: '鈴木奈々',               sNum: 'NN' },
-  { id: 'taiyo',           name: '杉浦太陽',               sNum: 'TY' },
-  { id: 'yoshiaki',        name: 'よしあき',               sNum: 'YA' },
-  { id: 'michi',           name: 'ミチ',                   sNum: 'MC' },
+  { id: 'mizyu',    name: 'MIZYU',    sNum: 'MZ' },
+  { id: 'rin',      name: 'RIN',      sNum: 'RN' },
+  { id: 'suzuka',   name: 'SUZUKA',   sNum: 'SZ' },
+  { id: 'kanon',    name: 'KANON',    sNum: 'KN' },
+  { id: 'nako',     name: '矢吹奈子', sNum: 'NK' },
+  { id: 'nana',     name: '鈴木奈々', sNum: 'NN' },
+  { id: 'taiyo',    name: '杉浦太陽', sNum: 'TY' },
+  { id: 'yoshiaki', name: 'よしあき', sNum: 'YA' },
+  { id: 'michi',    name: 'ミチ',     sNum: 'MC' },
 ];
 
 // 1. 날짜 결정 (DATE_OVERRIDE 환경변수 지원)

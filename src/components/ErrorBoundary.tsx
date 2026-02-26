@@ -28,7 +28,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex flex-col items-center justify-center h-screen gap-4 px-6 text-center"
           style={{ background: 'linear-gradient(135deg, #fdf2f8, #faf5ff)' }}>
-          <img src="/logo.png" alt="tripleS chat" style={{ width: 52 }} />
+          <img src="/logo.png" alt="TWIN PLANET chat" style={{ width: 52 }} />
           <h2 className="text-lg font-bold text-gray-700">앗, 오류가 발생했어요</h2>
           <p className="text-sm text-gray-400 max-w-xs">
             {this.state.error?.message ?? '알 수 없는 오류'}

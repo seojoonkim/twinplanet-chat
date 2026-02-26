@@ -6,8 +6,11 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const ANTHROPIC_API_KEY = 'REDACTED_ANTHROPIC_API_KEY';
 
 const SEED_SEQUENCE = [
-  { id: 'atarashii-gakko', name: '新しい学校のリーダーズ', persona: '4人組。個性的で自由奔放。集合的な「私たち」口調。', prompt: 'オンエアを開始する挨拶メッセージ' },
-  { id: 'nako', name: '矢吹奈子', persona: '温かく前向き。努力家で謙虚。ファンへの愛情深い。', prompt: 'AG!の挨拶に続いて参加する温かいメッセージ' },
+  { id: 'mizyu', name: 'MIZYU', persona: 'AG!リーダー。ミジュコプターで魅せる。エネルギッシュで頼もしい。', prompt: 'AG!リーダーとしてオンエアを開始する挨拶メッセージ' },
+  { id: 'rin', name: 'RIN', persona: 'AG!メンバー。ヒップホップ&DJ担当。クールで自由奔放。', prompt: 'MIZYUの挨拶に続いてクールに参加するメッセージ' },
+  { id: 'suzuka', name: 'SUZUKA', persona: 'AG!メンバー。大阪出身、関西弁。笑いとMCパワー全開。', prompt: '関西弁で元気よく挨拶するメッセージ' },
+  { id: 'kanon', name: 'KANON', persona: 'AG!末っ子。普段は静か、ステージでは全力。アニオタ。', prompt: '静かでやさしい口調で参加するメッセージ' },
+  { id: 'nako', name: '矢吹奈子', persona: '温かく前向き。努力家で謙虚。ファンへの愛情深い。', prompt: 'AG!に続いて参加する温かいメッセージ' },
   { id: 'nana', name: '鈴木奈々', persona: '全力・謙虚がモットー。天然で面白い。', prompt: 'ファンに元気よく挨拶するメッセージ' },
   { id: 'taiyo', name: '杉浦太陽', persona: '誠実で温かい。家族を大切にする。落ち着いた話し方。', prompt: '落ち着いたトーンで自然に参加するメッセージ' },
   { id: 'yoshiaki', name: 'よしあき', persona: 'Z世代ファッションアイコン。ユニークで本物。', prompt: 'ファッションの話題でさらっと登場するメッセージ' },

@@ -105,7 +105,7 @@ const REACTIONS: { key: ReactionKey; emoji: string; label: string }[] = [
   { key: 'star', emoji: '✨', label: '최고' },
 ];
 
-const ALL_IDOL_IDS = ['chaewon','chaeyeon','dahyun','hayeon','hyerin','jiwoo','jiyeon','jubin','kaede','kotone','mayu','naekyung','nien','rin','seoa','seollin','seoyeon','shinwi','sion','sohyun','sumin','yeonji','yooyeon','yubin'];
+const ALL_IDOL_IDS = ['atarashii-gakko','nako','nana','taiyo','yoshiaki','michi','mizyu','rin','suzuka','kanon'];
 
 function memberImgSrc(id: string): string {
   return id === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${id}/profile.jpg`;
@@ -455,7 +455,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
       {/* 푸터 */}
       <div className="pb-6 pt-2 text-center text-xs text-gray-400 flex flex-col gap-0.5">
         <span className="bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent font-semibold text-sm">
-          tripleS chat
+          TWIN PLANET chat
         </span>
         <span>
           Made with 💜 by{' '}

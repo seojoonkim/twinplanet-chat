@@ -10,7 +10,10 @@ const diary = JSON.parse(fs.readFileSync(diaryPath, 'utf-8'));
 
 // タレント名前マッピング
 const MEMBER_NAMES = {
-  'atarashii-gakko': '新しい学校のリーダーズ',
+  mizyu: 'MIZYU',
+  rin: 'RIN',
+  suzuka: 'SUZUKA',
+  kanon: 'KANON',
   nako: '矢吹奈子',
   nana: '鈴木奈々',
   taiyo: '杉浦太陽',

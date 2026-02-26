@@ -21,7 +21,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
 // ── 멤버 메타 ─────────────────────────────────────────────────────────────────
 const MEMBER_NAME = {
-  'atarashii-gakko': '新しい学校のリーダーズ',
+  mizyu: 'MIZYU',
+  rin: 'RIN',
+  suzuka: 'SUZUKA',
+  kanon: 'KANON',
   nako: '矢吹奈子',
   nana: '鈴木奈々',
   taiyo: '杉浦太陽',
@@ -30,7 +33,10 @@ const MEMBER_NAME = {
 };
 
 const MEMBER_KEYWORDS = {
-  'atarashii-gakko': ['AG!', 'ATARASHII GAKKO', '新しい学校', 'リーダーズ'],
+  mizyu: ['MIZYU', 'みずゆ', 'ミズユ', 'ミジュコプター'],
+  rin: ['RIN', 'りん', 'リン', 'ラップ'],
+  suzuka: ['SUZUKA', 'すずか', 'スズカ', '関西弁'],
+  kanon: ['KANON', 'かのん', 'カノン', 'クラシックダンス'],
   nako: ['奈子', '矢吹', 'nako', '야부키'],
   nana: ['奈々', '鈴木奈々', 'nana', '스즈키'],
   taiyo: ['太陽', '杉浦', 'taiyo', '타이요'],
@@ -127,10 +133,10 @@ async function generateCommentsForUntaggedPost(title, content) {
   const userPrompt = `게시글 제목: ${title}
 게시글 내용: ${content}
 
-No specific members were tagged. Choose 1-2 members from the TWIN PLANET talent who would naturally react to this post based on its content. Available members: 新しい学校のリーダーズ(AG!), 矢吹奈子(nako), 鈴木奈々(nana), 杉浦太陽(taiyo), よしあき(yoshiaki), ミチ(michi).
+No specific members were tagged. Choose 1-2 members from the TWIN PLANET talent who would naturally react to this post based on its content. Available members: MIZYU(mizyu), RIN(rin), SUZUKA(suzuka), KANON(kanon), 矢吹奈子(nako), 鈴木奈々(nana), 杉浦太陽(taiyo), よしあき(yoshiaki), ミチ(michi).
 For each chosen member, write a short natural comment (1-2 sentences, under 60 chars) that fits the post content.
 Return JSON: [{"idol_id": "nako", "content": "comment"}, ...]
-Member IDs: atarashii-gakko=新しい学校のリーダーズ, nako=矢吹奈子, nana=鈴木奈々, taiyo=杉浦太陽, yoshiaki=よしあき, michi=ミチ.`;
+Member IDs: mizyu=MIZYU, rin=RIN, suzuka=SUZUKA, kanon=KANON, nako=矢吹奈子, nana=鈴木奈々, taiyo=杉浦太陽, yoshiaki=よしあき, michi=ミチ.`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',

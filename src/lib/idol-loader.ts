@@ -116,7 +116,7 @@ export async function loadGroupInfo(groupSlug: string): Promise<string> {
 const GROUP_SLUG_MAP: Record<string, string> = {
   IVE: 'ive',
   SEVENTEEN: 'seventeen',
-  tripleS: 'triples',
+  twinplanet: 'twin-planet',
   ARTMS: 'artms',
   '트리플에스': 'triples',
   '세븐틴': 'seventeen',
