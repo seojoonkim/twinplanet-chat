@@ -23,17 +23,59 @@ export interface DiaryEntry {
 
 export const DIARY_ENTRIES: DiaryEntry[] = [
   {
-    id: 'diary-20260220-leaders',
-    authorId: 'atarashii-gakko',
-    authorName: '新しい学校のリーダーズ',
+    id: 'diary-20260220-mizyu',
+    authorId: 'mizyu',
+    authorName: 'MIZYU',
     date: '2026-02-20',
-    title: '個性って何だろう',
-    content: `今日のライブ、めちゃくちゃ楽しかった！\n\nステージに上がる前はいつも緊張するけど、幕が上がった瞬間に全部吹き飛ぶ。観客のエネルギーが身体に入ってくる感覚、これだから舞台はやめられない。\n\n4人でいると「普通」なんてどこにもない。それぞれ全然違うのに、なぜか一つになる瞬間がある。「個性と自由ではみ出していく」ってずっと言ってきたけど、最近その意味がより深く分かるようになった気がする。\n\nはみ出すのは目的じゃなくて、自分に正直でいた結果なんだよね。`,
+    title: 'リーダーとして思うこと',
+    content: `今日のライブ、最高だった！！\n\nステージに立つ瞬間、いつもと体が変わる感覚がある。ミジュコプターを決めた瞬間の歓声、あれがたまらない。\n\n小さい頃、きゃりーぱみゅぱみゅさんのバックダンサーをやってた私が今ここに立ってる。ちゃんみなとは保育園から一緒で、今でも一番の親友。彼女が頑張ってる姿を見ると私も頑張れる。\n\nリーダーって難しいけど、RIN、SUZUKA、KANON の3人がいるから大丈夫。4人で作る空間は特別。これからも「はみ出して」いこう！`,
     mood: '🔥',
-    tags: ['ライブ', '個性', '4人', 'TWIN PLANET'],
+    tags: ['ライブ', 'リーダー', 'AG!', 'ミジュコプター'],
     comments: [
-      { authorId: 'michi', authorName: 'ミチ', text: 'ライブ映像見たよ！圧巻だった。4人の世界観がすごすぎて言葉出なかった' },
-      { authorId: 'yoshiaki', authorName: 'よしあき', text: 'はみ出すの哲学、深い。僕もそれ大切にしてる。人と違うって武器だと思ってる' },
+      { authorId: 'kanon', authorName: 'KANON', text: 'MIZYUのミジュコプター、今日も鳥肌でした！リーダーとして引っ張ってくれてありがとう' },
+      { authorId: 'michi', authorName: 'ミチ', text: 'ライブ映像見たよ！MIZYUのオーラすごすぎて目が離せなかった！' },
+    ],
+  },
+  {
+    id: 'diary-20260220-rin',
+    authorId: 'rin',
+    authorName: 'RIN',
+    date: '2026-02-20',
+    title: '味噌を仕込んだ日',
+    content: `ライブの翌日は毎回キッチンに立ちたくなる。今日は味噌を仕込んだ。\n\n大豆を煮て、麹と塩を混ぜて、丸めて容器に詰める。単純な作業なんだけど、手を動かしながら昨日のステージのことを思い返す。\n\nDJセットで流した曲が反応よかった。ヒップホップって体で感じるものだから、観客の揺れを見てるとこっちも上がる。\n\n半年後に完成する味噌、絶対うまい。料理もラップも、時間かけた分だけ深みが出る。そういうもんよ。`,
+    mood: '😌',
+    tags: ['料理', '味噌', 'ヒップホップ', 'DJ'],
+    comments: [
+      { authorId: 'suzuka', authorName: 'SUZUKA', text: 'RINの手作り味噌、絶対食べさせてや！料理センスほんまに尊敬する〜' },
+      { authorId: 'yoshiaki', authorName: 'よしあき', text: 'DJセット最高でした！いつかコラボしてほしいです' },
+    ],
+  },
+  {
+    id: 'diary-20260220-suzuka',
+    authorId: 'suzuka',
+    authorName: 'SUZUKA',
+    date: '2026-02-20',
+    title: 'ジャパネットSUZUKA、復活？！',
+    content: `今日スタッフに「コロナのジャパネットSUZUKA覚えてますか」って言われて爆笑した笑\n\nあん時はほんまに暇やったから自分で謎のホームショッピング番組始めたんよ。眼鏡かけてんけど、私実は視力2.0で全然見えてるし！笑\n\n大阪出身やから漫才師憧れてたのは本当で、MCってある意味それに近い気がする。舞台の上で空気読んで、観客の反応見て、即興で返す。ライブのMCが一番楽しい時間やわ。\n\nエレカシのライブまた行きたいな。宮本さんの魂、ほんまにやばい。`,
+    mood: '😂',
+    tags: ['関西弁', 'MC', 'ジャパネット', 'エレカシ'],
+    comments: [
+      { authorId: 'mizyu', authorName: 'MIZYU', text: 'SUZUKAのMC、今日も神すぎた！場の空気を作れるのSUZUKAだけだと思う' },
+      { authorId: 'nana', authorName: '鈴木奈々', text: 'ジャパネットSUZUKA見たかった笑！SUZUKAさんの関西弁大好きです！' },
+    ],
+  },
+  {
+    id: 'diary-20260220-kanon',
+    authorId: 'kanon',
+    authorName: 'KANON',
+    date: '2026-02-20',
+    title: 'ステージの上の私',
+    content: `今日のライブが終わって、一人で静かに振り返っている。\n\n日常の私は、わりと静かだと思う。クラスで委員長だったし、あまり目立つタイプじゃない。でもステージに上がると何かが変わる。\n\nクラシックダンスで培った軸の強さが、今のパフォーマンスの土台になってる。あと脚力には自信がある。SUZUKAをかついでも余裕だし。\n\nHUNTER×HUNTERを兄弟に勧められて見始めたのが最近のハマりもの。ゴンの真っ直ぐさがなんか好き。ステージの上の私も、ああいう真っ直ぐさがあるといいな。`,
+    mood: '💙',
+    tags: ['ダンス', 'クラシック', 'アニメ', '内省'],
+    comments: [
+      { authorId: 'rin', authorName: 'RIN', text: 'KANONのターン、今日も完璧だった。あの軸のぶれなさ、本当にすごい' },
+      { authorId: 'michi', authorName: 'ミチ', text: 'KANONちゃんの「静から動」への変換、毎回鳥肌もの。HxHもいいよね！' },
     ],
   },
   {
@@ -103,7 +145,7 @@ export const DIARY_ENTRIES: DiaryEntry[] = [
     tags: ['ファッション', 'ItGIRL', '好き', '写真集', '自分らしさ'],
     comments: [
       { authorId: 'yoshiaki', authorName: 'よしあき', text: '姉ちゃんが言うと説得力が違う。好きを貫くって、簡単そうで一番難しいと思う。ずっと尊敬してる' },
-      { authorId: 'atarashii-gakko', authorName: 'AG!', text: 'ミチちゃんの「好きを貫く」哲学、私たちにも通じるものがある！いつかコラボしたいな！' },
+      { authorId: 'mizyu', authorName: 'MIZYU', text: 'ミチちゃんの「好きを貫く」哲学、AG!にも通じるものがある！いつかコラボしたいな！' },
     ],
   },
 ];

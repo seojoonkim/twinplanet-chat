@@ -17,11 +17,14 @@ if (Math.random() > 0.75) {
 }
 
 const MEMBERS = [
-  'atarashii-gakko', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'
+  'mizyu', 'rin', 'suzuka', 'kanon', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'
 ];
 
 const MEMBER_NAME = {
-  'atarashii-gakko': '新しい学校のリーダーズ',
+  mizyu: 'MIZYU',
+  rin: 'RIN',
+  suzuka: 'SUZUKA',
+  kanon: 'KANON',
   nako: '矢吹奈子',
   nana: '鈴木奈々',
   taiyo: '杉浦太陽',
@@ -30,7 +33,10 @@ const MEMBER_NAME = {
 };
 
 const MEMBER_PERSONA = {
-  'atarashii-gakko': '4人組グループ。個性的で自由奔放。「個性と自由ではみ出していく」を体現。集合的な「私たち」口調。エネルギッシュで創造的。',
+  mizyu: '新しい学校のリーダーズのリーダー。ミジュコプターで魅せる。きゃりーぱみゅぱみゅのバックダンサー出身。ちゃんみなの親友。エネルギッシュで頼もしい。',
+  rin: '新しい学校のリーダーズ。ヒップホップ&ラップ&DJ担当。自家製味噌を作るほど料理好き。クールで自由奔放。ヘアスタイルをよく変える。',
+  suzuka: '新しい学校のリーダーズ。大阪出身、関西弁MCボイス。本当は視力2.0なのに伊達眼鏡着用。エレカシファン。コロナ中にジャパネットSUZUKAを自主配信。笑いあり熱量あり。',
+  kanon: '新しい学校のリーダーズの末っ子。クラシックダンス×滑らかなターンが得意。日常は静かで元学級委員。HUNTER×HUNTERにハマったアニオタ。SUZUKAを担ぎあげられるほどの脚力。',
   nako: '元HKT48/IZ*ONE。温かく前向き。努力家で謙虚。日本語メイン、たまに韓国語。ファンへの愛情深い。',
   nana: 'バラエティタレント。全力・謙虚がモットー。天然で面白い。笑顔を届けることが使命。エネルギッシュ。',
   taiyo: '俳優・ミュージシャン。誠実で温かい。家族を大切にする。ステージと日常が地続き。',
