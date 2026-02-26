@@ -231,11 +231,11 @@ const PulsePage = () => {
   const submitComment = async () => {
     if (!selectedPost) return;
     if (!commentForm.author_name.trim() || !commentForm.content.trim()) {
-      alert('닉네임과 내용은 필수 입력값입니다.');
+      alert('Nickname and content are required.');
       return;
     }
     if (isConfigMissing()) {
-      alert('Supabase 환경변수가 설정되지 않았습니다.');
+      alert('Supabase environment variables are not configured.');
       return;
     }
 
@@ -251,14 +251,14 @@ const PulsePage = () => {
         }),
       });
       if (!res.ok) {
-        throw new Error(`댓글 등록 실패 (${res.status})`);
+        throw new Error(`Failed to submit comment (${res.status})`);
       }
       localStorage.setItem(LS_NAME_KEY, commentForm.author_name.trim());
       localStorage.setItem(LS_PW_KEY, commentForm.author_password.trim());
       setCommentForm({ ...commentForm, content: '' });
       await fetchComments(selectedPost.id);
     } catch (error) {
-      alert(error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.');
+      alert(error instanceof Error ? error.message : 'An unknown error occurred.');
     }
   };
 
@@ -273,28 +273,28 @@ const PulsePage = () => {
           onClick={() => setView('write')}
           className="text-xs font-semibold text-violet-600 bg-violet-50 hover:bg-violet-100 px-2.5 py-1 rounded-full transition-colors border border-violet-200"
         >
-          글쓰기
+          Write
         </button>
       </div>
 
       <div className="pb-3">
         {loading ? (
-          <div className="py-10 text-center text-gray-400">불러오는 중입니다...</div>
+          <div className="py-10 text-center text-gray-400">Loading...</div>
         ) : posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-gray-400">
             <div className="text-4xl mb-3">✨</div>
-            <p className="text-sm">아직 글이 없어요</p>
-            <p className="text-xs mt-1">첫 번째 글을 남겨보세요!</p>
+            <p className="text-sm">No posts yet</p>
+            <p className="text-xs mt-1">Be the first to write!</p>
           </div>
         ) : (
           <div className="bg-white rounded-2xl overflow-hidden" style={cardShadow}>
             <div className="flex items-center px-3 py-2 text-[11px] text-gray-400 border-b border-violet-100">
               <span className="w-8 shrink-0 text-center">#</span>
-              <span className="flex-1 min-w-0">제목</span>
-              <span className="w-16 shrink-0 text-center">작성자</span>
-              <span className="w-14 shrink-0 text-center">날짜</span>
-              <span className="w-10 shrink-0 text-center">조회</span>
-              <span className="w-8 shrink-0 text-center">댓글</span>
+              <span className="flex-1 min-w-0">Title</span>
+              <span className="w-16 shrink-0 text-center">Author</span>
+              <span className="w-14 shrink-0 text-center">Date</span>
+              <span className="w-10 shrink-0 text-center">Views</span>
+              <span className="w-8 shrink-0 text-center">Comments</span>
             </div>
             {posts.map((post, idx) => (
               <button
@@ -328,10 +328,10 @@ const PulsePage = () => {
               onClick={() => setView('list')}
             >
               <span className="text-base">←</span>
-              <span>목록</span>
+              <span>List</span>
             </button>
           </div>
-          <div className="rounded-xl bg-white p-6 text-center text-gray-400">게시글을 선택하지 않았습니다.</div>
+          <div className="rounded-xl bg-white p-6 text-center text-gray-400">No post selected.</div>
         </div>
       );
     }
@@ -345,7 +345,7 @@ const PulsePage = () => {
             onClick={() => setView('list')}
           >
             <span className="text-base">←</span>
-            <span>목록</span>
+            <span>List</span>
           </button>
         </div>
 
@@ -356,7 +356,7 @@ const PulsePage = () => {
               <span className="font-medium text-violet-600">{selectedPost.author_name}</span>
               <span> · </span>
               <span>
-                {new Date(selectedPost.created_at).toLocaleString('ko-KR', {
+                {new Date(selectedPost.created_at).toLocaleString('en-US', {
                   dateStyle: 'medium',
                   timeStyle: 'short',
                 })}
@@ -374,13 +374,13 @@ const PulsePage = () => {
                   : 'text-sm font-semibold text-gray-600'
               }
             >
-              댓글 {comments.length}개
+              Comments {comments.length}
             </div>
           </div>
 
           <div>
             {comments.length === 0 ? (
-              <div className="px-4 py-8 text-center text-gray-400 text-sm">첫 댓글을 남겨보세요 💬</div>
+              <div className="px-4 py-8 text-center text-gray-400 text-sm">Be the first to comment 💬</div>
             ) : (
               comments.map(comment => (
                 <div
@@ -416,7 +416,7 @@ const PulsePage = () => {
         <div className="border-t border-violet-100 mt-2 pt-4 px-4 pb-6 space-y-3">
           <div className="flex gap-3">
             <div className="flex-1">
-              <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">아이디</label>
+              <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">ニックネーム</label>
               <input
                 type="text"
                 value={commentForm.author_name}
@@ -425,7 +425,7 @@ const PulsePage = () => {
               />
             </div>
             <div className="flex-1">
-              <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">비밀번호</label>
+              <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">Password</label>
               <input
                 type="password"
                 value={commentForm.author_password}
@@ -435,7 +435,7 @@ const PulsePage = () => {
             </div>
           </div>
           <div>
-            <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">댓글 내용</label>
+            <label className="block px-1 mb-1.5 text-xs font-semibold text-violet-600">内容を入力してください</label>
             <textarea
               rows={3}
               value={commentForm.content}
@@ -449,7 +449,7 @@ const PulsePage = () => {
               onClick={submitComment}
               className="text-xs font-semibold bg-violet-500 hover:bg-violet-600 text-white px-4 py-2 rounded-full transition-colors"
             >
-              등록
+              Submit
             </button>
           </div>
         </div>
@@ -466,17 +466,17 @@ const PulsePage = () => {
           className="flex items-center gap-1 text-sm text-gray-500 hover:text-violet-600 transition-colors"
         >
           <span>←</span>
-          <span>취소</span>
+          <span>Cancel</span>
         </button>
-        <span className="absolute left-0 right-0 text-center text-sm font-semibold text-violet-700 pointer-events-none">글쓰기</span>
+        <span className="absolute left-0 right-0 text-center text-sm font-semibold text-violet-700 pointer-events-none">Write</span>
       </div>
 
       <div className="px-4">
         <div className="mb-3">
-          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">아이디</label>
+          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">ニックネーム</label>
           <input
             type="text"
-            placeholder="코스모스_별빛123"
+            placeholder="TWIN_PLANET_love"
             value={writeForm.author_name}
             onChange={e => setWriteForm({ ...writeForm, author_name: e.target.value })}
             autoComplete="off"
@@ -486,12 +486,12 @@ const PulsePage = () => {
         </div>
         <div className="mb-3">
           <div className="mb-1.5 flex items-center gap-2 px-1">
-            <span className="text-xs font-semibold text-violet-600">비밀번호</span>
-            <span className="text-[10px] text-gray-400">수정·삭제 시 필요</span>
+            <span className="text-xs font-semibold text-violet-600">Password</span>
+            <span className="text-[10px] text-gray-400">Required for edit/delete</span>
           </div>
           <input
             type="password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="Enter password"
             value={writeForm.author_password}
             onChange={e => setWriteForm({ ...writeForm, author_password: e.target.value })}
             autoComplete="new-password"
@@ -500,7 +500,7 @@ const PulsePage = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">제목</label>
+          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">Title</label>
           <input
             type="text"
             placeholder=""
@@ -510,10 +510,10 @@ const PulsePage = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">내용</label>
+          <label className="mb-1.5 block px-1 text-xs font-semibold text-violet-600">Content</label>
           <textarea
             rows={8}
-            placeholder=""
+            placeholder="TWIN PLANETタレントについて自由に話そう！"
             value={writeForm.content}
             onChange={e => setWriteForm({ ...writeForm, content: e.target.value })}
             className="min-h-[220px] w-full resize-none rounded-2xl border-0 bg-white px-4 py-3.5 text-sm text-gray-800 placeholder-gray-400 shadow-[0_2px_12px_rgba(109,40,217,0.08)] focus:outline-none focus:ring-2 focus:ring-violet-300"
@@ -521,7 +521,7 @@ const PulsePage = () => {
         </div>
         <div className="flex justify-end mt-2">
           <button onClick={submitPost} className="bg-violet-500 hover:bg-violet-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-sm transition-colors">
-            등록
+            Submit
           </button>
         </div>
       </div>
