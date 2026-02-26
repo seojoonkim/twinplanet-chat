@@ -28,14 +28,41 @@ export interface GroupRoom {
 
 // TWIN PLANET タレント メンバーデータ
 export const ALL_MEMBERS: Record<string, RoomMember> = {
-  'atarashii-gakko': {
-    id: 'atarashii-gakko',
-    name: 'AG!',
-    fullName: '新しい学校のリーダーズ',
-    color: '#dcff00',
-    bg: 'from-yellow-300 to-lime-400',
-    role: '個性と自由ではみ出していく4人組',
-    initials: 'AG',
+  mizyu: {
+    id: 'mizyu',
+    name: 'MIZYU',
+    fullName: 'MIZYU',
+    color: '#FF6B9D',
+    bg: 'from-pink-400 to-pink-600',
+    role: 'リーダー。ミジュコプターで魅せる',
+    initials: 'M',
+  },
+  rin: {
+    id: 'rin',
+    name: 'RIN',
+    fullName: 'RIN',
+    color: '#9B59B6',
+    bg: 'from-violet-400 to-violet-600',
+    role: 'ヒップホップ&ラップ担当。料理が趣味',
+    initials: 'R',
+  },
+  suzuka: {
+    id: 'suzuka',
+    name: 'SUZUKA',
+    fullName: 'SUZUKA',
+    color: '#E67E22',
+    bg: 'from-orange-400 to-orange-600',
+    role: '関西弁×パワフルボイス×MC',
+    initials: 'S',
+  },
+  kanon: {
+    id: 'kanon',
+    name: 'KANON',
+    fullName: 'KANON',
+    color: '#3498DB',
+    bg: 'from-sky-400 to-sky-600',
+    role: 'クラシックダンス×アニオタ',
+    initials: 'K',
   },
   nako: {
     id: 'nako',
@@ -89,15 +116,29 @@ export const GROUP_ROOMS: GroupRoom[] = [
   {
     id: 'all',
     title: 'TWIN PLANET みんなで',
-    subtitle: 'AG!・奈子・奈々・太陽・よしあき・ミチ 全員集合',
-    gradient: 'linear-gradient(135deg, #dcff00, #ff9eb5)',
-    memberIds: ['atarashii-gakko', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'],
+    subtitle: 'MIZYU・RIN・SUZUKA・KANON・奈子・奈々・太陽・よしあき・ミチ 全員集合',
+    gradient: 'linear-gradient(135deg, #FF6B9D, #3498DB)',
+    memberIds: ['mizyu', 'rin', 'suzuka', 'kanon', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'],
     topics: [
       { id: 'all_intro', emoji: '👋', label: '自己紹介タイム', starter: 'みんな自己紹介してみて！それぞれの個性が爆発する自己紹介、期待してます！' },
       { id: 'all_collab', emoji: '🎵', label: 'コラボしたい！', starter: 'TWIN PLANET タレント同士でコラボするとしたら誰と何をやってみたい？' },
       { id: 'all_fav', emoji: '⭐', label: '最近のお気に入り', starter: '最近ハマってること、好きなもの、なんでもシェアして！' },
       { id: 'all_japan', emoji: '🇯🇵', label: '日本の好きなところ', starter: '日本のどんなところが好き？食べ物・文化・場所、なんでも！' },
       { id: 'all_dream', emoji: '🌟', label: '夢・目標', starter: 'これからやりたいこと、夢、目標を教えて！みんなで応援し合おう！' },
+    ],
+  },
+  {
+    id: 'ag',
+    title: 'AG! メンバーでトーク',
+    subtitle: 'MIZYU・RIN・SUZUKA・KANON 4人でトーク',
+    gradient: 'linear-gradient(135deg, #FF6B9D, #E67E22, #9B59B6, #3498DB)',
+    memberIds: ['mizyu', 'rin', 'suzuka', 'kanon'],
+    topics: [
+      { id: 'ag_energy', emoji: '🔥', label: 'AG!エネルギー爆発', starter: '今一番テンションが上がってることを教えて！みんなのパワー見せて！' },
+      { id: 'ag_dance', emoji: '💃', label: 'ダンス・パフォーマンス', starter: '最近のライブやパフォーマンスで一番興奮したシーンは？' },
+      { id: 'ag_hamidaseru', emoji: '✨', label: 'はみ出そう！', starter: '「はみ出す」って自分にとってどういう意味？今日どんなふうにはみ出した？' },
+      { id: 'ag_music', emoji: '🎵', label: '音楽・アート', starter: '今聴いてる曲や影響を受けたアーティストは？AG!の音楽の原点も聞きたい！' },
+      { id: 'ag_4nin', emoji: '🤝', label: '4人のケミ', starter: 'MIZYU・RIN・SUZUKA・KANON 4人の中で一番おもしろいエピソードを教えて！' },
     ],
   },
   {

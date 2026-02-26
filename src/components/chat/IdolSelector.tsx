@@ -19,11 +19,12 @@ function getInitials(name: string): string {
 }
 
 const IDOL_S_NUMBERS: Record<string, string> = {
-  seoyeon: 'S1', hyerin: 'S2', jiwoo: 'S3', chaeyeon: 'S4', yooyeon: 'S5',
-  sumin: 'S6', naekyung: 'S7', yubin: 'S8', kaede: 'S9', dahyun: 'S10',
-  kotone: 'S11', yeonji: 'S12', nien: 'S13', sohyun: 'S14', shinwi: 'S15',
-  mayu: 'S16', rin: 'S17', jubin: 'S18', hayeon: 'S19', sion: 'S20',
-  chaewon: 'S21', seollin: 'S22', seoa: 'S23', jiyeon: 'S24',
+  'atarashii-gakko': 'AG!',
+  nako: 'Nako',
+  nana: 'Nana',
+  taiyo: 'Taiyo',
+  yoshiaki: 'よしあき',
+  michi: 'ミチ',
 };
 
 type Tab = 'group' | 'solo' | 'feed' | 'diary' | 'community' | 'pulse' | 'onair';

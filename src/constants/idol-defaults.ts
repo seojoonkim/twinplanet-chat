@@ -1,5 +1,8 @@
 export const BUILT_IN_IDOL_IDS = [
-  'atarashii-gakko',
+  'mizyu',
+  'rin',
+  'suzuka',
+  'kanon',
   'nako',
   'nana',
   'taiyo',
@@ -19,15 +22,45 @@ export const IDOL_DEFAULTS: Record<BuiltInIdolId, {
   language: 'ja' | 'ko' | 'en';
   color: string;
 }> = {
-  'atarashii-gakko': {
-    id: 'atarashii-gakko',
-    name: '新しい学校のリーダーズ',
-    nameKr: '아타라시이 각코',
-    nameEn: 'ATARASHII GAKKO!',
-    description: '個性と自由ではみ出していく4人組',
-    profileImage: '/idols/atarashii-gakko/profile.jpg',
+  'mizyu': {
+    id: 'mizyu',
+    name: 'MIZYU',
+    nameKr: '미즈유',
+    nameEn: 'MIZYU',
+    description: '新しい学校のリーダーズ リーダー。ミジュコプターで魅せる',
+    profileImage: '/idols/mizyu/profile.jpg',
     language: 'ja',
-    color: '#dcff00',
+    color: '#FF6B9D',
+  },
+  'rin': {
+    id: 'rin',
+    name: 'RIN',
+    nameKr: '린',
+    nameEn: 'RIN',
+    description: '新しい学校のリーダーズ。ヒップホップ&ラップ担当',
+    profileImage: '/idols/rin/profile.jpg',
+    language: 'ja',
+    color: '#9B59B6',
+  },
+  'suzuka': {
+    id: 'suzuka',
+    name: 'SUZUKA',
+    nameKr: '스즈카',
+    nameEn: 'SUZUKA',
+    description: '新しい学校のリーダーズ。関西弁×パワフルボイス×MC',
+    profileImage: '/idols/suzuka/profile.jpg',
+    language: 'ja',
+    color: '#E67E22',
+  },
+  'kanon': {
+    id: 'kanon',
+    name: 'KANON',
+    nameKr: '카논',
+    nameEn: 'KANON',
+    description: '新しい学校のリーダーズ 末っ子。クラシックダンス×アニオタ',
+    profileImage: '/idols/kanon/profile.jpg',
+    language: 'ja',
+    color: '#3498DB',
   },
   'nako': {
     id: 'nako',
