@@ -136,9 +136,9 @@ const SOURCE_ICON_LABEL: Record<Source, string> = {
 };
 
 const COMMUNITY_LINK_LABELS: Record<Source, string> = {
-  theqoo: '더쿠에서 보기 →',
-  dcinside: '디씨에서 보기 →',
-  twitter: '𝕏 트위터에서 보기 →',
+  theqoo: 'View on Theqoo →',
+  dcinside: 'View on DCInside →',
+  twitter: '𝕏 View on Twitter →',
 };
 
 const COMMUNITY_LINK_COLORS: Record<Source, string> = {
@@ -377,10 +377,10 @@ function CommunityCard({ item }: { item: CommunityItem }) {
 }
 
 function sourceFilterLabel(value: SourceFilter) {
-  if (value === 'all') return '전체';
-  if (value === 'theqoo') return '더쿠';
-  if (value === 'twitter') return '트위터';
-  return '디씨';
+  if (value === 'all') return 'ALL';
+  if (value === 'theqoo') return 'Theqoo';
+  if (value === 'twitter') return 'Twitter';
+  return 'DCInside';
 }
 
 export default function CommunityPage() {
@@ -505,7 +505,7 @@ export default function CommunityPage() {
                     onClick={() => { setSourceFilter(value); setSourceDropdownOpen(false); }}
                     className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors mb-1.5 last:mb-0 ${sourceFilter === value ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-violet-50'}`}
                   >
-                    {value === 'all' ? '전체' : sourceFilterLabel(value)}
+                    {sourceFilterLabel(value)}
                   </button>
                 ))}
               </div>
