@@ -9,10 +9,10 @@ export default async function handler(req, res) {
     return res.status(400).send('Invalid URL');
   }
 
-  // Referer 체크 — triples.chat 또는 localhost 외 출처 차단
+  // Referer 체크 — twinplanet-chat 또는 localhost 외 출처 차단
   const referer = req.headers['referer'] || req.headers['origin'] || '';
   const isAllowed = !referer 
-    || referer.includes('triples.chat')
+    || referer.includes('twinplanet-chat')
     || referer.includes('localhost')
     || referer.includes('127.0.0.1')
     || referer.includes('vercel.app');

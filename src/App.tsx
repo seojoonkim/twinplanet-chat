@@ -69,7 +69,7 @@ export default function App() {
 
       {/* ── 하위 호환 리다이렉트 ── */}
       <Route path="/solo"           element={<Navigate to="/chat"  replace />} />
-      <Route path="/triples"        element={<Navigate to="/group/t-squad" replace />} />
+      <Route path="/triples"        element={<Navigate to="/group/ag" replace />} />
 
       {/* ── 어드민 ── */}
       <Route

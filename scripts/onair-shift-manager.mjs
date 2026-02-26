@@ -161,7 +161,7 @@ async function enterMember(memberId, endsAtIso, existingMembers, startedAtIso = 
 
   if (existingMembers.length === 0) {
     // 첫 입장 — 단순 인사
-    const enterPrompt = `너는 tripleS 멤버 ${MEMBER_NAME[memberId]}이야.
+    const enterPrompt = `あなたはTWIN PLANETタレントの ${MEMBER_NAME[memberId]}이야.
 페르소나: ${MEMBER_PERSONA[memberId] || ''}
 현재 시간대: ${TIME_CTX}
 온에어 라디오에 막 입장했어. 시간대에 맞게 자연스럽게 인사해줘.
@@ -177,7 +177,7 @@ async function enterMember(memberId, endsAtIso, existingMembers, startedAtIso = 
     }).join('\n');
 
     const briefingMember = existingMembers[Math.floor(Math.random() * existingMembers.length)];
-    const briefingPrompt = `너는 ${MEMBER_NAME[briefingMember.member_id]}이야.
+    const briefingPrompt = `あなたはTWIN PLANETタレントの${MEMBER_NAME[briefingMember.member_id]}です。
 ${MEMBER_NAME[memberId]}가 방금 라디오에 들어왔어.
 최근 대화:
 ${context || '(대화 없음)'}
@@ -188,7 +188,7 @@ ${MEMBER_NAME[memberId]}에게 "어떤 이야기 하고 있었는지" 반갑게 
     await sleep(10000); // 브리핑 후 10초 대기
 
     // 새 멤버 입장 인사
-    const enterPrompt = `너는 tripleS 멤버 ${MEMBER_NAME[memberId]}이야.
+    const enterPrompt = `あなたはTWIN PLANETタレントの ${MEMBER_NAME[memberId]}이야.
 페르소나: ${MEMBER_PERSONA[memberId] || ''}
 현재 시간대: ${TIME_CTX}
 온에어 라디오에 합류했어. ${existingMembers.map(m => MEMBER_NAME[m.member_id]).join(', ')}와 함께야.
@@ -203,7 +203,7 @@ ${MEMBER_NAME[memberId]}에게 "어떤 이야기 하고 있었는지" 반갑게 
 // 멤버 퇴장 처리
 async function exitMember(session) {
   // 1. 퇴장 인사 먼저 (멤버가 작별 인사)
-  const leavePrompt = `너는 tripleS 멤버 ${session.member_name}이야.
+  const leavePrompt = `あなたはTWIN PLANETタレントの ${session.member_name}이야.
 페르소나: ${MEMBER_PERSONA[session.member_id] || ''}
 온에어 라디오에서 지금 퇴장해. 함께해줘서 고마운 마음, 다음에 또 만나자.
 1~2문장, 라디오 스타일. 한국어. 메시지만 출력.`;

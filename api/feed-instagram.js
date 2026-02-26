@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         'X-RapidAPI-Key': RAPIDAPI_KEY,
         'X-RapidAPI-Host': 'instagram120.p.rapidapi.com',
       },
-      body: JSON.stringify({ username: 'triplescosmos', maxId: '' }),
+      body: JSON.stringify({ username: 'atarashiigakko', maxId: '' }),
     });
 
     if (!response.ok) {
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       const shortcode = node.code || node.pk || '';
       const url = shortcode
         ? `https://www.instagram.com/p/${shortcode}/`
-        : 'https://www.instagram.com/triplescosmos/';
+        : 'https://www.instagram.com/atarashiigakko/';
 
       return {
         id: node.pk || node.id || shortcode,

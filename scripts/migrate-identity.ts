@@ -63,7 +63,7 @@ const idolIdentities = [
     name_ko: '정채연',
     name_en: 'Chaeyeon',
     birth_date: '1997-12-01',
-    group_name: 'tripleS',
+    group_name: 'TWIN PLANET',
     personality_tags: ['상냥함', '따뜻함', '배려심', '순수함'],
     speech_style: {
       self_reference: '채연',

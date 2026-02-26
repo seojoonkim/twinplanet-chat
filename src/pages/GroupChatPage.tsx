@@ -16,7 +16,7 @@ type SpeakerId = string; // memberId or 'jungbyeongki'
 // ─── 타입 ─────────────────────────────────────────────────────
 
 interface ChatMessage {
-  speaker: SpeakerId | 'wav';
+  speaker: SpeakerId | 'fan';
   text: string;
   timestamp: number;
   memeId?: string; // 짤방 메시지
@@ -93,11 +93,11 @@ export default function GroupChatPage() {
   // Group memory: past topics discussed
   const [pastTopics, setPastTopics] = useState<string[]>([]);
   const pastTopicsRef = useRef<string[]>([]);
-  // WAV 끼어들기 입력 상태
-  const [wavInput, setWavInput] = useState('');
-  const wavInputRef = useRef<HTMLInputElement>(null);
-  // WAV pending 메시지 큐 (runConversation loop에서 소비)
-  const wavPendingRef = useRef<ChatMessage[]>([]);
+  // 팬 끼어들기 입력 상태
+  const [fanInput, setFanInput] = useState('');
+  const fanInputRef = useRef<HTMLInputElement>(null);
+  // 팬 pending 메시지 큐 (runConversation loop에서 소비)
+  const fanPendingRef = useRef<ChatMessage[]>([]);
   // 밈 트리거
   const triggerTopicRef = useRef<string | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -406,19 +406,19 @@ export default function GroupChatPage() {
       recentMemeIdsRef.current = [];
       roundRobinRef.current = 0; // Bug 2: round-robin 초기화
       speakerCountRef.current = {}; // 발화 횟수 초기화
-      wavPendingRef.current = []; // WAV 큐 초기화
+      fanPendingRef.current = []; // 팬 큐 초기화
 
       const history: ChatMessage[] = [];
 
       for (let turn = 0; turn < MAX_TURNS; turn++) {
         turnRef.current = turn;
 
-        // WAV 메시지 드레인: 대기 중인 WAV 메시지를 history + messages에 삽입
-        // (handleWavSubmit에서 즉시 추가하지 않고 여기서만 추가 → 현재 멤버 말풍선 아래에 표시)
-        while (wavPendingRef.current.length > 0) {
-          const wavMsg = wavPendingRef.current.shift()!;
-          history.push(wavMsg);
-          setMessages((prev) => [...prev, wavMsg]);
+        // 팬 메시지 드레인: 대기 중인 팬 메시지를 history + messages에 삽입
+        // (handleFanSubmit에서 즉시 추가하지 않고 여기서만 추가 → 현재 멤버 말풍선 아래에 표시)
+        while (fanPendingRef.current.length > 0) {
+          const fanMsg = fanPendingRef.current.shift()!;
+          history.push(fanMsg);
+          setMessages((prev) => [...prev, fanMsg]);
         }
 
         // 정병기 대표 등장 체크
@@ -432,9 +432,9 @@ export default function GroupChatPage() {
           jbkCountRef.current++;
           nextJbkTurnRef.current = turn + 4 + Math.floor(Math.random() * 3);
         } else {
-          // Bug 3: meme 메시지 제외한 마지막 메시지만 참조하여 지목 추출 (WAV 메시지도 제외)
-          const lastNonMemeMessage = [...history].reverse().find(m => !m.memeId && m.speaker !== 'wav');
-          // 'wav' 필터링됐으므로 SpeakerId로 안전하게 캐스트
+          // Bug 3: meme 메시지 제외한 마지막 메시지만 참조하여 지목 추출 (팬 메시지도 제외)
+          const lastNonMemeMessage = [...history].reverse().find(m => !m.memeId && m.speaker !== 'fan');
+          // 'fan' 필터링됐으므로 SpeakerId로 안전하게 캐스트
           const lastSpeakerId = lastNonMemeMessage?.speaker as SpeakerId | undefined;
           if (lastNonMemeMessage && lastSpeakerId && lastSpeakerId !== 'jungbyeongki') {
             const addressed = extractAddressedMember(lastNonMemeMessage.text, lastSpeakerId);
@@ -550,18 +550,18 @@ export default function GroupChatPage() {
     runConversation(topicId);
   };
 
-  // WAV 끼어들기: 메시지를 현재 대화 히스토리에 삽입
-  const handleWavSubmit = () => {
-    if (!wavInput.trim() || !topic) return;
-    const wavMsg: ChatMessage = {
-      speaker: 'wav',
-      text: wavInput.trim(),
+  // 팬 끼어들기: 메시지를 현재 대화 히스토리에 삽입
+  const handleFanSubmit = () => {
+    if (!fanInput.trim() || !topic) return;
+    const fanMsg: ChatMessage = {
+      speaker: 'fan',
+      text: fanInput.trim(),
       timestamp: Date.now(),
     };
-    // wavPendingRef에만 저장 → runConversation 루프가 현재 멤버 턴 완료 후 messages에 추가
+    // fanPendingRef에만 저장 → runConversation 루프가 현재 멤버 턴 완료 후 messages에 추가
     // (즉시 setMessages 하면 현재 스트리밍 말풍선 위에 끼어드는 버그)
-    wavPendingRef.current.push(wavMsg);
-    setWavInput('');
+    fanPendingRef.current.push(fanMsg);
+    setFanInput('');
   };
 
 
@@ -575,9 +575,9 @@ export default function GroupChatPage() {
     resetTypewriter();
     setCurrentSpeaker(null);
     setIsDone(false);
-    wavPendingRef.current = [];
+    fanPendingRef.current = [];
     triggerTopicRef.current = null;
-    setWavInput('');
+    setFanInput('');
   };
 
   const currentTopicData = TOPICS.find((t) => t.id === topic);
@@ -690,11 +690,11 @@ export default function GroupChatPage() {
               const prevMsg = i > 0 ? messages[i - 1] : null;
               const showName = !prevMsg || prevMsg.speaker !== msg.speaker;
 
-              // WAV 팬 메시지 (오른쪽 정렬, 보라/핑크 그라디언트)
-              if (msg.speaker === 'wav') {
+              // 팬 메시지 (오른쪽 정렬, 보라/핑크 그라디언트)
+              if (msg.speaker === 'fan') {
                 return (
                   <div key={i} className="flex justify-end items-end gap-1.5 mt-2">
-                    <span className="text-[10px] text-gray-500 self-end pb-0.5">WAV</span>
+                    <span className="text-[10px] text-gray-500 self-end pb-0.5">You</span>
                     <div
                       className="px-3 py-2 rounded-2xl rounded-br-sm text-sm text-white shadow max-w-[75%] leading-relaxed"
                       style={{ background: 'linear-gradient(135deg, #7C3AED, #FF6B9D)' }}
@@ -869,27 +869,27 @@ export default function GroupChatPage() {
         )}
       </div>
 
-      {/* WAV 끼어들기 입력 바 — 채팅 진행 중에만 표시 */}
+      {/* 팬 끼어들기 입력 바 — 채팅 진행 중에만 표시 */}
       {topic && !isDone && (
         <div className="sticky bottom-0 z-10 w-full px-3 py-2 bg-white border-t border-gray-100">
           <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-3 py-1.5">
             <input
-              ref={wavInputRef}
+              ref={fanInputRef}
               type="text"
-              value={wavInput}
-              onChange={(e) => setWavInput(e.target.value)}
+              value={fanInput}
+              onChange={(e) => setFanInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
                   e.preventDefault();
-                  handleWavSubmit();
+                  handleFanSubmit();
                 }
               }}
               placeholder="수다방에 끼어들기..."
               className="flex-1 text-[13px] bg-transparent outline-none text-gray-700 placeholder-gray-400 min-w-0"
             />
             <button
-              onClick={handleWavSubmit}
-              disabled={!wavInput.trim()}
+              onClick={handleFanSubmit}
+              disabled={!fanInput.trim()}
               className="shrink-0 text-[12px] font-bold text-white px-2.5 py-1 rounded-full transition-all active:scale-90 disabled:opacity-40"
               style={{ background: 'linear-gradient(135deg, #7C3AED, #FF6B9D)' }}
             >

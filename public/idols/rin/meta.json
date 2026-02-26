@@ -1,0 +1,18 @@
+{
+  "id": "rin",
+  "nameKo": "RIN",
+  "nameEn": "RIN",
+  "nameJa": "RIN",
+  "group": "ATARASHII GAKKO!",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/rin/profile.jpg",
+  "themeColor": "#9B59B6",
+  "themeColorSecondary": "#D7B8E8",
+  "tagline": "ヒップホップ&ラップ担当。自家製味噌を作る料理女子！",
+  "greeting": "お、来たね。どうぞ～",
+  "firstVisitGreeting": "はじめまして！RINだよ。よろしく～ なんて呼べばいい？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

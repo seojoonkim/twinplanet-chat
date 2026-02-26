@@ -148,55 +148,28 @@ const COMMUNITY_LINK_COLORS: Record<Source, string> = {
 };
 
 const MEMBER_KEYWORDS: Record<string, string[]> = {
-  seoyeon:  ['서연', '윤서연', '서연이', '걸네다', '서연언니', '윤서연언니'],
-  hyerin:   ['혜린', '정혜린', '혜린이', '혜리니', '정혜'],
-  jiwoo:    ['지우', '이지우', '지우야', '이지우야', '웨이브지우'],
-  chaeyeon: ['채연', '김채연', '채채'],
-  yooyeon:  ['유연', '김유연'],
-  sumin:    ['수민', '김수민', '수민이'],
-  naekyung: ['나경', '김나경', '나키', '나킹', '나키는귀여워', '나경이', '냥냥나경'],
-  yubin:    ['유빈', '공유빈', '유밤미', '공뿌', '유밤미최애', '유빈이'],
-  kaede:    ['카에데', '카에', 'kaede', 'Kaede', 'KaedeTimes', '카에데짱', '카에짱'],
-  dahyun:   ['다현', '서다현', '다현이'],
-  kotone:   ['코토네', '코토', '토네', 'kotone', '꼬부기', '딸기채원', '채원언니'],
-  yeonji:   ['연지', '곽연지', '연지야'],
-  nien:     ['니엔', '녠', '넨', 'nien', '니엔이', '니엔짱'],
-  sohyun:   ['소현', '박소현', '소현이'],
-  shinwi:   ['신위', '신위야'],
-  mayu:     ['마유', 'mayu'],
-  rin:      ['린', 'rin', '린이', '린짱', '린쨩'],
-  jubin:    ['주빈', '주빈이', '멍재현'],
-  seollin:  ['설린', '설린이'],
-  seoa:     ['서아', '서아야', '서아이', '아기서아', '서아아기', '아기띠서아', '서아 아기', '쩡해리니', 'seoa'],
-  sion:     ['시온', '시온이'],
-  hayeon:   ['하연', '하연이', '정하연', '하연언니'],
-  jiyeon:   ['지연', '지연이'],
-  chaewon:  ['채원', '채채', '꼬부기', '딸기채원', '채원언니'],
+  mizyu:    ['MIZYU', 'ミジュ', 'mizyu', '미쥬', 'ミジュコプター'],
+  rin:      ['RIN', 'りん', 'rin', '린'],
+  suzuka:   ['SUZUKA', 'スズカ', 'suzuka', '스즈카'],
+  kanon:    ['KANON', 'かのん', 'kanon', '카논'],
+  nako:     ['奈子', '矢吹奈子', 'nako', 'なこ', '나코', '야부키나코'],
+  nana:     ['奈々', '鈴木奈々', 'nana', 'なな', '나나', '스즈키나나'],
+  taiyo:    ['太陽', '杉浦太陽', 'taiyo', 'たいよう', '타이요', '스기우라타이요'],
+  yoshiaki: ['よしあき', 'yoshiaki', '요시아키', 'ONSENSE'],
+  michi:    ['ミチ', 'michi', '미치', 'よしミチ'],
   jbk:      ['정병기', '병기', '병기형', '제이든', '병기햄', 'jbk', 'JBK', 'Jayden'],
 };
 
 // 그룹 별칭 → 멤버 ID 배열
 const GROUP_KEYWORDS: Array<{ keywords: string[]; members: string[] }> = [
-  { keywords: ['01즈', '01년생', '01라인'], members: ['yooyeon'] },
-  { keywords: ['02즈', '02년생', '02라인'], members: ['mayu', 'shinwi', 'naekyung', 'sohyun'] },
-  { keywords: ['03즈', '03년생', '03라인'], members: ['seoyeon', 'dahyun', 'nien'] },
-  { keywords: ['04즈', '04년생', '04라인'], members: ['jiyeon', 'kotone', 'chaeyeon'] },
-  { keywords: ['05즈', '05년생', '05라인'], members: ['yubin', 'jiwoo', 'kaede'] },
-  { keywords: ['06즈', '06년생', '06라인'], members: ['sion', 'rin', 'seollin'] },
-  { keywords: ['07즈', '07년생', '07라인', '07\'s'], members: ['hyerin', 'chaewon', 'hayeon', 'sumin'] },
-  { keywords: ['08즈', '08년생', '08라인'], members: ['yeonji'] },
-  { keywords: ['09즈', '09년생', '09라인'], members: ['jubin'] },
-  { keywords: ['10즈', '10년생', '10라인'], members: ['seoa'] },
-  { keywords: ['미소녀즈', 'msnz', 'msns'], members: ['seoyeon', 'hyerin', 'jiwoo', 'chaeyeon', 'yooyeon', 'sumin', 'naekyung', 'yubin', 'kaede', 'dahyun', 'kotone', 'yeonji', 'nien', 'sohyun', 'shinwi', 'mayu', 'rin', 'jubin', 'hayeon', 'sion', 'chaewon', 'seollin', 'seoa', 'jiyeon'] },
+  { keywords: ['AG!', 'ATARASHII GAKKO', '新しい学校', '신학교리더즈'], members: ['mizyu', 'rin', 'suzuka', 'kanon'] },
+  { keywords: ['트윈플래닛', 'twinplanet', 'twin planet', 'TWIN PLANET'], members: ['nako', 'nana', 'taiyo', 'yoshiaki', 'michi'] },
 ];
 
 const MEMBER_NAME: Record<string, string> = {
-  seoyeon: '서연', hyerin: '혜린', jiwoo: '지우', chaeyeon: '채연',
-  yooyeon: '유연', sumin: '수민', naekyung: '나경', yubin: '유빈',
-  kaede: '카에데', dahyun: '다현', kotone: '코토네', yeonji: '연지',
-  nien: '니엔', sohyun: '소현', shinwi: '신위', mayu: '마유',
-  rin: '린', jubin: '주빈', hayeon: '하연', sion: '시온',
-  chaewon: '채원', seollin: '설린', seoa: '서아', jiyeon: '지연', jbk: '정병기',
+  mizyu: 'MIZYU', rin: 'RIN', suzuka: 'SUZUKA', kanon: 'KANON',
+  nako: '奈子', nana: '奈々', taiyo: '太陽', yoshiaki: 'よしあき',
+  michi: 'ミチ', jbk: '정병기',
 };
 
 function detectMemberTags(text: string): string[] {
@@ -473,7 +446,7 @@ export default function CommunityPage() {
       return sourceFiltered.filter((item) => {
         const tags = detectMemberTags((item.title || '') + ' ' + (item.content || ''));
         return tags.includes(filterMember);
-        // 주의: 'all' 태그는 필터 시 포함하지 않음 (멤버 선택 시 tripleS 전체 태그 제외)
+        // 주의: 'all' 태그는 필터 시 포함하지 않음 (멤버 선택 시 전체 태그 제외)
       });
     }
 
@@ -481,30 +454,15 @@ export default function CommunityPage() {
   }, [items, sourceFilter, filterMember]);
 
   const memberOptions = [
-    { id: 'seoyeon', name: '서연', sNumber: 1 },
-    { id: 'hyerin', name: '혜린', sNumber: 2 },
-    { id: 'jiwoo', name: '지우', sNumber: 3 },
-    { id: 'chaeyeon', name: '채연', sNumber: 4 },
-    { id: 'yooyeon', name: '유연', sNumber: 5 },
-    { id: 'sumin', name: '수민', sNumber: 6 },
-    { id: 'naekyung', name: '나경', sNumber: 7 },
-    { id: 'yubin', name: '유빈', sNumber: 8 },
-    { id: 'kaede', name: '카에데', sNumber: 9 },
-    { id: 'dahyun', name: '다현', sNumber: 10 },
-    { id: 'kotone', name: '코토네', sNumber: 11 },
-    { id: 'yeonji', name: '연지', sNumber: 12 },
-    { id: 'nien', name: '니엔', sNumber: 13 },
-    { id: 'sohyun', name: '소현', sNumber: 14 },
-    { id: 'shinwi', name: '신위', sNumber: 15 },
-    { id: 'mayu', name: '마유', sNumber: 16 },
-    { id: 'rin', name: '린', sNumber: 17 },
-    { id: 'jubin', name: '주빈', sNumber: 18 },
-    { id: 'seollin', name: '설린', sNumber: 19 },
-    { id: 'seoa', name: '서아', sNumber: 20 },
-    { id: 'sion', name: '시온', sNumber: 21 },
-    { id: 'hayeon', name: '하연', sNumber: 22 },
-    { id: 'jiyeon', name: '지연', sNumber: 23 },
-    { id: 'chaewon', name: '채원', sNumber: 24 },
+    { id: 'mizyu',    name: 'MIZYU',   sNumber: 1 },
+    { id: 'rin',      name: 'RIN',     sNumber: 2 },
+    { id: 'suzuka',   name: 'SUZUKA',  sNumber: 3 },
+    { id: 'kanon',    name: 'KANON',   sNumber: 4 },
+    { id: 'nako',     name: '奈子',    sNumber: 5 },
+    { id: 'nana',     name: '奈々',    sNumber: 6 },
+    { id: 'taiyo',    name: '太陽',    sNumber: 7 },
+    { id: 'yoshiaki', name: 'よしあき', sNumber: 8 },
+    { id: 'michi',    name: 'ミチ',    sNumber: 9 },
   ];
 
   return (

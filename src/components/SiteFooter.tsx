@@ -10,10 +10,10 @@ function today() {
 let _vid: string | null = null;
 function getVid(): string {
   if (_vid) return _vid;
-  const s = localStorage.getItem('triples_vid');
+  const s = localStorage.getItem('twinplanet_vid');
   if (s) { _vid = s; return s; }
   const id = `v_${Math.random().toString(36).slice(2, 11)}`;
-  localStorage.setItem('triples_vid', id);
+  localStorage.setItem('twinplanet_vid', id);
   _vid = id;
   return id;
 }
@@ -44,7 +44,7 @@ export default function SiteFooter() {
     const date = currentDate;
 
     // 1) page_visits 기록 (오늘 처음 방문이면 INSERT)
-    const visitKey = `triples_pv_${date}`;
+    const visitKey = `twinplanet_pv_${date}`;
     if (!localStorage.getItem(visitKey)) {
       sb.from('page_visits')
         .upsert({ date, visitor_id: getVid() }, { onConflict: 'date,visitor_id', ignoreDuplicates: true })
@@ -78,7 +78,7 @@ export default function SiteFooter() {
     const sb = supabase;
     if (!sb) return;
 
-    const channel = sb.channel('triples-online');
+    const channel = sb.channel('twinplanet-online');
     channelRef.current = channel;
 
     const updateCount = () => {

@@ -1,0 +1,18 @@
+{
+  "id": "mizyu",
+  "nameKo": "MIZYU",
+  "nameEn": "MIZYU",
+  "nameJa": "MIZYU",
+  "group": "ATARASHII GAKKO!",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/mizyu/profile.jpg",
+  "themeColor": "#FF6B9D",
+  "themeColorSecondary": "#FFB3CF",
+  "tagline": "新しい学校のリーダーズのリーダー。ミジュコプターで魅せる！",
+  "greeting": "また来たんだ～！今日はどう？",
+  "firstVisitGreeting": "よー！MIZYUだよ！はじめまして✨ なんて呼んでいい？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

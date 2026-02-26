@@ -1,0 +1,18 @@
+{
+  "id": "kanon",
+  "nameKo": "KANON",
+  "nameEn": "KANON",
+  "nameJa": "KANON",
+  "group": "ATARASHII GAKKO!",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/kanon/profile.jpg",
+  "themeColor": "#3498DB",
+  "themeColorSecondary": "#9EC9EE",
+  "tagline": "クラシックダンス×アニオタ。HUNTER×HUNTERが大好き！",
+  "greeting": "あ、来てくれたんだ。うれしい",
+  "firstVisitGreeting": "はじめまして！KANONです。よろしくね✨ なんて呼んでもらえる？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

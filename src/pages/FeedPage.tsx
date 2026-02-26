@@ -107,9 +107,6 @@ interface Tags {
   hasPhoto: boolean;
   hasDance: boolean;
   hasCute: boolean;
-  hasMayu: boolean;
-  hasKaede: boolean;
-  hasKotone: boolean;
 }
 
 function detectTags(title: string, body: string): Tags {
@@ -122,9 +119,6 @@ function detectTags(title: string, body: string): Tags {
     hasPhoto:    /사진|포토|photo|pic|📷|shot|촬영/.test(kw),
     hasDance:    /안무|댄스|dance|춤|choreography/.test(kw),
     hasCute:     /귀여|cute|애교|아기|baby|💕/.test(kw),
-    hasMayu:     /mayu|마유|マユ/.test(kw),
-    hasKaede:    /kaede|카에데|カエデ/.test(kw),
-    hasKotone:   /kotone|코토네|コトネ/.test(kw),
   };
 }
 
@@ -139,31 +133,6 @@ const MEMBER_NAME_PATTERNS: [string, RegExp][] = [
   ['taiyo',    /#taiyo|#太陽|#杉浦太陽/i],
   ['yoshiaki', /#yoshiaki|#よしあき|#ONSENSE/i],
   ['michi',    /#michi|#ミチ|#よしミチ/i],
-  // legacy placeholder to avoid empty array
-  ['seoyeon',  /#seoyeon|#서연|#SeoYeon|#소연/i],
-  ['hyerin',   /#hyerin|#혜린|#HyeRin/i],
-  ['jiwoo',    /#jiwoo|#지우|#JiWoo/i],
-  ['chaeyeon', /#chaeyeon|#채연|#ChaEYeon/i],
-  ['yooyeon',  /#yooyeon|#유연|#YooYeon/i],
-  ['sumin',    /#sumin|#수민|#SuMin/i],
-  ['naekyung', /#naekyung|#나경|#NaeKyung/i],
-  ['yubin',    /#yubin|#유빈|#YuBin/i],
-  ['kaede',    /#kaede|#카에데|#カエデ/i],
-  ['dahyun',   /#dahyun|#다현|#DaHyun/i],
-  ['kotone',   /#kotone|#코토네|#コトネ/i],
-  ['yeonji',   /#yeonji|#연지|#YeonJi/i],
-  ['nien',     /#nien|#니엔/i],
-  ['sohyun',   /#sohyun|#소현|#SoHyun/i],
-  ['shinwi',   /#shinwi|#신위|#XinYu/i],
-  ['mayu',     /#mayu|#마유|#マユ/i],
-  ['rin',      /#rin\b|#린\b|#リン/i],
-  ['jubin',    /#jubin|#주빈|#JuBin/i],
-  ['hayeon',   /#hayeon|#하연|#HaYeon/i],
-  ['sion',     /#sion\b|#시온|#シオン/i],
-  ['chaewon',  /#chaewon|#채원|#ChaeWon/i],
-  ['seollin',  /#seollin|#설린|#SeolLin/i],
-  ['seoa',     /#seoa|#서아|#SeoA/i],
-  ['jiyeon',   /#jiyeon|#지연|#JiYeon/i],
 ];
 
 function detectPoster(body: string, seed: number): string {
@@ -180,269 +149,165 @@ function detectPoster(body: string, seed: number): string {
 type Ctx = 'concert' | 'comeback' | 'food' | 'japan' | 'photo' | 'dance' | 'cute' | 'default';
 
 const COMMENT_POOL: Record<string, Partial<Record<Ctx, string[]>>> = {
-  seoyeon: {
+  mizyu: {
     concert: [
-      "어... 이번 안무 진짜 힘들었는데. 잘 봐줘요",
-      "잘 하면 돼 뭘 걱정해",
-      "어... 연습 때 다리 쥐 났었는데 아무도 모르지",
+      "ミジュコプター発射準備完了！무대 완전 기대돼!!",
+      "리더로서 이번 무대 진짜 자신 있어요. 다들 봐줘!!",
+      "연습 엄청 했거든요. 못 믿겠으면 와서 확인해요 ㅎㅎ",
     ],
     comeback: [
-      "어... 잘 될 것 같은데 왜 불안하지",
-      "열심히 했으니까 되겠죠 어...",
-      "어... 이 곡 녹음할 때 한 번에 됐어 나 천재인가",
-    ],
-    food: ["어... 맛있겠다", "먹으러 가자"],
-    photo: ["어... 나 여기서 좀 괜찮지 않아?", "사진은 뭐 찍히는 대로"],
-    cute: ["어... 귀엽긴 하네"],
-    default: ["어... 잘 부탁해요", "열심히 할게요", "어... 할 말 없는데", "어... 사실 이거 준비하면서 제일 힘든 파트 있었는데 지금은 말할 수 있어요. 발목 삔 상태로 연습했어요. 아무도 몰랐죠? 그래도 다 됐으니까 괜찮아요 코스모스 감사합니다"],
-  },
-  hyerin: {
-    concert: [
-      "저 이 안무 마스터했어요!! 드디어!! 3일 걸림ㅋㅋ",
-      "07즈 중에 내가 제일 잘하죠 ㅎㅎ (사실 다들 잘함)",
-      "무대 끝나고 치킨 먹기로 약속했거든요 힘나요",
-    ],
-    comeback: ["이 노래 듣고 안무 바로 떠올랐어요!!", "진짜 자신 있어요!!"],
-    food: ["맛있겠다! 지우야 같이 가자 내가 사줄게", "이거 진짜 맛있어요 추천!!"],
-    default: ["기대해주세요!!", "이번엔 다르다고요 ㅎㅎ"],
-  },
-  jiwoo: {
-    concert: [
-      "이 공연... 어떻게 가요? 표 어디서 사요?",
-      "저 무대 끝나고 어디 가야 해요?? 출구가 어디 ㅠㅠ",
-      "이 무대에서 왜 제가 센터죠?? 저 키 큰 게 잘못인가요??",
-    ],
-    comeback: ["이 노래 가사가... 무슨 뜻이에요?? 저만 모르는 건가요??"],
-    food: [
-      "이게 뭐예요? 어떻게 만들어요? 저 못 만들겠어요",
-      "이거 먹으면 키 더 크나요?? 이미 충분히 큰데...",
-    ],
-    photo: ["사진 찍을 때 표정을 어떻게 해야 해요?? 이게 맞나요??"],
-    default: ["진짜 재밌을 것 같아요!", "같이 즐겨요~ ㅎㅎ"],
-  },
-  chaeyeon: {
-    concert: [
-      "오오오오!!! 💥 이 무대 진짜 기대됐는데 드디어!!!",
-      "오!! 나 이거 보고 소름 돋았어!!!! 팔에 보여줄까요???",
-      "오 잠깐만요 저 이 안무 연습하다가 어제 넘어졌는데 아무도 몰라야 해요",
-    ],
-    comeback: [
-      "오!!!! 신곡 나왔다!!!! 저 이미 100번 들음!!!!",
-      "오오오 이 노래 진짜 미쳤다!!!! 뮤비도 미쳤어!!!!",
-    ],
-    food: ["오오!! 나 이거 먹어봤는데 진짜 맛있어!!!!!", "이거 먹으면서 안무 연습했어요 ㅋㅋ"],
-    photo: ["오!!!!! 이 사진 미쳤어!!! 다들 너무 이쁘다!!!!"],
-    cute: ["오!!!! 귀여워!!! 나도 귀여워줘요!!! 💕💕"],
-    default: ["에너지 폭발할 거예요 💥", "열심히 준비했어요!", "오오오오!!!!!! 저 진짜 이 무대/곡 기다렸는데 드디어!!! 연습하면서 얼마나 설렜는지 몰라요!! 다들 꼭 꼭 꼭 봐주세요!! 저 진짜 최선 다했어요!! 💥💥💥"],
-  },
-  yooyeon: {
-    concert: ["잘 됐어", "오케이", "무대 좋네"],
-    comeback: ["나왔네", "들었어", "괜찮은데"],
-    food: ["맛있으면 됨"],
-    photo: ["ㅇㅇ", "잘 나왔네"],
-    cute: ["..."],
-    default: ["알겠어", "ㅇㅇ", "그래"],
-  },
-  sumin: {
-    concert: [
-      "선배님들 정말 대단하세요!! 저도 열심히 할게요!! 감사합니다!! 💕",
-      "언니오빠들 무대 너무 멋있어요!! 저 울 것 같아요!! 💕",
-    ],
-    comeback: [
-      "와 새 노래 너무 좋아요!! 언니오빠들 다들 수고하셨어요!! 💕",
-      "진짜 감동적이에요!! 존경합니다!! 💕",
-    ],
-    food: ["이거 맛있어 보여요!! 다 같이 먹으면 좋겠어요!! 💕"],
-    cute: ["너무 귀여워요!! 저도 귀엽나요?? 💕"],
-    default: ["코스모스 많이 와줘요! 💕", "같이 신나게 놀아요~ 💕", "언니오빠들 정말 너무 고생 많으셨어요!! 이걸 준비하시느라 얼마나 힘드셨을지... 저는 옆에서 보면서 진짜 대단하다고 생각했어요!! 코스모스 여러분도 꼭 함께해주세요!! 수민이도 열심히 할게요!! 💕💕"],
-  },
-  naekyung: {
-    concert: [
-      "저 이 무대 연습하면서 울었어요...",
-      "코스모스분들 만나면 또 울 것 같아요 ㅠㅠ",
-      "저 이 곡 처음 들었을 때 샤워하다가 울었어요...",
-    ],
-    comeback: [
-      "신곡 처음 들었을 때 눈물났어요... 진짜 너무 좋아요 ㅠㅠ",
-      "가사 읽다가 또 울었어요... 이러면 안 되는데 ㅠㅠ",
-    ],
-    food: ["맛있는 거 먹으면 왜 눈물이 나죠 ㅠㅠ 감동이에요"],
-    photo: ["이 사진 보니까 눈물나요... 추억이 ㅠㅠ"],
-    cute: ["귀여워서 울겠어요 ㅠㅠ"],
-    default: ["무조건 옵니다!! 🔥", "기대하세요!!!", "저 처음 이 곡 받았을 때 가사 읽다가 울었어요... 진짜 이런 감정을 이렇게 표현할 수 있구나 싶어서... 코스모스 여러분이 들어줄 때 저도 같이 느낄 수 있으면 좋겠어요 ㅠㅠ 감사해요"],
-  },
-  yubin: {
-    concert: [
-      "이 무대... 사실 좀 무서운데 ㅋㅋ 대신 줄넘기 하나는 자신 있음",
-      "어... 잘 될 거야 아마도 ㅋㅋ (줄넘기 싸들고 갈까)",
-    ],
-    comeback: ["괜찮은 것 같아 ㅋㅋ 들어볼게", "나쁘지 않은데 ㅋ"],
-    food: ["먹어볼게 ㅋ", "맛있으면 다행이지 뭐"],
-    default: ["어... 잘 될 거야", "ㅋㅋ 해볼게"],
-  },
-  kaede: {
-    japan: [
-      "やっと日本！！！待ってたよ～！！！ 진짜 기대돼!!!",
-      "일본 공연 楽しみにしてた！！やっぱ最高～！！",
-      "やっと日本に行ける！！嬉しすぎ！！ 다들 와줘!!",
-    ],
-    concert: ["この舞台 진짜 최고야！みんな来てね！", "ステージ楽しみ!!"],
-    food: ["이거 일본에서도 먹어봤어요!! 美味しい！！"],
-    photo: ["写真きれい！！ 예쁘다!! ✨"],
-    default: ["頑張ります！✨ 같이 가요~", "楽しみ!! 기대해줘!!", "ずっとこれを待ってたよ～！！！연습하면서 진짜 힘들었지만 카에데 최선 다했어요！みんな絶対見てね！！コスモスのみんな大好き！！🌸"],
-  },
-  dahyun: {
-    food: [
-      "아이고 이거 진짜 맛있다아~ 부산에도 생겼으면 좋겠네~",
-      "우리 부산 음식이 더 맛있는데 ㅋㅋ 한번 와봐라",
-      "부산 가면 이거보다 맛있는 거 사줄게~",
-    ],
-    concert: ["진짜 좋다아~ 이 무대 부산 팬들도 봤으면 좋겠는데~"],
-    comeback: ["이 노래 진짜 좋다아~ 부산에서도 다 알겠다~", "부산 사투리로 부르면 더 좋을텐데ㅋㅋ"],
-    default: ["좋다아~ 기대해주이소!", "다현이가 잘 하겠심더~"],
-  },
-  kotone: {
-    japan: [
-      "やっと…待ってた",
-      "東京来るんだ…嬉しい",
-      "日本ツアー…楽しみにしてる",
-    ],
-    concert: ["見に行く", "最高だった", "ステージ良かった"],
-    food: ["食べたい…", "美味しそう"],
-    default: ["楽しみ", "良かった", "うん"],
-  },
-  yeonji: {
-    concert: [
-      "이 무대 보고 나서 게임 접속했는데 집중 안 됨 ㅋㅋ",
-      "이 에너지 게임에도 써야 하는데ㅋㅋ 버프 받은 느낌",
-    ],
-    comeback: ["새 노래 나왔다 ㅋㅋ 게임 BGM으로 써야겠다", "이거 듣고 랭크 2연승함 ㅋㅋ"],
-    food: ["먹으면서 게임하면 딱인데 ㅋㅋ"],
-    photo: ["이 사진 게임 로딩 화면 느낌 ㅋㅋ 이쁘다"],
-    default: ["ㄱㄱ", "GG ㅋㅋ", "이거 버프임 ㅋ"],
-  },
-  nien: {
-    food: [
-      "먹방!!! 我要吃!! 저도 데려가줘요!!! 🍜",
-      "이거 대만에도 있어요!! 맛있어!! 好吃！",
-      "저 이거 3그릇 먹었어요. 사실이에요.",
-    ],
-    japan: ["일본 음식도 맛있어요!! 好吃好吃！！"],
-    concert: ["공연 끝나고 뭐 먹어요?? 我好饿！！", "무대 멋있어요!! 加油！"],
-    default: ["저도 할 수 있어요!! 加油！", "열심히 할게요!! 💜"],
-  },
-  sohyun: {
-    concert: ["...좋아", "무대... 예쁘겠다"],
-    comeback: ["좋다", "들었어... 좋아"],
-    photo: ["예쁘다"],
-    food: ["먹고 싶다"],
-    cute: ["귀엽"],
-    default: ["열심히 할게요", "...좋아", "ㅎ"],
-  },
-  shinwi: {
-    concert: [
-      "키 크니까 무대에서 다르죠 ㅎㅎ 174cm의 위엄",
-      "174cm의 퍼포먼스 기대해주세요~ 무대 위에서 제가 더 빛나요",
-    ],
-    photo: [
-      "역시 키 크면 사진이 달라요 ㅎㅎ 비율 보세요",
-      "제 사진이 왜 이렇게 잘 나왔을까요 역시 저니까 ㅎㅎ",
-    ],
-    comeback: ["이 노래 불러봤는데요 제 목소리가 제일 어울려요 사실", "새 노래! 제 파트가 제일 좋지 않나요? ㅎㅎ"],
-    default: ["제가 있으니까 괜찮을 거예요 ㅎㅎ", "역시 저 ✨"],
-  },
-  mayu: {
-    photo: [
-      "この写真 너무 아름다워… 내가 찍었으면 좋았을텐데 ㅠㅠ",
-      "📷 光がすごく綺麗… 이런 빛은 못 참아",
+      "이 곡 처음 들었을 때 '이거다!'싶었어요. 역시 나 감각 있음 ㅎ",
+      "녹음할 때 한 번에 OK나왔어요. 그냥 천재인 것 같아요 ㅎ",
     ],
     japan: [
-      "日本での撮影楽しみにしてる✨ 카메라 3개 가져갈 거야",
-      "아 근데 내 카메라 배터리 또 없어졌어",
+      "日本！！やっとだ！！ 진짜 기대돼요 みんな来てね～！！",
+      "日本のファンのみなさん！！待ってたよ！！💕",
     ],
-    concert: ["舞台照明 아름다울 것 같아！ 카메라 가져가도 돼요??"],
-    default: ["写真撮りたい✨", "綺麗～ 예쁘다~"],
+    dance: [
+      "안무 포인트는 역시 ミジュコプター이죠. 특허 출원 중이에요 ㅋㅋ",
+      "이 동작 제가 제안했는데 정말 잘 됐어요 ㅎㅎ",
+    ],
+    cute: ["귀엽긴 한데... 저도 귀엽죠? 리더도 귀여울 수 있거든요 ㅎ"],
+    default: ["みんな！よろしく！！ 최선 다할게요", "리더 MIZYU 여기 있어요!! 기대해줘요~", "이번 정말 자신 있어요. 연습하면서 진짜 힘들었지만 그만큼 완성도가 높아요!! みんな絶対見てね！！🌟"],
   },
   rin: {
-    concert: ["무대 연습 많이 했어요... 기대해주세요", "댄스 파트 자신 있어요"],
-    dance: ["이 안무 좋아요. 많이 연습했어요", "이 동작이 제일 어려웠는데 마스터했어요"],
-    default: ["기대해주세요~", "열심히 할게요"],
-  },
-  jubin: {
     concert: [
-      "자, 다들 주목!! 이번 공연 포인트는 바로~~ (MC 본능 발동)",
-      "오늘의 하이라이트 소개해드리겠습니다~ 무대 4번에서 대박나거든요",
+      "랩 파트 진짜 열심히 했어요. 들려요?",
+      "안무 마스터했어요. 힙합 베이스라 이런 건 자신 있어요",
     ],
     comeback: [
-      "이번 곡 킬링파트 들어보셨나요?? 제가 설명해드리겠습니다~~",
-      "자 여기서 퀴즈! 이 노래 키 몇번 바뀌게요?? 맞추면 사인 ㅋㅋ",
+      "이 노래 비트 진짜 좋아요. 랩 쓰고 싶어졌어요",
+      "가사 분석 끝. 내 스타일이에요 ㅎ",
     ],
-    food: ["자 오늘의 맛집 리뷰 시간입니다~~ 결론부터 말씀드리면... 맛있어요 ㅋㅋ"],
-    photo: ["사진 리뷰 코너! 오늘 MVP는~~ ㅋㅋ"],
-    default: ["열심히 준비했어요!! 🙌", "설레요!!", "자자자, 여러분 주목해주세요!! 이번 작품의 포인트를 제가 직접 설명해드리겠습니다~ 먼저 첫 번째 파트에서 주목해야 할 부분은... 아 이거 다 스포일러 되겠다ㅋㅋ 그냥 보세요 최고예요!!"],
+    food: [
+      "이거 제가 집에서 만들 수 있어요. 레시피 알아요",
+      "요리하면서 이 노래 들었는데 완전 찰떡이에요",
+    ],
+    dance: [
+      "힙합 베이스로 이 안무 분석해봤는데 잘 만들었어요",
+      "이 동작 배울 때 제가 젤 먼저 마스터했어요. 사실이에요",
+    ],
+    default: ["괜찮아요. 기대해요", "잘 됐어요 ㅎ", "이 곡 연습하면서 요리도 같이 했어요. 효율적이죠 ㅋㅋ"],
   },
-  hayeon: {
+  suzuka: {
+    concert: [
+      "ほんまに楽しみやで！！ 무대 박살낼 준비 됐어요!!",
+      "관서 출신 파워 보여줄게요!! なめんなよ～！！",
+      "무대 끝나고 오코노미야키 먹을 거예요 그게 낙이에요",
+    ],
+    comeback: [
+      "ほんまにええ曲やわ！！ 진짜 좋은 곡이에요!!",
+      "이 노래 오사카에서도 뜰 거예요!! 보장해요!!",
+    ],
+    food: [
+      "오코노미야키 먹고 싶다... 관서 음식 최고예요",
+      "이 음식 맛있겠다!! でも오코노미야키는 못 이겨요 ㅎㅎ",
+    ],
+    japan: [
+      "大阪帰ってきた！！！ほんまに嬉しいわ！！",
+      "일본 투어！！오코노미야키 먹으러 가야지ー！！",
+    ],
+    cute: ["귀엽긴 한데... 저도 귀엽거든요!! ほんまに可愛いやろ！！"],
+    default: ["ほんまに頑張るで！！ 열심히 할게요!!", "오사카 파워로 간다!!", "みんな！！ほんまにおおきに！！ 다들 응원해줘서 진짜 힘이 나요!! 최선 다할게요!!"],
+  },
+  kanon: {
+    concert: [
+      "클래식 댄스 훈련 받아서 무대 체력은 걱정 없어요 ㅎ",
+      "이 안무 제가 제일 먼저 완성했어요. 클래식 베이스거든요",
+    ],
+    comeback: [
+      "이 곡 어떤 애니 오프닝이랑 비슷한 느낌이에요!! 좋아요!!",
+      "뮤비 분위기가 제가 좋아하는 애니랑 비슷해요!! 최고!!",
+    ],
+    dance: [
+      "발레 동작 섞여 있는 거 보였어요?? 제가 제안했거든요 ㅎ",
+      "클래식 댄스와 현대 댄스의 조화예요. 제 파트 집중해서 봐주세요",
+    ],
+    cute: [
+      "귀엽다!! 어떤 애니 캐릭터랑 비슷해요!! 최고!!",
+      "저도 이렇게 귀여운 캐릭터 코스프레 하고 싶어요!!",
+    ],
+    food: ["맛있겠다!! 어떤 애니에서 본 거랑 똑같이 생겼어요!! ㅎㅎ"],
+    default: ["기대해줘요!! 클래식+현대 댄스의 완벽한 조화!!  最高!!", "춤 열심히 연습했어요~", "이 곡 받았을 때 제가 좋아하는 애니 OST 느낌이어서 진짜 좋았어요!! 안무도 제가 가장 빨리 외웠어요!! 다들 꼭 봐주세요!!"],
+  },
+  nako: {
+    concert: [
+      "오늘도 최선을 다할게요!! 응원해줘서 고마워요 😊",
+      "무대 위에서만큼은 걱정 없어요. 경험이 있거든요 ㅎ",
+      "팬 여러분 만나면 항상 힘이 나요!! 감사해요!!",
+    ],
+    comeback: [
+      "이 곡 준비하면서 정말 열심히 했어요!! 들어줘서 고마워요",
+      "새 노래 좋아해줘서 기뻐요~ 계속 응원해줘 😊",
+    ],
+    food: ["이거 맛있어 보인다! 같이 먹으러 가자~~", "밥은 혼자 먹는 것보다 같이 먹는 게 더 맛있어요 ㅎ"],
+    japan: ["日本のみんな～！！また来たよ！会えて嬉しい！！", "일본 공연 항상 설레요!! 팬 여러분 만나는 게 최고예요!!"],
+    default: ["応援ありがとう！！ 항상 감사해요~", "열심히 할게요!! 기대해줘도 돼요 😊", "이 일 하면서 이렇게 많은 분들이 응원해주시는 게 제일 감사해요!! 오늘도 최선을 다할게요!!"],
+  },
+  nana: {
+    concert: [
+      "やばい！！！楽しみすぎる！！！무대 완전 기대돼!!!",
+      "무대에서 넘어질 것 같아요 기대감에 ㅋㅋㅋ",
+      "오늘 최고의 엔터테이너가 되겠습니다！！！",
+    ],
+    comeback: [
+      "이거 진짜 좋아!!! 들을수록 귀에 꽂혀!!!",
+      "신곡!!!! やったー！！！！ 기다렸다!!!",
+    ],
+    food: [
+      "맛있겠다~~ 배고프다 ㅋㅋ 지금 당장 먹고 싶어!!",
+      "이거 먹으면서 버라이어티 찍으면 완전 재밌겠다!!",
+    ],
+    japan: ["日本ただいまー！！！みんな元気だった？！！！", "일본 팬 여러분 만나서 기뻐요!!! 笑顔全開です！！！"],
+    cute: ["귀여워!!! 저도 귀엽죠?? 귀엽다고 해줘요!!!! ㅋㅋ"],
+    default: ["ノリノリで行くよー！！ 같이 신나게 즐겨요!!", "すごい！！！최고!!! 기대해줘요!!", "みんなー！！楽しみすぎてやばいです！！！ 진짜 이번에 진짜 최고의 무대 보여줄게요!! 笑顔で見てね！！！"],
+  },
+  taiyo: {
+    concert: [
+      "멋진 무대 기대해요. 최선 다하겠습니다",
+      "이런 에너지 좋아요. 나도 지지 않을 거야",
+    ],
+    comeback: [
+      "이 곡 음악적으로 좋아요. 잘 만든 것 같아요",
+      "새 노래 나왔네. 들어봤어요 좋더라고요",
+    ],
+    food: ["맛있어 보이는데. 나중에 먹어봐야겠어요", "먹방은 항상 보는 사람 배고프게 만들어요 ㅋ"],
+    japan: ["日本か。また来れてよかった", "일본 무대는 뭔가 달라요. 좋은 의미로요"],
+    default: ["잘 될 것 같아요. 기대해줘요", "열심히 준비했습니다", "이 일 오래 하면서 느끼는 건데 준비하는 과정이 제일 중요한 것 같아요. 그 과정 열심히 했으니까 결과는 자신 있어요."],
+  },
+  yoshiaki: {
     photo: [
-      "잠깐 저 이 사진에서 좀 이쁘지 않아요?? 사진 잘 받은 것 같은데 ㅎㅎ",
-      "저 잘생겼다... 매일 느끼지만 오늘 특히 ㅎㅎ",
+      "이 비주얼 진짜 패션 센스 있어요!! 코디 어디서 했어요??",
+      "사진 완전 좋아요. 스타일링 칭찬합니다",
+      "이 옷 어디 거예요?? 저도 입어보고 싶어요",
     ],
     concert: [
-      "무대 조명 받으면 제가 더 빛나거든요 사실ㅎㅎ",
-      "이번 무대 스타일링 진짜 제 얼굴에 맞춤이에요 ㅎㅎ",
-    ],
-    comeback: ["뮤비에서 제 얼굴이 제일 잘 나왔어요 인정?? ㅎㅎ"],
-    default: ["꼭 봐주세요~ 잘생긴 사람이 ㅎㅎ", "행복한 시간 될 거예요!"],
-  },
-  sion: {
-    concert: [
-      "꺄아아아아!!!!! 💜💜 이 공연 진짜 기대돼요!!!!! 저 이미 흥했어요!!!!!",
-      "으아아아!! 무대 보자마자 소리 질렀어요!! 지금도 흥남!!",
+      "이번 스타일링 진짜 기대됩니다. 패션도 퍼포먼스예요!!",
+      "무대 패션 직접 제안했어요. 기대해줘요~",
     ],
     comeback: [
-      "꺄!!!!! 신곡!!!!! 저 이거 진짜 진짜 좋아해요!!!!! 😭😭",
-      "꺄아아아!!!!!!! 저 이거 듣고 밥 3번 먹었어요 흥이 나서",
+      "뮤비 의상 완전 마음에 들었어요!! 트렌디함 인정!!",
+      "이 비주얼... 누가 스타일링했어요?? 잘했어요",
     ],
-    food: ["먹방!! 흥!! 먹으면서 춤추면 칼로리 제로 아닌가요?!?!", "이거 맛있어요?? 맛있으면 흥나잖아요!!!!!"],
-    cute: ["귀여워요!!!!! 저도 귀여워요!!!!! 💕💕💕"],
-    default: ["시온이 열심히 할게요 🌸", "코스모스 사랑해요~!!!!!", "꺄아아아아아아아아!!!!!!!! 저 진짜 이거 받고 숙소에서 혼자 방방 뛰었어요ㅋㅋㅋ 룸메이트가 뭐냐고 해서 신곡이라고 했더니 같이 뛰어줬어요ㅋㅋ 진짜 너무 좋아요 여러분 들어보세요!!!!! 💜💜"],
+    cute: ["패션 감각 있으면 더 귀여워 보여요~ 이것도 스타일이에요 ㅎ"],
+    default: ["スタイルで魅せますよ！ 비주얼도 퍼포먼스예요~", "패션이 곧 아이덴티티!! 기대해줘요", "Z세대 패션 아이콘으로서 이번에 진짜 비주얼 담당 제대로 할게요. 스타일링 직접 많이 참여했어요!! 봐줘요~"],
   },
-  chaewon: {
+  michi: {
+    photo: [
+      "이 비주얼 완전 좋아요. 스타일 있다",
+      "이 분위기... 제가 좋아하는 스타일이에요",
+    ],
     concert: [
-      "저 흥 못 참아서 대기실에서 쌍절곤 돌릴 뻔 했어요 진짜로 ㅋㅋ",
-      "무대에서 쌍절곤 퍼포먼스 하면 안 되나요?? 진짜 멋있을 건데",
+      "It GIRL 등장합니다. 기대해줘요~",
+      "무대 위에서 제일 빛나는 사람이 되겠습니다",
     ],
     comeback: [
-      "이 노래 들으면서 쌍절곤 연습하면 박자 딱 맞을 것 같은데 ㅋㅋ",
-      "저 이 노래 리듬 타다가 쌍절곤 돌리다가 창문 칠 뻔 했어요",
+      "이 곡 트렌디해요. 제 감각에 맞아요",
+      "뮤비 비주얼 완전 내 스타일이다",
     ],
-    food: ["이거 쌍절곤으로 면 건질 수 있을까요 ㅋㅋ", "맛있겠다!! 먹으면서 쌍절곤 연습할래요 ㅋ"],
-    cute: ["저 귀엽죠?? 귀엽죠?? 인정이죠?? 💕", "막내 파워!! 귀여운 건 제가 1등이에요!!"],
-    default: ["떨리는데 기대돼요~", "저 이번엔 진짜 열심히요 ㅋㅋ"],
-  },
-  seollin: {
-    concert: [
-      "저 승마 연습하면서 이 노래 들었는데 박자 딱 맞아요 ㅋㅋ",
-      "오빠 언니들 항상 멋있어요!! 말 타면서 응원할게요 🐴",
-    ],
-    comeback: ["새 노래 말 타면서 들었는데 말도 흥났어요 ㅋㅋ"],
-    default: ["설린도 최선 다할게요! ✨", "기대해주세요! 🐴"],
-  },
-  seoa: {
-    concert: [
-      "저도 이 무대 보고 싶어요!!!! 선배님들 너무 멋있어요!!!",
-      "무대 끝나고 선배님들한테 사인 받을래요!! ☀️",
-    ],
-    comeback: ["새 노래!! 저도 부르고 싶어요!! ☀️", "가사가 너무 예뻐요!!"],
-    cute: ["저도 귀여워요?? ☀️☀️", "아기라서 원래 귀여운 거예요 ㅎㅎ"],
-    default: ["꼭 봐주세요!! 열심히 할게요!! ☀️", "서아 기대돼요!! 🌟"],
-  },
-  jiyeon: {
-    concert: [
-      "발레 훈련 받아서 무대 체력은 자신 있어요~ (사실 넘어질 뻔 했음 ㅋㅋ)",
-      "이 안무 발레 동작이랑 비슷한 파트 있어서 자신 있어요! (아마도)",
-    ],
-    dance: ["이 동작 발레에서 본 적 있어요! 제가 도와줄게요~"],
-    default: ["우아하게 할게요... 아마도 ㅋㅋ", "지연이도 열심히 할게요!! 💜"],
+    cute: ["귀여운 거 좋아요. 트렌디하게 귀엽게 ㅎ"],
+    japan: ["日本！また来たよ！스타일리시하게 일본도 접수!", "일본 팬 여러분 만나러 왔어요~"],
+    default: ["それがミチスタイル！ 기대해줘요", "트렌드 세터로서 이번에 뭔가 보여줄게요", "It GIRL이라는 말이 부담스럽기도 한데요, 그냥 저답게 하면 된다고 생각해요. 이번에도 미치답게 하겠습니다. 기대해줘요~"],
   },
 };
 
@@ -454,124 +319,83 @@ interface Thread {
 }
 
 const THREADS: Thread[] = [
-  // 채연 넘어짐
-  { ctx: 'concert', comments: [{ memberId: 'chaeyeon', content: '오 잠깐만요 저 이 안무 연습하다가 어제 넘어졌는데 아무도 몰라야 해요' }],
+  // MIZYU 리더십
+  { ctx: 'concert', comments: [{ memberId: 'mizyu', content: '리더로서 이번 무대 진짜 책임감 느껴요. 다들 믿어줘요!!' }],
     replyChain: [
-      { memberId: 'hyerin', content: '채연아 나 봤는데 ㅋㅋㅋ' },
-      { memberId: 'chaeyeon', content: '혜린언니!!!!!😭😭😭' },
-      { memberId: 'jiwoo', content: '어디서 넘어졌어요?? 나도 조심해야 하는데ㅠㅠ' },
+      { memberId: 'rin', content: 'MIZYU 믿는다. 다들 잘 하자' },
+      { memberId: 'suzuka', content: 'リーダー頼んだで！！ MIZYU 파이팅!!' },
+      { memberId: 'kanon', content: 'MIZYU언니 최고예요!! 같이 잘 해봐요!!' },
     ],
   },
-  // 나경 샤워 울음
-  { ctx: 'concert', comments: [{ memberId: 'naekyung', content: '저 이 곡 처음 들었을 때 샤워하다가 울었어요...' }],
+  // RIN 요리+랩
+  { ctx: 'food', comments: [{ memberId: 'rin', content: '이거 제가 만들 수 있어요. 집에서 더 맛있게 만들거든요' }],
     replyChain: [
-      { memberId: 'yubin', content: '나경아 샤워하다가?? ㅋㅋㅋ 세상에' },
-      { memberId: 'naekyung', content: '어쩔 수 없잖아요 ㅠㅠ 감동적인걸 ㅠㅠ' },
-      { memberId: 'sumin', content: '나경언니 울지 마세요ㅠㅠ 저까지 슬퍼져요 💕' },
+      { memberId: 'suzuka', content: 'ほんまに？？ 만들어줘!! 먹고 싶다!!' },
+      { memberId: 'rin', content: '오코노미야키는 못 이길 것 같지만 ㅋㅋ' },
+      { memberId: 'suzuka', content: '오코노미야키는 내 거거든요!! ㅋㅋ' },
     ],
   },
-  // 유연 잘 됐네
-  { ctx: 'concert', comments: [{ memberId: 'yooyeon', content: '잘 됐네' }],
+  // SUZUKA 오코노미야키
+  { ctx: 'japan', comments: [{ memberId: 'suzuka', content: '大阪帰ってきた！！오코노미야키 먹으러 가야지~!!' }],
     replyChain: [
-      { memberId: 'chaeyeon', content: '언니 이게 다예요??? 저 진짜... 😭' },
-      { memberId: 'yooyeon', content: '응' },
-      { memberId: 'seoyeon', content: 'ㅋㅋㅋ 유연이답다' },
+      { memberId: 'nana', content: '스즈카 오코노미야키만 생각하는 거야?? ㅋㅋ 나도 먹고 싶어!!' },
+      { memberId: 'suzuka', content: 'ほんまに最高やねん！！오코노미야키 없으면 일본 투어 못 해요 ㅋ' },
+      { memberId: 'mizyu', content: '스즈카... 무대도 생각해요 ㅋㅋ' },
     ],
   },
-  // 일본 3인방
-  { ctx: 'japan', comments: [{ memberId: 'kaede', content: 'やっと日本！！！待ってたよ～！！！ 진짜 기대돼!!!' }],
+  // KANON 애니 비교
+  { ctx: 'comeback', comments: [{ memberId: 'kanon', content: '이 곡 어떤 애니 오프닝이랑 비슷한 느낌이에요!! 진짜 좋아요!!' }],
     replyChain: [
-      { memberId: 'kotone', content: 'カエデ…テンション高すぎ笑' },
-      { memberId: 'kaede', content: '당연하지！！！ 日本だよ！！！' },
-      { memberId: 'mayu', content: '写真いっぱい撮ろうね！✨ 아 근데 내 카메라 배터리 또...' },
-      { memberId: 'kaede', content: 'マユ！充電してよ！笑' },
+      { memberId: 'mizyu', content: '카논... 무슨 애니?? ㅋㅋ' },
+      { memberId: 'kanon', content: '비밀이에요 ㅎㅎ 아는 사람만 알아요!' },
+      { memberId: 'nana', content: '나 알 것 같아!! 나도 그 생각 했어!!' },
     ],
   },
-  // 니엔+다현 먹방
-  { ctx: 'food', comments: [{ memberId: 'nien', content: '저 이거 3그릇 먹었어요. 사실이에요.' }],
+  // NAKO 경험담
+  { ctx: 'concert', comments: [{ memberId: 'nako', content: '무대 위에서 팬분들 표정 보는 게 제일 좋아요. 그래서 이 일 하는 것 같아요 😊' }],
     replyChain: [
-      { memberId: 'dahyun', content: '니엔아 나도 3그릇 먹을 수 있는데 근데 부산 가면 더 맛있는 거 있어' },
-      { memberId: 'nien', content: '다현언니 우리 먹방 같이 하자요!!!! 好吃！' },
-      { memberId: 'jiwoo', content: '이거 어떻게 만들어요?? 재료가 뭐예요??' },
-      { memberId: 'hyerin', content: '지우야 그냥 사 먹으면 돼 ㅋㅋ' },
+      { memberId: 'nana', content: '나코짱!! 그 말에 나도 울컥했어!!' },
+      { memberId: 'nako', content: '나나~ ㅋㅋ 같이 열심히 하자!!　😊' },
+      { memberId: 'taiyo', content: '멋있는 말이에요. 나도 그래요' },
     ],
   },
-  // 채원 쌍절곤
-  { ctx: 'comeback', comments: [{ memberId: 'chaewon', content: '저 이 노래 리듬 타다가 쌍절곤 돌리다가 창문 칠 뻔 했어요' }],
+  // NANA 버라이어티 에너지
+  { ctx: 'food', comments: [{ memberId: 'nana', content: '먹방 버라이어티 하고 싶다!! 이 음식 먹으면서 게임하면 재밌겠는데!!' }],
     replyChain: [
-      { memberId: 'seoyeon', content: '채원아......제발' },
-      { memberId: 'chaewon', content: '언니 괜찮았어요!!!! 창문은 무사해요!!' },
-      { memberId: 'sion', content: '채원아 나도 같이 돌려볼래!!!! 🤣🤣' },
-      { memberId: 'seoyeon', content: '...둘 다 안 돼' },
+      { memberId: 'taiyo', content: '나나 또 기획하는 거야?? ㅋㅋ' },
+      { memberId: 'nana', content: '기획력 있잖아요!! 어때요 재밌겠죠?!!' },
+      { memberId: 'yoshiaki', content: '저도 참여하고 싶어요!! 스타일리시하게 먹방 할게요~' },
     ],
   },
-  // 소현 한마디
-  { ctx: 'comeback', comments: [{ memberId: 'sohyun', content: '좋다' }],
+  // TAIYO+MICHI 쿨가이
+  { ctx: 'comeback', comments: [{ memberId: 'taiyo', content: '이 곡 음악적으로 잘 만든 것 같아요. 들을수록 좋아지는 타입이에요' }],
     replyChain: [
-      { memberId: 'yooyeon', content: '소현이 리뷰' },
-      { memberId: 'seoyeon', content: '이게 최고 리뷰야' },
+      { memberId: 'michi', content: '오빠도 그렇게 생각했어요? 저도 처음엔 몰랐는데 반복할수록 좋아지더라고요' },
+      { memberId: 'nana', content: '두 분 역시 쿨하게 말해요!! 저는 처음부터 좋았어요!!!' },
     ],
   },
-  // 시온 밥
-  { ctx: 'comeback', comments: [{ memberId: 'sion', content: '꺄아아아!!!!!!! 저 이거 듣고 밥 3번 먹었어요 흥이 나서' }],
+  // YOSHIAKI+MICHI 남매 패션 토크
+  { ctx: 'photo', comments: [{ memberId: 'yoshiaki', content: '이 사진 스타일링 진짜 좋은데요. 어디 거예요??' }],
     replyChain: [
-      { memberId: 'chaewon', content: '시온언니 밥이요?? ㅋㅋㅋ' },
-      { memberId: 'sion', content: '흥나면 배고프잖아요!!!!!' },
-      { memberId: 'jubin', content: '자 여기서 질문! 시온이는 몇 공기 먹었게요?? ㅋㅋ' },
+      { memberId: 'michi', content: '요시아키 또 패션 이야기 ㅋㅋ 근데 나도 궁금하긴 해요 ㅎ' },
+      { memberId: 'yoshiaki', content: '누나도 궁금한 거잖아요 ㅋㅋ' },
+      { memberId: 'kanon', content: '이 코디 제가 좋아하는 애니 캐릭터 스타일이에요!!' },
     ],
   },
-  // 하연+주빈
-  { ctx: 'photo', comments: [{ memberId: 'hayeon', content: '잠깐 저 이 사진에서 좀 이쁘지 않아요?? 사진 잘 받은 것 같은데 ㅎㅎ' }],
+  // AG! 일본 투어
+  { ctx: 'japan', comments: [{ memberId: 'mizyu', content: '日本ツアー最高！！みんなに会えて嬉しい！！ 진짜 에너지 받았어요!!' }],
     replyChain: [
-      { memberId: 'jubin', content: '하연아 그거 내가 옆에 있어서 그런 거야 ㅎㅎ' },
-      { memberId: 'hayeon', content: '주빈아 넌 항상 ㅋㅋㅋ' },
-      { memberId: 'shinwi', content: '잠깐만요 저도 이 사진에서 비율이 미쳤는데 저 좀 봐주세요 ㅎㅎ' },
+      { memberId: 'rin', content: '역시 일본 팬분들 열정이 다르네요. 좋았어요' },
+      { memberId: 'suzuka', content: 'ほんまやで！！ 오코노미야키도 먹었고 완벽했어요!!' },
+      { memberId: 'kanon', content: '日本最高！！！또 오고 싶어요!!!!!' },
     ],
   },
-  // 시온+채원 텐션
-  { ctx: 'concert', comments: [{ memberId: 'sion', content: '꺄아아아아!!!!! 이 공연 진짜 기대돼요!!!!!' }],
+  // RIN 댄스 배틀
+  { ctx: 'dance', comments: [{ memberId: 'rin', content: '이 안무 힙합 베이스가 있어서 제가 제일 빨리 습득했어요. 사실이에요' }],
     replyChain: [
-      { memberId: 'chaewon', content: '시온언니!!! 저도요!!! 쌍절곤 가져가도 돼요???!!' },
-      { memberId: 'sion', content: '당연하지!!!!!! 같이 돌리자!!!!!! 💜💜' },
-      { memberId: 'yooyeon', content: '둘 다 안 돼' },
-      { memberId: 'chaeyeon', content: '유연언니!!!!! 너무해요ㅠㅠ 근데 웃겨요 ㅋㅋㅋ' },
-    ],
-  },
-  // 나경 컴백 울음
-  { ctx: 'comeback', comments: [{ memberId: 'naekyung', content: '신곡 처음 들었을 때 눈물났어요... 진짜 너무 좋아요 ㅠㅠ' }],
-    replyChain: [
-      { memberId: 'yubin', content: '나경아 또 울어...? ㅋㅋㅋ' },
-      { memberId: 'naekyung', content: '어쩔 수 없잖아요 ㅠㅠ 감동적인걸 ㅠㅠ' },
-    ],
-  },
-  // 마유 카메라 배터리
-  { ctx: 'japan', comments: [{ memberId: 'mayu', content: '写真いっぱい撮りたい✨ 아 근데 내 카메라 배터리 또 없어졌어' }],
-    replyChain: [
-      { memberId: 'kaede', content: 'マユ！充電してよ！笑' },
-      { memberId: 'mayu', content: '충전기를 숙소에 놓고 왔어 ㅠㅠ' },
-      { memberId: 'kotone', content: '…私が貸そうか' },
-    ],
-  },
-  // 지우+혜린 엉뚱
-  { ctx: 'concert', comments: [{ memberId: 'jiwoo', content: '이 공연... 어떻게 가요? 표 어디서 사요?' }],
-    replyChain: [
-      { memberId: 'hyerin', content: '지우야 내가 알려줄게 ㅋㅋ' },
-      { memberId: 'jiwoo', content: '혜린언니 고마워요!! 근데 우리 공연인 거 맞죠...??' },
-      { memberId: 'seoyeon', content: '어... 지우야 우리가 하는 거야' },
-    ],
-  },
-  // 연지 게임
-  { ctx: 'comeback', comments: [{ memberId: 'yeonji', content: '새 노래 나왔다 ㅋㅋ 게임 BGM으로 써야겠다' }],
-    replyChain: [
-      { memberId: 'sion', content: '연지야!! 게임말고 춤도 춰야지!!! ㅋㅋ' },
-      { memberId: 'yeonji', content: '춤추면서 게임하면 되잖아요 ㅋㅋ (사실 안 됨)' },
-    ],
-  },
-  // 지연 발레
-  { ctx: 'dance', comments: [{ memberId: 'jiyeon', content: '발레 훈련 받아서 무대 체력은 자신 있어요~ (사실 넘어질 뻔 했음 ㅋㅋ)' }],
-    replyChain: [
-      { memberId: 'seollin', content: '지연아 괜찮았어?? ㅋㅋ 나도 승마하다가 ㅋㅋ' },
-      { memberId: 'jiyeon', content: '우아하게 넘어졌으니까 괜찮아요 ㅎㅎ' },
+      { memberId: 'mizyu', content: '린... 나도 빨리 배웠는데 ㅋㅋ' },
+      { memberId: 'rin', content: 'MIZYU 리더니까 빨리 배우는 게 당연하죠 ㅋㅋ' },
+      { memberId: 'kanon', content: '저는 클래식 배이스라 클래식 동작은 제가 제일 빠르거든요!! ㅎ' },
     ],
   },
 ];
@@ -582,7 +406,7 @@ const JBK_REPLIES = [
   "다들 잘하고 있어요! 자랑스럽습니다",
   "ㅋㅋㅋ 이런 거 올려도 되나요",
   "맞아요 맞아요",
-  "열심히 준비했습니다 코스모스 많이 봐주세요!",
+  "열심히 준비했습니다. 많이 봐주세요!",
   "멤버들이 진짜 열심히 했어요. 잘 부탁드립니다 🙇",
   "이런 반응 보면 힘이 나네요 감사합니다",
   "ㅋㅋ 맞는 말이에요",
@@ -590,17 +414,15 @@ const JBK_REPLIES = [
 
 // ── Like 친화도 ──────────────────────────────────────────────
 const LIKE_AFFINITY: [string, string[]][] = [
-  ['chaeyeon', ['sion', 'naekyung', 'seoa', 'jubin', 'hayeon']],
-  ['yooyeon', ['seoyeon', 'yubin', 'sohyun']],
-  ['naekyung', ['sumin', 'hyerin', 'jiwoo', 'seoa']],
-  ['kaede', ['kotone', 'mayu']],
-  ['kotone', ['kaede', 'mayu', 'rin']],
-  ['mayu', ['kaede', 'kotone', 'seollin']],
-  ['sion', ['chaewon', 'chaeyeon', 'hayeon', 'jubin']],
-  ['chaewon', ['sion', 'seoa', 'seollin', 'jiyeon']],
-  ['sumin', ['seoyeon', 'hyerin', 'jiwoo', 'chaeyeon', 'yooyeon']],
-  ['sohyun', ['seoyeon', 'yooyeon', 'rin', 'yubin']],
-  ['jubin', ['chaeyeon', 'sion', 'hayeon']],
+  ['mizyu',    ['rin', 'suzuka', 'kanon']],
+  ['rin',      ['mizyu', 'suzuka']],
+  ['suzuka',   ['mizyu', 'rin', 'kanon', 'nana']],
+  ['kanon',    ['mizyu', 'rin', 'suzuka']],
+  ['nako',     ['nana', 'taiyo', 'michi']],
+  ['nana',     ['nako', 'taiyo', 'yoshiaki', 'michi']],
+  ['taiyo',    ['nako', 'nana', 'michi']],
+  ['yoshiaki', ['michi', 'nana', 'kanon']],
+  ['michi',    ['yoshiaki', 'nako', 'nana', 'taiyo']],
 ];
 
 function buildLikes(commenterId: string, seed: number, forcedMin?: number): CommentLike[] {
@@ -614,10 +436,8 @@ function buildLikes(commenterId: string, seed: number, forcedMin?: number): Comm
     }
   }
 
-  const isSohyun = commenterId === 'sohyun';
-  const isYooyeonShort = commenterId === 'yooyeon';
-  const baseCount = isSohyun ? 4 : isYooyeonShort ? 3 : 2;
-  const maxCount = isSohyun ? 7 : isYooyeonShort ? 5 : 5;
+  const baseCount = 2;
+  const maxCount = 5;
   const targetCount = Math.max(forcedMin || 0, baseCount + Math.floor(rng() * (maxCount - baseCount + 1)));
 
   const affinityLikers = affinityMap.get(commenterId) || [];
@@ -627,17 +447,10 @@ function buildLikes(commenterId: string, seed: number, forcedMin?: number): Comm
   // Add affinity likers first
   for (const l of affinityLikers) {
     if (!used.has(l) && likes.length < targetCount) {
-      if (isSohyun || isYooyeonShort || rng() < 0.7) {
+      if (rng() < 0.7) {
         likes.push({ memberId: l });
         used.add(l);
       }
-    }
-  }
-
-  // seoyeon+yubin always like yooyeon
-  if (isYooyeonShort) {
-    for (const must of ['seoyeon', 'yubin']) {
-      if (!used.has(must)) { likes.push({ memberId: must }); used.add(must); }
     }
   }
 
@@ -671,12 +484,12 @@ function getCtx(tags: Tags): Ctx {
 
 function getPreferredMembers(tags: Tags): string[] {
   const p: string[] = [];
-  if (tags.hasJapan || tags.hasKaede || tags.hasKotone || tags.hasMayu) p.push('kaede', 'kotone', 'mayu');
-  if (tags.hasConcert || tags.hasDance) p.push('chaeyeon', 'yubin', 'rin', 'jubin', 'hyerin');
-  if (tags.hasComeback) p.push('sion', 'naekyung', 'sumin', 'chaewon');
-  if (tags.hasFood) p.push('nien', 'dahyun', 'jiwoo');
-  if (tags.hasPhoto) p.push('mayu', 'shinwi', 'hayeon');
-  if (tags.hasCute) p.push('sumin', 'seoa', 'chaewon');
+  if (tags.hasJapan) p.push('mizyu', 'rin', 'suzuka', 'kanon');
+  if (tags.hasConcert || tags.hasDance) p.push('mizyu', 'rin', 'suzuka', 'kanon');
+  if (tags.hasComeback) p.push('nako', 'nana', 'michi');
+  if (tags.hasFood) p.push('nana', 'taiyo', 'nako');
+  if (tags.hasPhoto) p.push('yoshiaki', 'michi', 'kanon');
+  if (tags.hasCute) p.push('kanon', 'nako', 'yoshiaki');
   return [...new Set(p)];
 }
 
@@ -763,12 +576,12 @@ function buildSmartComments(postId: string, source: FeedSource, title: string, b
     const content = pickCommentByLength(memberId, ctx, desiredLen, hashStr(postId + memberId));
     const replies: Reply[] = [];
 
-    // Occasional sumin encouragement reply
-    if (memberId !== 'sumin' && rng() < 0.15) {
+    // Occasional nako encouragement reply
+    if (memberId !== 'nako' && rng() < 0.15) {
       replies.push({
-        memberId: 'sumin',
-        content: '정말 멋있어요!! 화이팅!! 💕',
-        likes: buildLikes('sumin', hashStr(postId + 'sumin-reply-' + memberId)),
+        memberId: 'nako',
+        content: '응원할게요!! 화이팅!! 😊',
+        likes: buildLikes('nako', hashStr(postId + 'nako-reply-' + memberId)),
       });
     }
 
@@ -942,7 +755,7 @@ function renderTweetText(
 
     if (entry) {
       const isPic = entry.display.startsWith('pic.') || entry.expanded.includes('/photo/');
-      const isSelf = entry.expanded.includes('x.com/triplescosmos') || entry.expanded.includes('twitter.com/triplescosmos');
+      const isSelf = entry.expanded.includes('x.com/ATARASHIIGAKKO') || entry.expanded.includes('twitter.com/ATARASHIIGAKKO');
 
       if (isSelf) {
         // 자기 링크 → 스킵
@@ -1070,7 +883,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
             <path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
           </svg>
           <span className="text-[11px] text-gray-500 font-medium">
-            tripleS official 님이 재게시함
+            ATARASHII GAKKO! official 님이 재게시함
             {post.rtAuthorName && (
               <span className="text-gray-400"> · <span className="font-semibold text-gray-600">{post.rtAuthorName}</span> 원글</span>
             )}
@@ -1094,7 +907,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
             <SourceBadge source={post.source} />
           </div>
           <p className="text-[12px] text-gray-400 leading-tight mt-0.5">
-            {timeAgo(post.timestamp)} · {`tripleS · ${S_NUMBERS[post.posterId] || ''}`}
+            {timeAgo(post.timestamp)} · {`TWIN PLANET · ${S_NUMBERS[post.posterId] || ''}`}
           </p>
         </div>
         <div className="text-gray-300 text-xl leading-none shrink-0">···</div>
@@ -1408,7 +1221,7 @@ export default function FeedPage() {
         // t.co URL 처리: self-link만 제거, 나머지는 renderTweetText가 처리
         let cleanText = t.text || '';
         (t.urls || []).forEach(u => {
-          const isSelfLink = u.expanded.includes('x.com/triplescosmos') || u.expanded.includes('twitter.com/triplescosmos');
+          const isSelfLink = u.expanded.includes('x.com/ATARASHIIGAKKO') || u.expanded.includes('twitter.com/ATARASHIIGAKKO');
           if (isSelfLink) {
             cleanText = cleanText.replace(u.url, '');
           }
@@ -1474,30 +1287,15 @@ export default function FeedPage() {
   }, []);
 
   const memberOptions = [
-    { id: 'seoyeon', name: '서연', sNumber: 1 },
-    { id: 'hyerin', name: '혜린', sNumber: 2 },
-    { id: 'jiwoo', name: '지우', sNumber: 3 },
-    { id: 'chaeyeon', name: '채연', sNumber: 4 },
-    { id: 'yooyeon', name: '유연', sNumber: 5 },
-    { id: 'sumin', name: '수민', sNumber: 6 },
-    { id: 'naekyung', name: '나경', sNumber: 7 },
-    { id: 'yubin', name: '유빈', sNumber: 8 },
-    { id: 'kaede', name: '카에데', sNumber: 9 },
-    { id: 'dahyun', name: '다현', sNumber: 10 },
-    { id: 'kotone', name: '코토네', sNumber: 11 },
-    { id: 'yeonji', name: '연지', sNumber: 12 },
-    { id: 'nien', name: '니엔', sNumber: 13 },
-    { id: 'sohyun', name: '소현', sNumber: 14 },
-    { id: 'shinwi', name: '신위', sNumber: 15 },
-    { id: 'mayu', name: '마유', sNumber: 16 },
-    { id: 'rin', name: '린', sNumber: 17 },
-    { id: 'jubin', name: '주빈', sNumber: 18 },
-    { id: 'seollin', name: '설린', sNumber: 19 },
-    { id: 'seoa', name: '서아', sNumber: 20 },
-    { id: 'sion', name: '시온', sNumber: 21 },
-    { id: 'hayeon', name: '하연', sNumber: 22 },
-    { id: 'jiyeon', name: '지연', sNumber: 23 },
-    { id: 'chaewon', name: '채원', sNumber: 24 },
+    { id: 'mizyu',    name: 'MIZYU',   sNumber: 1 },
+    { id: 'rin',      name: 'RIN',     sNumber: 2 },
+    { id: 'suzuka',   name: 'SUZUKA',  sNumber: 3 },
+    { id: 'kanon',    name: 'KANON',   sNumber: 4 },
+    { id: 'nako',     name: '奈子',    sNumber: 5 },
+    { id: 'nana',     name: '奈々',    sNumber: 6 },
+    { id: 'taiyo',    name: '太陽',    sNumber: 7 },
+    { id: 'yoshiaki', name: 'よしあき', sNumber: 8 },
+    { id: 'michi',    name: 'ミチ',    sNumber: 9 },
   ];
 
   const displayPosts = posts.map((post) => ({
@@ -1521,7 +1319,7 @@ export default function FeedPage() {
         className="px-4 pt-4 pb-3 border-b border-violet-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
         style={{ background: '#F5F3FF' }}
       >
-          <h1 className="text-sm font-normal text-gray-900 shrink-0">코스모스 공방 🌐</h1>
+          <h1 className="text-sm font-normal text-gray-900 shrink-0">팬 피드 🌐</h1>
         <div className="flex items-center gap-2 shrink-0">
           {/* 출처 드랍다운 */}
           <div ref={sourceDropdownRef} className="relative">

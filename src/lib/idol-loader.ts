@@ -118,7 +118,6 @@ const GROUP_SLUG_MAP: Record<string, string> = {
   SEVENTEEN: 'seventeen',
   twinplanet: 'twin-planet',
   ARTMS: 'artms',
-  '트리플에스': 'triples',
   '세븐틴': 'seventeen',
   '아이브': 'ive',
   '아르테미스': 'artms',

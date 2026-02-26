@@ -573,7 +573,7 @@ Never send one long message — break it up naturally like a real chat.
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${openrouterKey}`,
-        'HTTP-Referer': 'https://triples-chat.vercel.app',
+        'HTTP-Referer': 'https://twinplanet-chat.vercel.app',
         'X-Title': 'TWIN PLANET Chat',
       },
       body: JSON.stringify(body),

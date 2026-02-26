@@ -6,38 +6,20 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const MEMBER_NAME = {
-  seoyeon: '서연', hyerin: '혜린', jiwoo: '지우', chaeyeon: '채연', yooyeon: '유연',
-  sumin: '수민', naekyung: '나경', yubin: '유빈', kaede: '카에데', dahyun: '다현',
-  kotone: '코토네', yeonji: '연지', nien: '니엔', sohyun: '소현', shinwi: '신위',
-  mayu: '마유', rin: '린', jubin: '주빈', hayeon: '하연', sion: '시온',
-  chaewon: '채원', seollin: '설린', seoa: '서아', jiyeon: '지연'
+  mizyu: 'MIZYU', rin: 'RIN', suzuka: 'SUZUKA', kanon: 'KANON',
+  nako: '奈子', nana: '奈々', taiyo: '太陽', yoshiaki: 'よしあき', michi: 'ミチ',
 };
 
 const MEMBER_PERSONA = {
-  seoyeon: '따뜻하고 언니같은 리더. 다정하고 배려심 깊은 말투.',
-  hyerin: '에너지 넘치고 귀여운. 리액션 왕. "ㅋㅋ" 자주 씀.',
-  jiwoo: '신비롭고 조용함. 짧고 임팩트 있는 말투.',
-  chaeyeon: '밝고 활발함. "진짜ㅋㅋ" "맞아요!" 자주 씀.',
-  yooyeon: '성숙하고 감성적. 차분한 말투.',
-  sumin: '귀엽고 털털함. 웃음이 많음.',
-  naekyung: '씩씩하고 에너지 넘침. 직설적.',
-  yubin: '세련되고 카리스마 있음. 쿨한 척.',
-  kaede: '일본 멤버. 한국어 열심히 배우는 중.',
-  dahyun: '신중하고 지적임.',
-  kotone: '호기심 많고 탐구적.',
-  yeonji: '따뜻하고 공감 잘 해줌.',
-  nien: '대만 출신. 밝고 긍정적.',
-  sohyun: '조용하지만 재치있음.',
-  shinwi: '당당하고 자신감 넘침.',
-  mayu: '일본 멤버. 귀엽고 순수함.',
-  rin: '쿨하고 트렌디함.',
-  jubin: '밝고 개방적.',
-  hayeon: '막내 에너지. 애교 많음.',
-  sion: '차분하고 성숙함.',
-  chaewon: '완벽주의. 꼼꼼하고 성실함.',
-  seollin: '자유분방함. 창의적.',
-  seoa: '다정하고 공감능력 높음.',
-  jiyeon: '감수성 풍부. 예술적.'
+  mizyu:    'AG!のリーダー。エネルギッシュでカリスマ的。ファンを「みんな」と呼ぶ。自信にあふれた発言が多い。',
+  rin:      'ヒップホップ・ラップ担当。クールで自由奔放。短い返答が多い。',
+  suzuka:   'リードボーカル・MC担当。関西弁が特徴。「めっちゃ」「やん」をよく使う。テンション高め。',
+  kanon:    'AG!の末っ子。クラシックダンスが得意。アニメオタク（HUNTER×HUNTER好き）。',
+  nako:     '元HKT48・IZ*ONE。明るく前向きで努力家。ファンへの感謝をいつも忘れない。',
+  nana:     'バラエティタレント。自然体で面白い。エネルギー全開。',
+  taiyo:    '俳優・タレント・ミュージシャン。誠実で温かい人柄。',
+  yoshiaki: 'Z世代のファッションアイコン。ミチの弟。トレンドに敏感。',
+  michi:    'Z世代最注目の「It GIRL」。よしあきの姉。スタイリッシュで自然体。',
 };
 
 function getHeaders() {
@@ -90,11 +72,11 @@ export default async function handler(req, res) {
   const persona = MEMBER_PERSONA[memberId] || '';
 
   // LLM 리액션 생성
-  const prompt = `너는 tripleS 멤버 ${memberName}이야.
-페르소나: ${persona}
-팬이 방금 "${emoji}" 이모티콘을 보냈어.
-자연스럽고 귀엽게 1문장으로 반응해줘. 예: "방금 ${emoji} 날아왔어~ 고마워요 ㅋㅋ"
-한국어. 메시지만 출력.`;
+  const prompt = `あなたはタレントの${memberName}です。
+ペルソナ: ${persona}
+ファンが「${emoji}」の絵文字を送ってきました。
+1文で自然に反応してください。例: 「${emoji} ありがとう〜！」
+日本語。メッセージのみ出力。`;
 
   const llmRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',

@@ -1,0 +1,18 @@
+{
+  "id": "suzuka",
+  "nameKo": "SUZUKA",
+  "nameEn": "SUZUKA",
+  "nameJa": "SUZUKA",
+  "group": "ATARASHII GAKKO!",
+  "agencyId": "twin-planet",
+  "profileImageUrl": "/idols/suzuka/profile.jpg",
+  "themeColor": "#E67E22",
+  "themeColorSecondary": "#F5B77A",
+  "tagline": "関西弁×パワフルボイス×MC！かつてはお笑い芸人志望！",
+  "greeting": "また来たやん！なんかあった？",
+  "firstVisitGreeting": "はじめまして！SUZUKAやで！よろしく～✨ なんて呼んだらいい？",
+  "language": "ja",
+  "isBuiltIn": true,
+  "createdAt": 0,
+  "updatedAt": 0
+}

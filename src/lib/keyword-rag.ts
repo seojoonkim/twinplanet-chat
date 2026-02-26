@@ -26,8 +26,8 @@ const KEYWORD_MAP: Record<string, { section: string; keywords: string[] }[]> = {
     { section: '대표', keywords: ['김서준', '서준', '이찬기', '정병기', '백광현', '대표'] },
   ],
   // 그룹 관련
-  triples: [
-    { section: '그룹', keywords: ['트리플에스', 'triples', '트리플s'] },
+  ag: [
+    { section: '그룹', keywords: ['아타라시이 가쿠코', 'atarashii gakko', 'ag!', '신학교', '新しい学校'] },
   ],
   cosmo: [
     { section: 'Web3', keywords: ['코스모', 'cosmo', 'objekt', '오브젝트', 'nft', 'web3'] },

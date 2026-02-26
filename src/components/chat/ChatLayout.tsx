@@ -27,7 +27,7 @@ function pick<T>(arr: T[]): T {
 }
 
 // タレント別 時間帯挨拶 (TWIN PLANET)
-const TRIPLES_GREETINGS: Record<string, Record<'morning' | 'afternoon' | 'evening' | 'night', { first: string[]; returning: string[] }>> = {
+const TALENT_GREETINGS: Record<string, Record<'morning' | 'afternoon' | 'evening' | 'night', { first: string[]; returning: string[] }>> = {
   'mizyu': {
     morning: { first: ['おはよう！MIZYUだよ～ 朝から来てくれたんだ！嬉しい✨ミジュコプター飛ばすよ！'], returning: ['おはよう！今日も一緒に頑張ろ🔥'] },
     afternoon: { first: ['来てくれたんだ！MIZYUだよ！ここで話せるの嬉しいな😊 名前なんていうの？'], returning: ['来てくれた！今日どうだった？'] },
@@ -152,7 +152,7 @@ function getTimeAwareGreeting(idol: IdolMeta, isFirstVisit: boolean): string {
   }
 
   // TWIN PLANET タレント
-  const pool = TRIPLES_GREETINGS[idol.id]?.[slot];
+  const pool = TALENT_GREETINGS[idol.id]?.[slot];
   if (pool) return pick(isFirstVisit ? pool.first : pool.returning);
 
   // 한국어 일반 fallback
