@@ -352,7 +352,7 @@ function CommunityCard({ item }: { item: CommunityItem }) {
       {/* 리액션 카운트 */}
       <div className="flex items-center justify-between px-3.5 py-1.5">
         <span className="text-[12px] text-gray-400">🤍 {item.likes.toLocaleString()}</span>
-        <span className="text-[12px] text-gray-400">댓글 {item.replies}개</span>
+        <span className="text-[12px] text-gray-400">{item.replies} comments</span>
       </div>
 
       <div className="h-px bg-gray-100 mx-3.5" />
@@ -471,7 +471,7 @@ export default function CommunityPage() {
         className="px-4 pt-4 pb-3 border-b border-violet-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
         style={{ background: '#F5F3FF' }}
       >
-        <h1 className="text-sm font-normal text-gray-900 shrink-0">팬덤 레이더 📡</h1>
+        <h1 className="text-sm font-normal text-gray-900 shrink-0">FANDOM RADAR 📡</h1>
         <div className="flex gap-2 shrink-0">
           <div ref={sourceDropdownRef} className="relative">
             <button
@@ -573,7 +573,7 @@ export default function CommunityPage() {
       ) : fetchError ? (
         <div className="mx-4 text-sm text-gray-500 py-8 text-center">{fetchError}</div>
       ) : filteredItems.length === 0 ? (
-        <div className="mx-4 text-sm text-gray-500 py-8 text-center">최근 7일 간 게시물이 없습니다.</div>
+        <div className="mx-4 text-sm text-gray-500 py-8 text-center">No posts in the last 7 days.</div>
       ) : (
         filteredItems.map(item => (
           <CommunityCard key={item.id} item={item} />

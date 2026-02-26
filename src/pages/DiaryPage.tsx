@@ -99,10 +99,10 @@ function SecretNote({ text }: { text: string }) {
 // Feature C: 공감 리액션
 type ReactionKey = 'heart' | 'lol' | 'sad' | 'star';
 const REACTIONS: { key: ReactionKey; emoji: string; label: string }[] = [
-  { key: 'heart', emoji: '❤️', label: '공감' },
+  { key: 'heart', emoji: '❤️', label: 'Love' },
   { key: 'lol', emoji: '😂', label: 'ㅋㅋ' },
-  { key: 'sad', emoji: '😢', label: '슬픔' },
-  { key: 'star', emoji: '✨', label: '최고' },
+  { key: 'sad', emoji: '😢', label: 'Sad' },
+  { key: 'star', emoji: '✨', label: 'Best' },
 ];
 
 const ALL_IDOL_IDS = ['mizyu','rin','suzuka','kanon','nako','nana','taiyo','yoshiaki','michi'];
@@ -207,10 +207,10 @@ function DiaryReactions({ entryId, entry }: { entryId: string; entry: DiaryEntry
                   />
                 ))}
                 {isMyKey && (
-                  <div className="w-7 h-7 rounded-full bg-violet-500 border-2 border-white flex items-center justify-center text-[9px] text-white font-bold shrink-0">나</div>
+                  <div className="w-7 h-7 rounded-full bg-violet-500 border-2 border-white flex items-center justify-center text-[9px] text-white font-bold shrink-0">ME</div>
                 )}
               </div>
-              <span className="text-sm font-bold text-gray-600 shrink-0">{totalCount}명</span>
+              <span className="text-sm font-bold text-gray-600 shrink-0">{totalCount}</span>
             </button>
 
             {/* 한마디 — 프리셋 2명 + 내가 반응한 경우 나도 */}
@@ -230,9 +230,9 @@ function DiaryReactions({ entryId, entry }: { entryId: string; entry: DiaryEntry
                 ))}
                 {isMyKey && (
                   <div className="flex items-center gap-2.5 px-4 py-2">
-                    <div className="w-5 h-5 rounded-full bg-violet-500 flex items-center justify-center text-[8px] text-white font-bold shrink-0">나</div>
-                    <span className="text-[11px] font-semibold text-violet-600 shrink-0">나</span>
-                    <span className="text-[11px] text-violet-500 italic truncate">"반응 남겼어요 ✨"</span>
+                    <div className="w-5 h-5 rounded-full bg-violet-500 flex items-center justify-center text-[8px] text-white font-bold shrink-0">ME</div>
+                    <span className="text-[11px] font-semibold text-violet-600 shrink-0">ME</span>
+                    <span className="text-[11px] text-violet-500 italic truncate">"Reacted ✨"</span>
                   </div>
                 )}
               </div>
@@ -277,7 +277,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
           ‹ 목록
         </button>
         <span className="text-gray-400 text-xs">|</span>
-        <span className="text-xs text-gray-500 font-medium">{entry.authorName}의 일기</span>
+        <span className="text-xs text-gray-500 font-medium">{entry.authorName}'s diary</span>
       </div>
 
       {/* 일기 본문 — 스크롤 없이 전체 flow */}
@@ -401,7 +401,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
 
         {/* 서명 */}
         <div className="mt-4 pt-4 border-t border-violet-200 text-right">
-          <span className="text-sm text-violet-500 italic">— {entry.authorName} 씀</span>
+          <span className="text-sm text-violet-500 italic">— {entry.authorName}</span>
         </div>
 
         {/* Feature B: 비밀 반전 공개 */}
@@ -420,7 +420,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
         {/* Feature F: 시리즈 연결 */}
         {entry.relatedEntries && entry.relatedEntries.length > 0 && (
           <div className="mt-6 pt-4 border-t border-violet-100">
-            <p className="text-xs font-bold text-violet-600 mb-3">📖 연관 일기도 읽어봐요</p>
+            <p className="text-xs font-bold text-violet-600 mb-3">📖 Related diaries</p>
             <div className="space-y-2">
               {entry.relatedEntries.map(id => {
                 const related = DIARY_ENTRIES.find(e => e.id === id);
@@ -550,7 +550,7 @@ export default function DiaryPage() {
         style={{ background: '#F5F3FF' }}
       >
         {/* 왼쪽: 제목 */}
-        <h1 className="text-sm font-normal text-gray-900 shrink-0">오늘의 비밀일기 📖</h1>
+        <h1 className="text-sm font-normal text-gray-900 shrink-0">SECRET DIARY 📖</h1>
 
         {/* 오른쪽: 멤버 필터 드롭다운 */}
         <div ref={dropdownRef} className="relative shrink-0">

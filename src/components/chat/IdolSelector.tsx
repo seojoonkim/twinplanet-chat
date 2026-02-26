@@ -67,11 +67,6 @@ export default function IdolSelector({ idols }: Props) {
             onClick={() => navigate('/')}
             className="flex items-center justify-start gap-2 mb-3 animate-fade-in cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <img
-              src="/logo.png"
-              alt="twinplanet.chat"
-              className="w-[30px] h-[30px] logo-glow"
-            />
             <h1 className="text-[27px] font-black tracking-tight shimmer-text">
               twinplanet.chat
             </h1>

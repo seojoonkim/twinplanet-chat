@@ -587,8 +587,8 @@ export default function GroupChatPage() {
     return (
       <div className="flex items-center justify-center h-screen bg-gradient-to-br from-pink-50 to-purple-50">
         <div className="text-center">
-          <p className="text-lg font-bold text-gray-700 mb-2">방을 찾을 수 없어요 😢</p>
-          <button onClick={() => navigate('/')} className="text-pink-500 underline">홈으로 돌아가기</button>
+          <p className="text-lg font-bold text-gray-700 mb-2">Room not found 😢</p>
+          <button onClick={() => navigate('/')} className="text-pink-500 underline">Back to home</button>
         </div>
       </div>
     );
@@ -615,7 +615,7 @@ export default function GroupChatPage() {
             </svg>
           </button>
           <div className="flex-1">
-            <h1 className="text-base font-bold text-white">{room?.title || '수다방'} 🎵</h1>
+            <h1 className="text-base font-bold text-white">{room?.title || 'CHAT ROOM'} 🎵</h1>
             <p className="text-[11px] text-white/80">{MEMBER_ORDER.map(id => MEMBERS[id]?.name).filter(Boolean).join(' · ')}</p>
           </div>
           {currentTopicData && (
@@ -659,7 +659,7 @@ export default function GroupChatPage() {
               })}
             </div>
 
-            <p className="text-center text-sm text-gray-700 mb-2">5분 수다 주제를 골라주세요!</p>
+            <p className="text-center text-sm text-gray-700 mb-2">Pick a 5-min chat topic!</p>
             {/* 4열 3줄 고정 */}
             <div className="grid grid-cols-4 gap-2 w-full">
               {TOPICS.map((t: GroupTopic) => (
@@ -844,7 +844,7 @@ export default function GroupChatPage() {
             {/* Done state */}
             {isDone && (
               <div className="text-center py-6 space-y-3 animate-fade-in">
-                <p className="text-sm text-gray-600">{timeLeft === 0 ? '대화 시간이 끝났어요 ⏰' : '대화가 끝났어요! 🎤'}</p>
+                <p className="text-sm text-gray-600">{timeLeft === 0 ? "Time's up ⏰" : 'Chat ended! 🎤'}</p>
                 <div className="flex justify-center gap-3">
                   <button
                     onClick={handleRestart}
@@ -884,7 +884,7 @@ export default function GroupChatPage() {
                   handleFanSubmit();
                 }
               }}
-              placeholder="수다방에 끼어들기..."
+              placeholder="Join the chat..."
               className="flex-1 text-[13px] bg-transparent outline-none text-gray-700 placeholder-gray-400 min-w-0"
             />
             <button

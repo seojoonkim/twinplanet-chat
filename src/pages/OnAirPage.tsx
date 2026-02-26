@@ -338,7 +338,6 @@ export default function OnAirPage() {
                 onClick={() => navigate('/')}
                 className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
               >
-                <img src="/logo.png" alt="twinplanet.chat" className="w-[30px] h-[30px] logo-glow" />
                 <h1 className="text-[27px] font-black tracking-tight shimmer-text">twinplanet.chat</h1>
                 <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full">Beta</span>
               </button>
@@ -419,7 +418,7 @@ export default function OnAirPage() {
                         <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-400 border border-white" style={{ animation: 'onair-blink 1.5s ease-in-out infinite' }} />
                       </div>
                       <div className="text-[10px] text-white/90 mt-1">{m.name}</div>
-                      <div className="text-[9px] text-white/60">{formatCountdown(session.ends_at, new Date(now))} 남음</div>
+                      <div className="text-[9px] text-white/60">{formatCountdown(session.ends_at, new Date(now))} left</div>
                     </div>
                   );
                 })}
