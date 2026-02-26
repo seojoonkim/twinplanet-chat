@@ -128,17 +128,16 @@ export default function SiteFooter() {
       <div className="flex justify-center gap-3 mb-4">
         <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-xs text-gray-500 font-medium">지금</span>
-          <span className="text-xs font-bold text-green-600">{online}명</span>
-          <span className="text-xs text-gray-400">접속 중</span>
+          <span className="text-xs font-bold text-green-600">{online}</span>
+          <span className="text-xs text-gray-400">online</span>
         </div>
         <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-gray-100 shadow-sm">
           <span className="text-xs">📅</span>
-          <span className="text-xs text-gray-500 font-medium">오늘</span>
+          <span className="text-xs text-gray-500 font-medium">TODAY</span>
           <span className="text-xs font-bold text-violet-600">
-            {todayVisitors === null ? '…' : `${todayVisitors}명`}
+            {todayVisitors === null ? '…' : `${todayVisitors}`}
           </span>
-          <span className="text-xs text-gray-400">방문</span>
+          <span className="text-xs text-gray-400">visits</span>
         </div>
       </div>
 

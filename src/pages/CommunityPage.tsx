@@ -478,7 +478,7 @@ export default function CommunityPage() {
               onClick={() => setSourceDropdownOpen(o => !o)}
               className="flex items-center gap-1 text-xs font-medium text-violet-700 bg-violet-50 border border-violet-200 rounded-full px-2.5 py-1 hover:bg-violet-100 transition-colors whitespace-nowrap"
             >
-              {sourceFilter === 'all' ? '출처' : sourceFilterLabel(sourceFilter)}
+              {sourceFilter === 'all' ? 'SOURCE' : sourceFilterLabel(sourceFilter)}
               <svg
                 width="10"
                 height="10"
@@ -518,8 +518,8 @@ export default function CommunityPage() {
               className="flex items-center gap-1 text-xs font-medium text-violet-700 bg-violet-50 border border-violet-200 rounded-full px-2.5 py-1 hover:bg-violet-100 transition-colors whitespace-nowrap"
             >
               {filterMember
-                ? (memberOptions.find((m) => m.id === filterMember)?.name ?? '모두 보기')
-                : '모두 보기'}
+                ? (memberOptions.find((m) => m.id === filterMember)?.name ?? 'ALL')
+                : 'ALL'}
               <svg
                 width="10"
                 height="10"
@@ -544,7 +544,7 @@ export default function CommunityPage() {
                   onClick={() => { setFilterMember(''); setDropdownOpen(false); }}
                   className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg mb-2 transition-colors ${!filterMember ? 'bg-violet-100 text-violet-700' : 'text-gray-500 hover:bg-violet-50'}`}
                 >
-                  ✓ 모두 보기
+                  ✓ ALL
                 </button>
                 <div className="grid grid-cols-3 gap-1">
                   {memberOptions.map((m) => (

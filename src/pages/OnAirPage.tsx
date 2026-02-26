@@ -338,12 +338,12 @@ export default function OnAirPage() {
                 onClick={() => navigate('/')}
                 className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
               >
-                <img src="/logo.png" alt="TWIN PLANET chat" className="w-[30px] h-[30px] logo-glow" />
-                <h1 className="text-[27px] font-black tracking-tight shimmer-text">TWIN PLANET chat</h1>
+                <img src="/logo.png" alt="twinplanet.chat" className="w-[30px] h-[30px] logo-glow" />
+                <h1 className="text-[27px] font-black tracking-tight shimmer-text">twinplanet.chat</h1>
                 <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full">Beta</span>
               </button>
               <p className="text-sm font-normal tracking-tight bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
-                TWIN PLANET タレントとのリアルタイムチャット ✨
+                TWIN PLANET タレントと AI チャット ✨
               </p>
             </div>
             {/* Tab Bar */}
@@ -352,10 +352,10 @@ export default function OnAirPage() {
                 { tab: 'onair',     path: '/',          label: 'ON AIR' },
                 { tab: 'feed',      path: '/feed',      label: 'FEED' },
                 { tab: 'group',     path: '/rooms',     label: 'CHAT' },
-                { tab: 'solo',      path: '/chat',      label: 'CHAT' },
+                { tab: 'solo',      path: '/chat',      label: '1:1' },
                 { tab: 'diary',     path: '/diary',     label: 'DIARY' },
                 { tab: 'community', path: '/community', label: 'RADAR' },
-                { tab: 'pulse',     path: '/pulse',     label: 'RADAR' },
+                { tab: 'pulse',     path: '/pulse',     label: 'PULSE' },
               ] as { tab: Tab; path: string; label: string }[]).map(({ tab, path, label }) => {
                 const active = activeTab === tab;
                 return (
@@ -455,7 +455,7 @@ export default function OnAirPage() {
       <div className="flex-1 overflow-y-auto w-full pl-3 pr-5 pb-6 pt-4 space-y-0.5 custom-scrollbar">
         {visibleMessages.length === 0 ? (
           <div className="flex items-center justify-center py-16 text-sm text-gray-400">
-            잠시 후 방송이 시작됩니다 🎙️
+            まもなく放送が始まります 🎙️
           </div>
         ) : (
           visibleMessages.map((item, i) => {

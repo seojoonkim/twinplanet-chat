@@ -558,7 +558,7 @@ export default function DiaryPage() {
             onClick={() => setDropdownOpen(o => !o)}
             className="flex items-center gap-1 text-xs font-medium text-violet-700 bg-violet-50 border border-violet-200 rounded-full px-2.5 py-1 hover:bg-violet-100 transition-colors whitespace-nowrap"
           >
-            {filterMember ? (ALL_MEMBERS[filterMember]?.name ?? '정병기') : '모두 보기'}
+            {filterMember ? (ALL_MEMBERS[filterMember]?.name ?? 'ALL') : 'ALL'}
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: dropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
               <polyline points="6 9 12 15 18 9" />
             </svg>
@@ -574,7 +574,7 @@ export default function DiaryPage() {
                 onClick={() => { setFilterMember(''); setDropdownOpen(false); }}
                 className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg mb-2 transition-colors ${!filterMember ? 'bg-violet-100 text-violet-700' : 'text-gray-500 hover:bg-gray-50'}`}
               >
-                ✓ 모두 보기
+                ✓ ALL
               </button>
               {/* 멤버 3열 그리드 */}
               <div className="grid grid-cols-3 gap-1">

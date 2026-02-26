@@ -93,10 +93,10 @@ export default function IdolSelector({ idols }: Props) {
             { tab: 'onair',     path: '/',          label: 'ON AIR' },
             { tab: 'feed',      path: '/feed',      label: 'FEED' },
             { tab: 'group',     path: '/rooms',     label: 'CHAT' },
-            { tab: 'solo',      path: '/chat',      label: '1:1 챗' },
+            { tab: 'solo',      path: '/chat',      label: '1:1' },
             { tab: 'diary',     path: '/diary',     label: 'DIARY' },
             { tab: 'community', path: '/community', label: 'RADAR' },
-            { tab: 'pulse',     path: '/pulse',     label: '펄스' },
+            { tab: 'pulse',     path: '/pulse',     label: 'PULSE' },
           ] as { tab: Tab; path: string; label: string }[];
           return (
             <div
