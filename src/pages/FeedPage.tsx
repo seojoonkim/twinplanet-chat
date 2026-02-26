@@ -1249,9 +1249,10 @@ export default function FeedPage() {
       });
     };
 
-    const processInstagram = (posts: { id: string; timestamp?: number; caption?: string; thumbnail?: string; url?: string; likes?: number; videoUrl?: string }[]) => {
+    const processInstagram = (posts: { id: string; timestamp?: number; caption?: string; thumbnail?: string; url?: string; likes?: number; videoUrl?: string; memberId?: string | null; username?: string }[]) => {
       posts.forEach(p => {
-        const igPosterId = detectPoster(p.caption || '', hashStr(`ig-${p.id}`));
+        // memberId가 명시된 경우 우선 사용, 없으면 캡션 키워드 감지 → seed fallback
+        const igPosterId = p.memberId || detectPoster(p.caption || '', hashStr(`ig-${p.id}`));
         unified.push({
           id: `ig-${p.id}`,
           source: 'instagram',
