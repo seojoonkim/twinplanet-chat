@@ -41,7 +41,7 @@ function AdminGate({ children }: { children: React.ReactNode }) {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
             TWIN PLANET chat Admin
           </h1>
-          <p className="text-gray-400 text-sm mt-1">비밀번호를 입력하세요</p>
+          <p className="text-gray-400 text-sm mt-1">Enter password</p>
         </div>
 
         <input
@@ -51,7 +51,7 @@ function AdminGate({ children }: { children: React.ReactNode }) {
             setPassword(e.target.value);
             setError(false);
           }}
-          placeholder="비밀번호"
+          placeholder="Password"
           autoFocus
           className={`w-full px-4 py-3 rounded-xl border ${
             error ? 'border-red-400' : 'border-gray-200'
@@ -59,7 +59,7 @@ function AdminGate({ children }: { children: React.ReactNode }) {
         />
 
         {error && (
-          <p className="text-red-500 text-xs mt-2">비밀번호가 틀렸습니다.</p>
+          <p className="text-red-500 text-xs mt-2">Incorrect password.</p>
         )}
 
         <button

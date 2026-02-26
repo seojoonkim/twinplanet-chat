@@ -440,7 +440,7 @@ export default function OnAirPage() {
                     </div>
                   </div>
                   <div className="text-[10px] text-white/70 mt-1">{nextSession.member_name}</div>
-                  <div className="text-[9px] text-white/50">{formatCountdown(nextSession.started_at, new Date(now))} 후</div>
+                  <div className="text-[9px] text-white/50">in {formatCountdown(nextSession.started_at, new Date(now))}</div>
                 </div>
               </>
             )}

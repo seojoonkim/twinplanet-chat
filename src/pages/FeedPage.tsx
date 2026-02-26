@@ -885,7 +885,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
           <span className="text-[11px] text-gray-500 font-medium">
             ATARASHII GAKKO! official 님이 재게시함
             {post.rtAuthorName && (
-              <span className="text-gray-400"> · <span className="font-semibold text-gray-600">{post.rtAuthorName}</span> 원글</span>
+              <span className="text-gray-400"> · <span className="font-semibold text-gray-600">{post.rtAuthorName}</span> OP</span>
             )}
           </span>
         </div>
@@ -1016,7 +1016,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
         <span className="text-[12px] text-gray-400">
           {liked ? '❤️' : '🤍'} {(post.likes + (liked ? 1 : 0)).toLocaleString()}
         </span>
-        <span className="text-[12px] text-gray-400">댓글 {post.comments.reduce((sum, c) => sum + 1 + c.replies.length, 0)}개</span>
+        <span className="text-[12px] text-gray-400">{post.comments.reduce((sum, c) => sum + 1 + c.replies.length, 0)} comments</span>
       </div>
 
       <div className="h-px bg-gray-100 mx-3.5" />
