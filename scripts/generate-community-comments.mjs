@@ -21,40 +21,21 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
 // ── 멤버 메타 ─────────────────────────────────────────────────────────────────
 const MEMBER_NAME = {
-  seoyeon: '서연', hyerin: '혜린', jiwoo: '지우', chaeyeon: '채연',
-  yooyeon: '유연', sumin: '수민', naekyung: '나경', yubin: '유빈',
-  kaede: '카에데', dahyun: '다현', kotone: '코토네', yeonji: '연지',
-  nien: '니엔', sohyun: '소현', shinwi: '신위', mayu: '마유',
-  rin: '린', jubin: '주빈', hayeon: '하연', sion: '시온',
-  chaewon: '채원', seollin: '설린', seoa: '서아', jiyeon: '지연', jbk: '정병기',
+  'atarashii-gakko': '新しい学校のリーダーズ',
+  nako: '矢吹奈子',
+  nana: '鈴木奈々',
+  taiyo: '杉浦太陽',
+  yoshiaki: 'よしあき',
+  michi: 'ミチ',
 };
 
 const MEMBER_KEYWORDS = {
-  seoyeon:  ['서연', '윤서연', '서연이'],
-  hyerin:   ['혜린', '정혜린', '혜린이'],
-  jiwoo:    ['지우', '이지우', '지우야'],
-  chaeyeon: ['채연', '김채연', '채채'],
-  yooyeon:  ['유연', '김유연'],
-  sumin:    ['수민', '김수민', '수민이'],
-  naekyung: ['나경', '김나경', '나키', '나킹'],
-  yubin:    ['유빈', '공유빈', '유밤미', '공뿌'],
-  kaede:    ['카에데', '카에', 'kaede', 'Kaede', 'KaedeTimes'],
-  dahyun:   ['다현', '서다현', '다현이'],
-  kotone:   ['코토네', '코토', '토네', 'kotone'],
-  yeonji:   ['연지', '곽연지', '연지야'],
-  nien:     ['니엔', '녠', '넨', 'nien'],
-  sohyun:   ['소현', '박소현', '소현이'],
-  shinwi:   ['신위', '신위야'],
-  mayu:     ['마유', 'mayu'],
-  rin:      ['린', 'rin'],
-  jubin:    ['주빈', '주빈이', '멍재현'],
-  seollin:  ['설린', '설린이'],
-  seoa:     ['서아', '서아야'],
-  sion:     ['시온', '시온이'],
-  hayeon:   ['하연', '하연이'],
-  jiyeon:   ['지연', '지연이'],
-  chaewon:  ['채원', '채채'],
-  jbk:      ['정병기', '병기', '병기형', '제이든', '병기햄', 'jbk', 'JBK', 'Jayden'],
+  'atarashii-gakko': ['AG!', 'ATARASHII GAKKO', '新しい学校', 'リーダーズ'],
+  nako: ['奈子', '矢吹', 'nako', '야부키'],
+  nana: ['奈々', '鈴木奈々', 'nana', '스즈키'],
+  taiyo: ['太陽', '杉浦', 'taiyo', '타이요'],
+  yoshiaki: ['よしあき', 'yoshiaki', '요시아키', 'ONSENSE'],
+  michi: ['ミチ', 'michi', '미치', 'よしミチ'],
 };
 
 const ALL_MEMBER_IDS = Object.keys(MEMBER_NAME);
@@ -99,22 +80,22 @@ const contentPreview = (content || '').slice(0, 100);
     userPrompt = `게시글 제목: ${title}\n게시글 내용: ${contentPreview}\n\n${name}의 댓글:`;
   }
 
-  const systemPrompt = `너는 tripleS 멤버 ${name}야. 아래 personality와 speech-patterns를 참고해서 팬이 올린 DCinside/더쿠/트위터 게시글에 짧은 댓글을 달아줘.
+  const systemPrompt = `あなたはTWIN PLANETタレント ${name}です。ファンが投稿した掲示板の記事に短いコメントを残してください。
 
-페르소나:
-${personality || '(파일 없음)'}
+ペルソナ:
+${personality || '(ファイルなし)'}
 
-말투:
-${speechPatterns || '(파일 없음)'}
+話し方:
+${speechPatterns || '(ファイルなし)'}
 
-규칙:
-- 댓글은 1~2문장, 최대 80자
-- 자연스러운 반응 (귀엽다, 웃기다, 공감, 짧은 팩폭 등)
-- 한국어로
-- 이모지 1-2개 적절히
-- '@{작성자닉네임}' 같은 멘션 ❌
-- 자기 이름 언급 ❌
-- "팬 여러분" 같은 공식적 표현 ❌`;
+ルール:
+- コメントは1〜2文、最大80文字
+- 自然な反応（かわいい、面白い、共感など）
+- 日本語で
+- 絵文字1〜2個適切に
+- '@{ニックネーム}'のようなメンション ❌
+- 自分の名前を言わない ❌
+- 「ファンの皆さん」のような公式な表現 ❌`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -146,10 +127,10 @@ async function generateCommentsForUntaggedPost(title, content) {
   const userPrompt = `게시글 제목: ${title}
 게시글 내용: ${content}
 
-No specific members were tagged. Choose 1-2 members from the tripleS group who would naturally react to this post based on its content. Available members: 서연, 혜린, 지우, 채연, 유연, 수민, 나경, 유빈, 카에데, 다현, 코토네, 연지, 니엔, 소현, 신위, 마유, 린, 주빈, 설린, 서아, 시온, 하연, 지연, 채원, 정병기(jbk).
+No specific members were tagged. Choose 1-2 members from the TWIN PLANET talent who would naturally react to this post based on its content. Available members: 新しい学校のリーダーズ(AG!), 矢吹奈子(nako), 鈴木奈々(nana), 杉浦太陽(taiyo), よしあき(yoshiaki), ミチ(michi).
 For each chosen member, write a short natural comment (1-2 sentences, under 60 chars) that fits the post content.
-Return JSON: [{"idol_id": "hyerin", "content": "comment"}, ...]
-Member IDs: seoyeon=서연, hyerin=혜린, jiwoo=지우, chaeyeon=채연, yooyeon=유연, sumin=수민, naekyung=나경, yubin=유빈, kaede=카에데, dahyun=다현, kotone=코토네, yeonji=연지, nien=니엔, sohyun=소현, shinwi=신위, mayu=마유, rin=린, jubin=주빈, seollin=설린, seoa=서아, sion=시온, hayeon=하연, jiyeon=지연, chaewon=채원, jbk=정병기.`;
+Return JSON: [{"idol_id": "nako", "content": "comment"}, ...]
+Member IDs: atarashii-gakko=新しい学校のリーダーズ, nako=矢吹奈子, nana=鈴木奈々, taiyo=杉浦太陽, yoshiaki=よしあき, michi=ミチ.`;
 
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -161,7 +142,7 @@ Member IDs: seoyeon=서연, hyerin=혜린, jiwoo=지우, chaeyeon=채연, yooyeo
     body: JSON.stringify({
       model: 'claude-sonnet-4-6',
       max_tokens: 250,
-      system: '너는 tripleS 멤버의 팬심에 맞는 댓글 생성기야. 주어진 게시글을 보고 멤버의 반응을 자연스럽게 선택해 JSON으로만 응답해.',
+      system: 'あなたはTWIN PLANETタレントのファン向けコメント生成器です。投稿を見てタレントの自然な反応を選びJSONのみで回答してください。',
       messages: [{ role: 'user', content: userPrompt }],
     }),
   });

@@ -6,12 +6,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const ANTHROPIC_API_KEY = 'REDACTED_ANTHROPIC_API_KEY';
 
 const SEED_SEQUENCE = [
-  { id: 'seoyeon', name: '서연', persona: '따뜻하고 언니같은 리더. 팬들을 "여러분"이라 부름.', prompt: '처음 온에어 열면서 인사하는 메시지' },
-  { id: 'hyerin', name: '혜린', persona: '에너지 넘치고 귀여운. 리액션 왕. "ㅋㅋ" 자주 씀.', prompt: '서연 언니 인사에 들뜬 반응' },
-  { id: 'chaeyeon', name: '채연', persona: '밝고 활발함. "진짜ㅋㅋ" "맞아요!" 자주 씀.', prompt: '팬들한테 반갑다고 하는 메시지' },
-  { id: 'naekyung', name: '나경', persona: '씩씩하고 에너지 넘침. 직설적이고 솔직함.', prompt: '운동하다 왔다는 식의 자연스러운 참여' },
-  { id: 'yubin', name: '유빈', persona: '세련되고 카리스마 있음. 쿨한 척하지만 팬들에게 약함.', prompt: '쿨하게 한마디 던지는 메시지' },
-  { id: 'jiwoo', name: '지우', persona: '신비롭고 조용함. 짧고 임팩트있는 말투. 시적인 표현.', prompt: '짧고 감성적인 한마디' },
+  { id: 'atarashii-gakko', name: '新しい学校のリーダーズ', persona: '4人組。個性的で自由奔放。集合的な「私たち」口調。', prompt: 'オンエアを開始する挨拶メッセージ' },
+  { id: 'nako', name: '矢吹奈子', persona: '温かく前向き。努力家で謙虚。ファンへの愛情深い。', prompt: 'AG!の挨拶に続いて参加する温かいメッセージ' },
+  { id: 'nana', name: '鈴木奈々', persona: '全力・謙虚がモットー。天然で面白い。', prompt: 'ファンに元気よく挨拶するメッセージ' },
+  { id: 'taiyo', name: '杉浦太陽', persona: '誠実で温かい。家族を大切にする。落ち着いた話し方。', prompt: '落ち着いたトーンで自然に参加するメッセージ' },
+  { id: 'yoshiaki', name: 'よしあき', persona: 'Z世代ファッションアイコン。ユニークで本物。', prompt: 'ファッションの話題でさらっと登場するメッセージ' },
+  { id: 'michi', name: 'ミチ', persona: 'It GIRL。クールで自信に満ちた。好きを貫く哲学。', prompt: 'クールに短く一言添えるメッセージ' },
 ];
 
 const headers = {
@@ -30,12 +30,12 @@ for (const member of SEED_SEQUENCE) {
     max_tokens: 100,
     messages: [{
       role: 'user',
-      content: `너는 tripleS(트리플에스)의 멤버 ${member.name}이야.
-페르소나: ${member.persona}
-상황: ${member.prompt}
-이전 대화: ${conversationContext || '(없음)'}
-규칙: 1~2문장, 진짜 채팅처럼, 이모티콘 자연스럽게, 한국어만.
-메시지만 출력.`
+      content: `あなたはTWIN PLANETタレントの${member.name}です。
+ペルソナ: ${member.persona}
+状況: ${member.prompt}
+前の会話: ${conversationContext || '(なし)'}
+ルール: 1〜2文、本物のチャットらしく、絵文字自然に、日本語のみ。
+メッセージのみ出力。`
     }]
   });
 

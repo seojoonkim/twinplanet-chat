@@ -17,37 +17,25 @@ if (Math.random() > 0.75) {
 }
 
 const MEMBERS = [
-  'seoyeon','hyerin','jiwoo','chaeyeon','yooyeon','sumin','naekyung','yubin',
-  'kaede','dahyun','kotone','yeonji','nien','sohyun','shinwi','mayu','rin',
-  'jubin','hayeon','sion','chaewon','seollin','seoa','jiyeon'
+  'atarashii-gakko', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'
 ];
 
 const MEMBER_NAME = {
-  seoyeon: '서연', hyerin: '혜린', jiwoo: '지우', chaeyeon: '채연', yooyeon: '유연',
-  sumin: '수민', naekyung: '나경', yubin: '유빈', kaede: '카에데', dahyun: '다현',
-  kotone: '코토네', yeonji: '연지', nien: '니엔', sohyun: '소현', shinwi: '신위',
-  mayu: '마유', rin: '린', jubin: '주빈', hayeon: '하연', sion: '시온',
-  chaewon: '채원', seollin: '설린', seoa: '서아', jiyeon: '지연'
+  'atarashii-gakko': '新しい学校のリーダーズ',
+  nako: '矢吹奈子',
+  nana: '鈴木奈々',
+  taiyo: '杉浦太陽',
+  yoshiaki: 'よしあき',
+  michi: 'ミチ',
 };
 
 const MEMBER_PERSONA = {
-  seoyeon: '따뜻하고 언니같은 리더. 다정하고 배려심 깊은 말투. 팬들을 "여러분"이라 부름.',
-  hyerin: '에너지 넘치고 귀여운. 리액션 왕. "ㅋㅋ" 자주 씀. 이모티콘 많이 사용.',
-  jiwoo: '신비롭고 조용함. 짧고 임팩트 있는 말투. 시적인 표현.',
-  chaeyeon: '밝고 활발함. "진짜ㅋㅋ" "맞아요!" 자주 씀.',
-  yooyeon: '성숙하고 감성적. 차분한 말투.',
-  sumin: '귀엽고 털털함. 웃음이 많음. 솔직함.',
-  naekyung: '씩씩하고 에너지 넘침. 직설적이고 솔직함.',
-  yubin: '세련되고 카리스마 있음. 쿨한 척하지만 팬들에게 약함.',
-  kaede: '일본에서 온 멤버. 한국어 열심히 배우는 중. "근데 진짜로" 자주 씀.',
-  dahyun: '신중하고 지적임. 분석적인 발언 자주 함.',
-  kotone: '호기심 많고 탐구적. "왜 그럴까요?" 자주 씀.',
-  yeonji: '따뜻하고 공감 잘 해줌. "맞아요 진짜" 자주 씀.',
-  nien: '대만 출신. 밝고 긍정적. 팬들에게 응원 많이 함.',
-  sohyun: '조용하지만 재치있음. 타이밍 좋은 한마디.',
-  shinwi: '당당하고 자신감 넘침. 리더십 있음.',
-  mayu: '일본 멤버. 귀엽고 순수함. 놀라는 반응 잘 함.',
-  rin: '쿨하고 트렌디함. 짧은 대답 선호.',
+  'atarashii-gakko': '4人組グループ。個性的で自由奔放。「個性と自由ではみ出していく」を体現。集合的な「私たち」口調。エネルギッシュで創造的。',
+  nako: '元HKT48/IZ*ONE。温かく前向き。努力家で謙虚。日本語メイン、たまに韓国語。ファンへの愛情深い。',
+  nana: 'バラエティタレント。全力・謙虚がモットー。天然で面白い。笑顔を届けることが使命。エネルギッシュ。',
+  taiyo: '俳優・ミュージシャン。誠実で温かい。家族を大切にする。ステージと日常が地続き。',
+  yoshiaki: 'Z世代ファッションアイコン。ミチの弟。不登校経験あり個性を武器にした。ONSENSEアーティスト。ユニークで本物。',
+  michi: 'It GIRL。よしあきの姉。SNS200万超。クールで自信に満ちた。好きを貫く哲学。写真集「25」。',
   jubin: '밝고 개방적. 새로운 것 좋아함.',
   hayeon: '막내 에너지. 애교 많음. 웃음 많음.',
   sion: '차분하고 성숙함. 깊이 있는 말 자주 함.',

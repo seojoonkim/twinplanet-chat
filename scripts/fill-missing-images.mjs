@@ -8,14 +8,14 @@ if (!GEMINI_API_KEY) { console.error('GEMINI_API_KEY 없음'); process.exit(1); 
 const diaryPath = './public/diary-generated.json';
 const diary = JSON.parse(fs.readFileSync(diaryPath, 'utf-8'));
 
-// 멤버 한국어 이름 매핑
+// タレント名前マッピング
 const MEMBER_NAMES = {
-  naekyung: '나경', yubin: '유빈', chaeyeon: '채연', seoyeon: '서연',
-  hyerin: '혜린', jiwoo: '지우', sumin: '수민', yooyeon: '유연',
-  kaede: '카에데', dahyun: '다현', kotone: '코토네', yeonji: '연지',
-  nien: '니엔', sohyun: '소현', shinwi: '신위', mayu: '마유',
-  rin: '린', jubin: '주빈', hayeon: '하연', sion: '시온',
-  chaewon: '채원', seollin: '설린', seoa: '서아', jiyeon: '지연', jbk: '정병기'
+  'atarashii-gakko': '新しい学校のリーダーズ',
+  nako: '矢吹奈子',
+  nana: '鈴木奈々',
+  taiyo: '杉浦太陽',
+  yoshiaki: 'よしあき',
+  michi: 'ミチ',
 };
 
 async function generateImage(prompt) {

@@ -1,33 +1,14 @@
 import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs';
 
-// S1→S2→...→S24→jbk 순서
+// TWIN PLANET タレント 순서
 const MEMBER_CYCLE = [
-  { id: 'seoyeon',  name: '서연',   sNum: 'S1'  },
-  { id: 'hyerin',   name: '혜린',   sNum: 'S2'  },
-  { id: 'jiwoo',    name: '지우',   sNum: 'S3'  },
-  { id: 'chaeyeon', name: '채연',   sNum: 'S4'  },
-  { id: 'yooyeon',  name: '유연',   sNum: 'S5'  },
-  { id: 'sumin',    name: '수민',   sNum: 'S6'  },
-  { id: 'naekyung', name: '나경',   sNum: 'S7'  },
-  { id: 'yubin',    name: '유빈',   sNum: 'S8'  },
-  { id: 'kaede',    name: '카에데', sNum: 'S9'  },
-  { id: 'dahyun',   name: '다현',   sNum: 'S10' },
-  { id: 'kotone',   name: '코토네', sNum: 'S11' },
-  { id: 'yeonji',   name: '연지',   sNum: 'S12' },
-  { id: 'nien',     name: '니엔',   sNum: 'S13' },
-  { id: 'sohyun',   name: '소현',   sNum: 'S14' },
-  { id: 'shinwi',   name: '신위',   sNum: 'S15' },
-  { id: 'mayu',     name: '마유',   sNum: 'S16' },
-  { id: 'rin',      name: '린',     sNum: 'S17' },
-  { id: 'jubin',    name: '주빈',   sNum: 'S18' },
-  { id: 'hayeon',   name: '하연',   sNum: 'S19' },
-  { id: 'sion',     name: '시온',   sNum: 'S20' },
-  { id: 'chaewon',  name: '채원',   sNum: 'S21' },
-  { id: 'seollin',  name: '설린',   sNum: 'S22' },
-  { id: 'seoa',     name: '서아',   sNum: 'S23' },
-  { id: 'jiyeon',   name: '지연',   sNum: 'S24' },
-  { id: 'jbk',      name: '정병기', sNum: 'JBK' },
+  { id: 'atarashii-gakko', name: '新しい学校のリーダーズ', sNum: 'AG' },
+  { id: 'nako',            name: '矢吹奈子',               sNum: 'NK' },
+  { id: 'nana',            name: '鈴木奈々',               sNum: 'NN' },
+  { id: 'taiyo',           name: '杉浦太陽',               sNum: 'TY' },
+  { id: 'yoshiaki',        name: 'よしあき',               sNum: 'YA' },
+  { id: 'michi',           name: 'ミチ',                   sNum: 'MC' },
 ];
 
 // 1. 날짜 결정 (DATE_OVERRIDE 환경변수 지원)
@@ -75,7 +56,7 @@ try {
 // 5. Anthropic API로 일기 텍스트 생성
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-const diaryPrompt = `당신은 tripleS의 아이돌 멤버 ${member.name}입니다.
+const diaryPrompt = `あなたはTWIN PLANETタレントの${member.name}です。
 오늘 날짜: ${dateStr}
 최근 관련 소식: ${recentTweets.join(' | ') || '특별한 소식 없음'}
 
