@@ -36,8 +36,8 @@ if (existing.some(e => e.date === dateStr)) {
 }
 
 // 3. 멤버 순번 결정 (날짜 기반 순환)
-// diary-data.ts의 기존 S1~S6(서연~수민) 6개 고정 엔트리 이후부터 순환
-const BASE_OFFSET = 6; // S1~S6(서연~수민)은 고정 엔트리
+// diary-data.ts의 기존 TWIN PLANET 9개 고정 엔트리 이후부터 순환
+const BASE_OFFSET = 9; // 9개 고정 엔트리 (TWIN PLANET 9명)
 const totalEntries = BASE_OFFSET + existing.length;
 const memberIdx = totalEntries % MEMBER_CYCLE.length;
 const member = MEMBER_CYCLE[memberIdx];

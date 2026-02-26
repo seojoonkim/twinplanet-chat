@@ -14,3 +14,4 @@ trigger rebuild
 .env.production
 .env.local.vercel
 .env.vercel-check
+.env.local.backup
