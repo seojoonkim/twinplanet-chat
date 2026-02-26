@@ -15,6 +15,10 @@ export interface DiaryEntry {
   tags: string[];
   comments: DiaryComment[];
   relatedEntries?: string[];
+  imagePath?: string;
+  svgDrawing?: string;
+  themeLineColor?: string;
+  secretNote?: string;
 }
 
 export const DIARY_ENTRIES: DiaryEntry[] = [

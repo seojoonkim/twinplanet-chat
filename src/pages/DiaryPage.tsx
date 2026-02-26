@@ -353,7 +353,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
                   setDrawingLoaded(true);
                 }}
               />
-              <div style={{ display: 'none' }} dangerouslySetInnerHTML={{ __html: entry.svgDrawing }} />
+              <div style={{ display: 'none' }} dangerouslySetInnerHTML={{ __html: entry.svgDrawing ?? '' }} />
             </>
           )}
           {/* skeleton — 이미지 위에 absolute overlay, 로드 완료 시 fade-out */}

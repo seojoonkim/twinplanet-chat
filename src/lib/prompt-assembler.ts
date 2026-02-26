@@ -133,7 +133,7 @@ export function assembleSystemPrompt(
   if (memoryContext) {
     prompt = prompt.replace(
       /\{\{#if memoryContext\}\}([\s\S]*?)\{\{\/if\}\}/g,
-      (_, inner: string) => inner.replace('{{memoryContext}}', memoryContext),
+      (_match: string, inner: string) => inner.replace('{{memoryContext}}', memoryContext),
     );
   } else {
     prompt = prompt.replace(/\{\{#if memoryContext\}\}[\s\S]*?\{\{\/if\}\}/g, '');
