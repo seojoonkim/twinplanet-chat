@@ -1,3 +1,4 @@
+// HTML entity 디코딩
 function decodeEntities(str) {
   return str
     .replace(/&lt;/g, '<')
@@ -11,65 +12,93 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
 
-  const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
-  if (!RAPIDAPI_KEY) return res.status(500).json({ error: 'RAPIDAPI_KEY not set' });
+  const BEARER = (process.env.TWITTER_BEARER_TOKEN || '').trim() || null;
+  if (!BEARER) return res.status(500).json({ error: 'TWITTER_BEARER_TOKEN not set' });
 
   try {
-    // twitter241 search-v2: from:japanleaders Latest (official ATARASHII GAKKO! account)
-    const response = await fetch(
-      'https://twitter241.p.rapidapi.com/search-v2?query=from%3Ajapanleaders&type=Latest&count=20',
-      {
-        headers: {
-          'X-RapidAPI-Key': RAPIDAPI_KEY,
-          'X-RapidAPI-Host': 'twitter241.p.rapidapi.com',
-        },
-      }
+    // 1. Get user ID for @japanleaders (ATARASHII GAKKO! 公式)
+    const userRes = await fetch(
+      'https://api.twitter.com/2/users/by/username/japanleaders?user.fields=id,name,profile_image_url',
+      { headers: { Authorization: `Bearer ${BEARER}` } }
     );
+    const userData = await userRes.json();
+    if (!userData.data) return res.status(500).json({ error: 'User not found', detail: userData });
 
-    if (!response.ok) {
-      return res.status(500).json({ error: `API error: ${response.status}` });
-    }
+    const userId = userData.data.id;
 
-    const data = await response.json();
+    // 2. Get tweets
+    const tweetsRes = await fetch(
+      `https://api.twitter.com/2/users/${userId}/tweets` +
+      `?max_results=20` +
+      `&tweet.fields=created_at,text,note_tweet,attachments,public_metrics,referenced_tweets,author_id,entities` +
+      `&expansions=attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id,referenced_tweets.id.attachments.media_keys` +
+      `&media.fields=url,preview_image_url,type,width,height` +
+      `&user.fields=name,username,profile_image_url`,
+      { headers: { Authorization: `Bearer ${BEARER}` } }
+    );
+    const tweetsData = await tweetsRes.json();
+    if (!tweetsData.data) return res.status(500).json({ error: 'No tweets', detail: tweetsData });
 
-    // twitter241 search-v2 response structure: data.result.timeline.instructions[].entries
-    const instructions = data?.result?.timeline?.instructions || [];
-    const entries = instructions.flatMap(inst => inst.entries || []);
+    // Build lookup maps
+    const mediaMap = {};
+    (tweetsData.includes?.media || []).forEach(m => { mediaMap[m.media_key] = m; });
 
-    const tweets = entries
-      .filter(e => e?.content?.itemContent?.tweet_results?.result?.legacy)
-      .map(e => {
-        const tweetResult = e.content.itemContent.tweet_results.result;
-        const legacy = tweetResult.legacy;
-        const user = tweetResult.core?.user_results?.result?.legacy;
-        const media = legacy.extended_entities?.media || legacy.entities?.media || [];
-        const images = media
-          .filter(m => m.type === 'photo' || m.type === 'video' || m.type === 'animated_gif')
-          .map(m => m.media_url_https || m.media_url)
-          .filter(Boolean);
+    const tweetMap = {};
+    (tweetsData.includes?.tweets || []).forEach(t => { tweetMap[t.id] = t; });
 
-        const isRetweet = !!legacy.retweeted_status_result;
-        const text = decodeEntities(legacy.full_text || legacy.text || '');
-        const cleanText = text.replace(/https?:\/\/t\.co\/\S+/g, '').trim();
+    const userMap = {};
+    (tweetsData.includes?.users || []).forEach(u => { userMap[u.id] = u; });
 
-        return {
-          id: legacy.id_str || e.entryId,
-          text: cleanText,
-          createdAt: legacy.created_at,
-          url: `https://x.com/japanleaders/status/${legacy.id_str}`,
-          likes: legacy.favorite_count || 0,
-          retweets: legacy.retweet_count || 0,
-          images,
-          isRetweet,
-          rtAuthorName: isRetweet ? user?.name : null,
-          rtAuthorUsername: isRetweet ? user?.screen_name : null,
-          urls: (legacy.entities?.urls || []).map(u => ({
-            url: u.url, expanded: u.expanded_url, display: u.display_url,
-          })),
-        };
-      })
-      .filter(t => t.text.length > 0)
-      .slice(0, 15);
+    const tweets = tweetsData.data.map(tweet => {
+      const rtRef = tweet.referenced_tweets?.find(r => r.type === 'retweeted');
+      const isRetweet = !!rtRef;
+
+      let rtAuthorName = null;
+      let rtAuthorUsername = null;
+      let originalText = null;
+      let urls = [];
+      let media = (tweet.attachments?.media_keys || []).map(k => mediaMap[k]).filter(Boolean);
+
+      if (isRetweet && rtRef) {
+        const origTweet = tweetMap[rtRef.id];
+        if (origTweet) {
+          originalText = decodeEntities(origTweet.note_tweet?.text || origTweet.text || '');
+          if (origTweet.author_id && userMap[origTweet.author_id]) {
+            rtAuthorName = userMap[origTweet.author_id].name;
+            rtAuthorUsername = userMap[origTweet.author_id].username;
+          }
+          const origMedia = (origTweet.attachments?.media_keys || []).map(k => mediaMap[k]).filter(Boolean);
+          if (origMedia.length > 0) media = origMedia;
+          const origUrls = origTweet.note_tweet?.entities?.urls || origTweet.entities?.urls || [];
+          urls = origUrls.map(u => ({ url: u.url, expanded: u.expanded_url, display: u.display_url }));
+        }
+      } else {
+        const fullText = tweet.note_tweet?.text || tweet.text || '';
+        originalText = decodeEntities(fullText);
+        const tweetUrls = tweet.note_tweet?.entities?.urls || tweet.entities?.urls || [];
+        urls = tweetUrls.map(u => ({ url: u.url, expanded: u.expanded_url, display: u.display_url }));
+      }
+
+      const images = media
+        .filter(m => m.type === 'photo' || m.type === 'animated_gif' || m.type === 'video')
+        .map(m => m.url || m.preview_image_url)
+        .filter(Boolean);
+
+      return {
+        id: tweet.id,
+        text: originalText || decodeEntities(tweet.text || ''),
+        createdAt: tweet.created_at,
+        url: `https://x.com/japanleaders/status/${tweet.id}`,
+        likes: tweet.public_metrics?.like_count || 0,
+        retweets: tweet.public_metrics?.retweet_count || 0,
+        media,
+        images,
+        urls,
+        isRetweet,
+        rtAuthorName,
+        rtAuthorUsername,
+      };
+    });
 
     return res.json({ tweets });
   } catch (err) {
