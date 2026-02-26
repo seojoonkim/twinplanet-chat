@@ -41,23 +41,19 @@ function ColorAvatar({ member, size = 'md' }: { member: RoomMember; size?: 'sm' 
 const MemberAvatar = memo(function MemberAvatar({ member, size = 'md', priority = false }: { member: RoomMember; size?: 'sm' | 'md' | 'lg' | 'xl'; priority?: boolean }) {
   const [imgFailed, setImgFailed] = useState(false);
   const src = `/idols/${member.id}/profile.jpg`;
-  const webpSrc = `/idols/${member.id}/profile.webp`;
   const px = size === 'sm' ? 'w-10 h-10' : size === 'xl' ? 'w-14 h-14' : size === 'lg' ? 'w-12 h-12' : 'w-10 h-10';
 
   if (!imgFailed) {
     return (
-      <picture>
-        <source srcSet={webpSrc} type="image/webp" />
-        <img
-          src={src}
-          alt={member.name}
-          className={`${px} rounded-full object-cover shrink-0 shadow-sm`}
-          loading={priority ? 'eager' : 'lazy'}
-          {...(priority ? { fetchPriority: 'high' as const } : {})}
-          decoding="async"
-          onError={() => setImgFailed(true)}
-        />
-      </picture>
+      <img
+        src={src}
+        alt={member.name}
+        className={`${px} rounded-full object-cover shrink-0 shadow-sm`}
+        loading={priority ? 'eager' : 'lazy'}
+        {...(priority ? { fetchPriority: 'high' as const } : {})}
+        decoding="async"
+        onError={() => setImgFailed(true)}
+      />
     );
   }
   return <ColorAvatar member={member} size={size} />;

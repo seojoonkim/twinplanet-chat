@@ -152,12 +152,7 @@ export default function IdolSelector({ idols }: Props) {
                           className={imgLoaded ? 'overflow-hidden' : 'overflow-hidden animate-img-fade'}
                           style={{ background: m.color, animationDelay: imgLoaded ? undefined : `${imgIdx * 0.08}s` }}
                         >
-                          <picture>
-                            <source
-                              srcSet={`/idols/${m.id}/profile.webp`}
-                              type="image/webp"
-                            />
-                            <img
+                          <img
                               src={`/idols/${m.id}/profile.jpg`}
                               alt={m.name}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 idol-photo-breathe"
@@ -175,7 +170,6 @@ export default function IdolSelector({ idols }: Props) {
                                 willChange: 'transform',
                               }}
                             />
-                          </picture>
                         </div>
                         );
                       })}
@@ -257,12 +251,7 @@ export default function IdolSelector({ idols }: Props) {
                         }}
                       >
                         {idol.profileImageUrl ? (
-                          <picture>
-                            <source
-                              srcSet={idol.profileImageUrl.replace(/\.jpg$/i, '.webp')}
-                              type="image/webp"
-                            />
-                            <img
+                          <img
                               src={idol.profileImageUrl}
                               alt={idol.nameKo}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 idol-photo-breathe"
@@ -280,7 +269,6 @@ export default function IdolSelector({ idols }: Props) {
                                 willChange: 'transform',
                               }}
                             />
-                          </picture>
                         ) : (
                           <span className="drop-shadow-lg">{getInitials(idol.nameKo)}</span>
                         )}
