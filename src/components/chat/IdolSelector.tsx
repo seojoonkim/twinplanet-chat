@@ -190,7 +190,6 @@ export default function IdolSelector({ idols }: Props) {
                           <span key={m.id}>
                             {i > 0 && <span className="mx-0.5">·</span>}
                             {m.name}
-                            <span className="text-[10px] text-gray-400">(S{m.sNumber})</span>
                           </span>
                         ))}
                       </p>

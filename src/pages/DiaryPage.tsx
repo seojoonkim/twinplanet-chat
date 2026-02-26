@@ -584,7 +584,7 @@ export default function DiaryPage() {
                     onClick={() => { setFilterMember(m.id); setDropdownOpen(false); }}
                     className={`flex flex-col items-center py-1.5 px-1 rounded-lg transition-colors ${filterMember === m.id ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
-                    <span className="text-[10px] text-gray-400 leading-none mb-0.5">S{m.sNumber}</span>
+                    <span className="text-[10px] text-gray-400 leading-none mb-0.5">{['mizyu','rin','suzuka','kanon'].includes(m.id) ? 'AG!' : '\u00a0'}</span>
                     <span className="text-[13px] font-semibold leading-none">{m.name}</span>
                   </button>
                 ))}

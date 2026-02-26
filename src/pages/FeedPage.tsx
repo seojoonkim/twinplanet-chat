@@ -1288,15 +1288,15 @@ export default function FeedPage() {
   }, []);
 
   const memberOptions = [
-    { id: 'mizyu',    name: 'MIZYU',   sNumber: 1 },
-    { id: 'rin',      name: 'RIN',     sNumber: 2 },
-    { id: 'suzuka',   name: 'SUZUKA',  sNumber: 3 },
-    { id: 'kanon',    name: 'KANON',   sNumber: 4 },
-    { id: 'nako',     name: '奈子',    sNumber: 5 },
-    { id: 'nana',     name: '奈々',    sNumber: 6 },
-    { id: 'taiyo',    name: '太陽',    sNumber: 7 },
-    { id: 'yoshiaki', name: 'よしあき', sNumber: 8 },
-    { id: 'michi',    name: 'ミチ',    sNumber: 9 },
+    { id: 'mizyu',    name: 'MIZYU',    group: 'AG!' },
+    { id: 'rin',      name: 'RIN',      group: 'AG!' },
+    { id: 'suzuka',   name: 'SUZUKA',   group: 'AG!' },
+    { id: 'kanon',    name: 'KANON',    group: 'AG!' },
+    { id: 'nako',     name: '奈子',     group: '' },
+    { id: 'nana',     name: '奈々',     group: '' },
+    { id: 'taiyo',    name: '太陽',     group: '' },
+    { id: 'yoshiaki', name: 'よしあき', group: '' },
+    { id: 'michi',    name: 'ミチ',     group: '' },
   ];
 
   const displayPosts = posts.map((post) => ({
@@ -1386,7 +1386,7 @@ export default function FeedPage() {
                       onClick={() => { setFilterMember(m.id); setDropdownOpen(false); }}
                       className={`flex flex-col items-center py-1.5 px-1 rounded-lg transition-colors ${filterMember === m.id ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-violet-50'}`}
                     >
-                      <span className="text-[10px] text-gray-400 leading-none mb-0.5">S{m.sNumber}</span>
+                      <span className="text-[10px] text-gray-400 leading-none mb-0.5">{m.group || '\u00a0'}</span>
                       <span className="text-[13px] font-semibold leading-none">{m.name}</span>
                     </button>
                   ))}
