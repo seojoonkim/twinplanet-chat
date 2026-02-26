@@ -319,97 +319,97 @@ interface Thread {
 }
 
 const THREADS: Thread[] = [
-  // MIZYU 리더십
-  { ctx: 'concert', comments: [{ memberId: 'mizyu', content: '리더로서 이번 무대 진짜 책임감 느껴요. 다들 믿어줘요!!' }],
+  // MIZYU リーダーシップ
+  { ctx: 'concert', comments: [{ memberId: 'mizyu', content: 'リーダーとして今回のステージ、本当に責任感あるよ。みんな信じてて!!' }],
     replyChain: [
-      { memberId: 'rin', content: 'MIZYU 믿는다. 다들 잘 하자' },
-      { memberId: 'suzuka', content: 'リーダー頼んだで！！ MIZYU 파이팅!!' },
-      { memberId: 'kanon', content: 'MIZYU언니 최고예요!! 같이 잘 해봐요!!' },
+      { memberId: 'rin', content: 'MIZYUのこと信じてる。みんな頑張ろ' },
+      { memberId: 'suzuka', content: 'リーダー頼んだで！！MIZYU ファイティン!!' },
+      { memberId: 'kanon', content: 'MIZYUさん最高!! 一緒に頑張ろ!!' },
     ],
   },
-  // RIN 요리+랩
-  { ctx: 'food', comments: [{ memberId: 'rin', content: '이거 제가 만들 수 있어요. 집에서 더 맛있게 만들거든요' }],
+  // RIN 料理+ラップ
+  { ctx: 'food', comments: [{ memberId: 'rin', content: 'これ私が作れるよ。家でもっとおいしく作れるから' }],
     replyChain: [
-      { memberId: 'suzuka', content: 'ほんまに？？ 만들어줘!! 먹고 싶다!!' },
-      { memberId: 'rin', content: '오코노미야키는 못 이길 것 같지만 ㅋㅋ' },
-      { memberId: 'suzuka', content: '오코노미야키는 내 거거든요!! ㅋㅋ' },
+      { memberId: 'suzuka', content: 'ほんまに？？ 作って!! 食べたい!!' },
+      { memberId: 'rin', content: 'お好み焼きには勝てなそうだけど ㅋㅋ' },
+      { memberId: 'suzuka', content: 'お好み焼きは私のもんやで!! ㅋㅋ' },
     ],
   },
-  // SUZUKA 오코노미야키
-  { ctx: 'japan', comments: [{ memberId: 'suzuka', content: '大阪帰ってきた！！오코노미야키 먹으러 가야지~!!' }],
+  // SUZUKA お好み焼き
+  { ctx: 'japan', comments: [{ memberId: 'suzuka', content: '大阪帰ってきた！！お好み焼き食べに行かなあかん~!!' }],
     replyChain: [
-      { memberId: 'nana', content: '스즈카 오코노미야키만 생각하는 거야?? ㅋㅋ 나도 먹고 싶어!!' },
-      { memberId: 'suzuka', content: 'ほんまに最高やねん！！오코노미야키 없으면 일본 투어 못 해요 ㅋ' },
-      { memberId: 'mizyu', content: '스즈카... 무대도 생각해요 ㅋㅋ' },
+      { memberId: 'nana', content: 'スズカちゃんお好み焼きのことしか考えてないの?? ㅋㅋ 私も食べたい!!' },
+      { memberId: 'suzuka', content: 'ほんまに最高やねん！！お好み焼きなしじゃ日本ツアーできへんわ ㅋ' },
+      { memberId: 'mizyu', content: 'スズカ…ステージのことも考えてよ ㅋㅋ' },
     ],
   },
-  // KANON 애니 비교
-  { ctx: 'comeback', comments: [{ memberId: 'kanon', content: '이 곡 어떤 애니 오프닝이랑 비슷한 느낌이에요!! 진짜 좋아요!!' }],
+  // KANON アニメ比較
+  { ctx: 'comeback', comments: [{ memberId: 'kanon', content: 'この曲、なんかアニメのオープニングに似た感じがする!! 本当に好き!!' }],
     replyChain: [
-      { memberId: 'mizyu', content: '카논... 무슨 애니?? ㅋㅋ' },
-      { memberId: 'kanon', content: '비밀이에요 ㅎㅎ 아는 사람만 알아요!' },
-      { memberId: 'nana', content: '나 알 것 같아!! 나도 그 생각 했어!!' },
+      { memberId: 'mizyu', content: 'かのん…どのアニメ?? ㅋㅋ' },
+      { memberId: 'kanon', content: '秘密ですよ ㅎ わかる人にはわかるやつ!' },
+      { memberId: 'nana', content: '私わかる気がする!! 私もそう思ってた!!' },
     ],
   },
-  // NAKO 경험담
-  { ctx: 'concert', comments: [{ memberId: 'nako', content: '무대 위에서 팬분들 표정 보는 게 제일 좋아요. 그래서 이 일 하는 것 같아요 😊' }],
+  // NAKO 経験談
+  { ctx: 'concert', comments: [{ memberId: 'nako', content: 'ステージの上でファンのみなさんの表情見るのが一番好き。だからこの仕事してる気がする 😊' }],
     replyChain: [
-      { memberId: 'nana', content: '나코짱!! 그 말에 나도 울컥했어!!' },
-      { memberId: 'nako', content: '나나~ ㅋㅋ 같이 열심히 하자!!　😊' },
-      { memberId: 'taiyo', content: '멋있는 말이에요. 나도 그래요' },
+      { memberId: 'nana', content: '奈子ちゃん!! その言葉に私もじんときた!!' },
+      { memberId: 'nako', content: '奈々~ ㅋㅋ 一緒に頑張ろ!! 😊' },
+      { memberId: 'taiyo', content: 'かっこいい言葉だよ。俺もそう思う' },
     ],
   },
-  // NANA 버라이어티 에너지
-  { ctx: 'food', comments: [{ memberId: 'nana', content: '먹방 버라이어티 하고 싶다!! 이 음식 먹으면서 게임하면 재밌겠는데!!' }],
+  // NANA バラエティエネルギー
+  { ctx: 'food', comments: [{ memberId: 'nana', content: '食べ歩きバラエティやりたい!! この食べ物食べながらゲームしたら絶対面白い!!' }],
     replyChain: [
-      { memberId: 'taiyo', content: '나나 또 기획하는 거야?? ㅋㅋ' },
-      { memberId: 'nana', content: '기획력 있잖아요!! 어때요 재밌겠죠?!!' },
-      { memberId: 'yoshiaki', content: '저도 참여하고 싶어요!! 스타일리시하게 먹방 할게요~' },
+      { memberId: 'taiyo', content: '奈々また企画してる?? ㅋㅋ' },
+      { memberId: 'nana', content: '企画力あるんだって!! どうですか面白そうでしょ?!!' },
+      { memberId: 'yoshiaki', content: '私も参加したい!! スタイリッシュに食レポします~' },
     ],
   },
-  // TAIYO+MICHI 쿨가이
-  { ctx: 'comeback', comments: [{ memberId: 'taiyo', content: '이 곡 음악적으로 잘 만든 것 같아요. 들을수록 좋아지는 타입이에요' }],
+  // TAIYO+MICHI クールコンビ
+  { ctx: 'comeback', comments: [{ memberId: 'taiyo', content: 'この曲、音楽的によくできてると思う。聴けば聴くほど好きになるタイプだよ' }],
     replyChain: [
-      { memberId: 'michi', content: '오빠도 그렇게 생각했어요? 저도 처음엔 몰랐는데 반복할수록 좋아지더라고요' },
-      { memberId: 'nana', content: '두 분 역시 쿨하게 말해요!! 저는 처음부터 좋았어요!!!' },
+      { memberId: 'michi', content: '太陽さんもそう思った? 私も最初はわかんなかったけど繰り返すほど好きになってきた' },
+      { memberId: 'nana', content: 'お二人やっぱクールに言うよね!! 私は最初から好きだったよ!!!' },
     ],
   },
-  // YOSHIAKI+MICHI 남매 패션 토크
-  { ctx: 'photo', comments: [{ memberId: 'yoshiaki', content: '이 사진 스타일링 진짜 좋은데요. 어디 거예요??' }],
+  // YOSHIAKI+MICHI ファッショントーク
+  { ctx: 'photo', comments: [{ memberId: 'yoshiaki', content: 'この写真のスタイリング、めちゃくちゃいいんだけど。どこの??' }],
     replyChain: [
-      { memberId: 'michi', content: '요시아키 또 패션 이야기 ㅋㅋ 근데 나도 궁금하긴 해요 ㅎ' },
-      { memberId: 'yoshiaki', content: '누나도 궁금한 거잖아요 ㅋㅋ' },
-      { memberId: 'kanon', content: '이 코디 제가 좋아하는 애니 캐릭터 스타일이에요!!' },
+      { memberId: 'michi', content: 'よしあきまたファッションの話 ㅋㅋ でも私も気になるわ ㅎ' },
+      { memberId: 'yoshiaki', content: '姉さんも気になってるじゃないですか ㅋㅋ' },
+      { memberId: 'kanon', content: 'このコーデ私の好きなアニメキャラのスタイルだ!!' },
     ],
   },
-  // AG! 일본 투어
-  { ctx: 'japan', comments: [{ memberId: 'mizyu', content: '日本ツアー最高！！みんなに会えて嬉しい！！ 진짜 에너지 받았어요!!' }],
+  // AG! 日本ツアー
+  { ctx: 'japan', comments: [{ memberId: 'mizyu', content: '日本ツアー最高！！みんなに会えて嬉しい！！本当にエネルギーもらえた!!' }],
     replyChain: [
-      { memberId: 'rin', content: '역시 일본 팬분들 열정이 다르네요. 좋았어요' },
-      { memberId: 'suzuka', content: 'ほんまやで！！ 오코노미야키도 먹었고 완벽했어요!!' },
-      { memberId: 'kanon', content: '日本最高！！！또 오고 싶어요!!!!!' },
+      { memberId: 'rin', content: 'さすが日本のファンのみなさん、熱量が違うな。よかった' },
+      { memberId: 'suzuka', content: 'ほんまやで！！お好み焼きも食べられたし完璧やった!!' },
+      { memberId: 'kanon', content: '日本最高！！！また来たい!!!!!' },
     ],
   },
-  // RIN 댄스 배틀
-  { ctx: 'dance', comments: [{ memberId: 'rin', content: '이 안무 힙합 베이스가 있어서 제가 제일 빨리 습득했어요. 사실이에요' }],
+  // RIN ダンスバトル
+  { ctx: 'dance', comments: [{ memberId: 'rin', content: 'この振り付けヒップホップベースあるから私が一番早く覚えたよ。本当の話' }],
     replyChain: [
-      { memberId: 'mizyu', content: '린... 나도 빨리 배웠는데 ㅋㅋ' },
-      { memberId: 'rin', content: 'MIZYU 리더니까 빨리 배우는 게 당연하죠 ㅋㅋ' },
-      { memberId: 'kanon', content: '저는 클래식 배이스라 클래식 동작은 제가 제일 빠르거든요!! ㅎ' },
+      { memberId: 'mizyu', content: 'RIN…私も早かったんだけど ㅋㅋ' },
+      { memberId: 'rin', content: 'MIZYUリーダーだから早いのは当然でしょ ㅋㅋ' },
+      { memberId: 'kanon', content: '私はクラシックベースだからクラシックの動きは私が一番早いんだよ!! ㅎ' },
     ],
   },
 ];
 
 // ── 정병기 대표 댓글 ──────────────────────────────────────────
 const JBK_REPLIES = [
-  "멤버들 고생했어요 🙏",
-  "다들 잘하고 있어요! 자랑스럽습니다",
-  "ㅋㅋㅋ 이런 거 올려도 되나요",
-  "맞아요 맞아요",
-  "열심히 준비했습니다. 많이 봐주세요!",
-  "멤버들이 진짜 열심히 했어요. 잘 부탁드립니다 🙇",
-  "이런 반응 보면 힘이 나네요 감사합니다",
-  "ㅋㅋ 맞는 말이에요",
+  "メンバーたちお疲れ様でした 🙏",
+  "みんなよくやってるよ！誇らしいです",
+  "ㅋㅋㅋ こんなの上げてもいいのかな",
+  "そうそう、その通り",
+  "一生懸命準備しました。たくさん見てね!",
+  "メンバーたちが本当に頑張ったよ。よろしくお願いします 🙇",
+  "こういう反応見ると力が湧いてくるよ、ありがとう",
+  "ㅋㅋ 正しいことを言ってる",
 ];
 
 // ── Like 친화도 ──────────────────────────────────────────────
@@ -580,7 +580,7 @@ function buildSmartComments(postId: string, source: FeedSource, title: string, b
     if (memberId !== 'nako' && rng() < 0.15) {
       replies.push({
         memberId: 'nako',
-        content: '응원할게요!! 화이팅!! 😊',
+        content: '応援してるよ!! ファイティン!! 😊',
         likes: buildLikes('nako', hashStr(postId + 'nako-reply-' + memberId)),
       });
     }
@@ -1335,7 +1335,7 @@ export default function FeedPage() {
             </button>
             {sourceDropdownOpen && (
               <div className="absolute top-full right-0 mt-1.5 bg-white rounded-2xl z-50 p-2" style={{ boxShadow: '0 8px 32px -4px rgba(0,0,0,0.14)', minWidth: '130px' }}>
-                {([['all', 'ALL'], ['youtube', 'YouTube'], ['twitter', '𝕏 Twitter'], ['instagram', 'Instagram']] as [FeedSourceFilter, string][]).map(([val, label]) => (
+                {([['all', 'ALL'], ['youtube', 'YouTube'], ['twitter', '𝕏'], ['instagram', 'Instagram']] as [FeedSourceFilter, string][]).map(([val, label]) => (
                   <button key={val} onClick={() => { setSourceFilter(val); setSourceDropdownOpen(false); }}
                     className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors ${sourceFilter === val ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-violet-50'}`}>
                     {sourceFilter === val ? '✓ ' : ''}{label}
