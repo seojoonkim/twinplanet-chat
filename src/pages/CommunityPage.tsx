@@ -234,16 +234,6 @@ function CommunityCard({ item }: { item: CommunityItem }) {
               {cleanContent}
             </p>
           ) : null}
-          {item.topComments?.length ? (
-            <div className="px-3.5 pb-1">
-              <div className="h-px bg-gray-100 mb-2" />
-              {item.topComments.map((comment, idx) => (
-                <p key={idx} className="text-[12px] text-gray-500">
-                  └ {comment}
-                </p>
-              ))}
-            </div>
-          ) : null}
         </div>
       ) : null}
 
