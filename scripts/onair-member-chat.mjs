@@ -100,6 +100,17 @@ if (!memberId || !memberName) {
   process.exit(0);
 }
 
+// 현재 토픽 fetch
+let currentTopic = '';
+try {
+  const topicRes = await fetch(
+    `${SUPABASE_URL}/rest/v1/onair_messages?author_name=eq.[TOPIC]&order=created_at.desc&limit=1&select=content`,
+    { headers }
+  );
+  const topicData = await topicRes.json();
+  currentTopic = topicData?.[0]?.content || '';
+} catch {}
+
 // 최근 대화 컨텍스트 구성
 const contextLines = recentMsgs.slice(-10).map(m => {
   const match = m.author_name?.match(/^\[MEMBER:(\w+)\](.+)/);
@@ -116,14 +127,14 @@ const response = await anthropic.messages.create({
     role: 'user',
     content: `あなたはタレントの${memberName}です。
 ペルソナ: ${persona}
-
+${currentTopic ? `\n現在のトピック: 「${currentTopic}」\n` : ''}
 ファンとのオンエアリアルタイムチャットに自然に参加してください。
 直近のチャット:
 ${contextLines || '（会話なし — 初参加）'}
 
 ルール:
 - 1〜2文で短く
-- 流れを自然に受けて挨拶か一言
+- ${currentTopic ? `現在のトピック「${currentTopic}」について自然に話すか、話を膨らませて。` : '流れを自然に受けて挨拶か一言。'}
 - ファン名は直前のメッセージがそのファンからの場合のみ呼ぶ。それ以外は「みんな」「ファンのみんな」など一般的な呼び方
 - 堅すぎず、本物のチャットのように
 - 必ず日本語で

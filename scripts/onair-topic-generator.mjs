@@ -98,23 +98,25 @@ async function generateTopic(sessions, messages) {
 }
 
 async function insertTopic(topic) {
+  // 1) [TOPIC] 메시지 (헤더 currentTopic용)
   const res = await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
     method: 'POST',
-    headers: {
-      ...headers,
-      Prefer: 'return=minimal',
-    },
-    body: JSON.stringify({
-      author_name: '[TOPIC]',
-      content: topic,
-    }),
+    headers: { ...headers, Prefer: 'return=minimal' },
+    body: JSON.stringify({ author_name: '[TOPIC]', content: topic }),
   });
-
   if (!res.ok) {
-    const err = await res.text();
-    console.error('Insert failed:', err);
+    console.error('Insert [TOPIC] failed:', await res.text());
     return false;
   }
+
+  // 2) [SYSTEM] 다이버 메시지 (채팅 구분선 배너용) — 500ms 후 삽입
+  await new Promise(r => setTimeout(r, 500));
+  await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
+    method: 'POST',
+    headers: { ...headers, Prefer: 'return=minimal' },
+    body: JSON.stringify({ author_name: '[SYSTEM]', content: `✨ トピック: ${topic}` }),
+  });
+
   return true;
 }
 
