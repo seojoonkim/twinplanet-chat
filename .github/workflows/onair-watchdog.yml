@@ -1,0 +1,19 @@
+name: OnAir Watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Call Watchdog API
+        run: |
+          curl -s "https://twinplanet-chat.vercel.app/api/onair-watchdog" || echo "watchdog call failed"

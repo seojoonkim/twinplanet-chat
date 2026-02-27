@@ -1,10 +1,12 @@
 // scripts/onair-script-generator.mjs
-// GitHub Actions 15분마다 실행
-// LLM으로 15턴 배치 대화 생성 → 60초마다 1개씩 DB INSERT
+// GitHub Actions 13분마다 실행
+// LLM으로 15턴 배치 대화 생성 → 10초마다 1개씩 DB INSERT
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+
+const FALLBACK_MEMBERS = ['mizyu', 'rin', 'suzuka'];
 
 const MEMBER_NAME = {
   mizyu: 'MIZYU',
@@ -46,7 +48,7 @@ const TIME_CTX = kstHour >= 5  && kstHour < 9  ? '早朝。起きたばかりか
   : kstHour >= 21                  ? '夜。1日が終わってちょっとチャットに寄った感じ。'
   : '深夜。眠れなかったり夜食食べてたり。';
 
-// 1. 현재 활성 3명 조회
+// 1. 현재 활성 세션 조회
 async function getActiveSessions() {
   const now = new Date().toISOString();
   const res = await fetch(
@@ -77,13 +79,13 @@ async function getMessageCountSinceLastTopic() {
   if (!Array.isArray(data)) return 0;
   let count = 0;
   for (const msg of data) {
-    if (msg.author_name === '[TOPIC]') break; // 마지막 토픽 이후 카운트 종료
+    if (msg.author_name === '[TOPIC]') break;
     if (msg.author_name?.startsWith('[MEMBER:')) count++;
   }
   return count;
 }
 
-// 3. LLM으로 15턴 배치 대화 생성
+// 3. LLM으로 15턴 배치 대화 생성 (3회 retry, 2초 간격)
 async function generateScript(activeMembers, recentMessages, shouldChangeTopic = false) {
   const memberDescriptions = activeMembers.map(m => {
     const persona = MEMBER_PERSONA[m.member_id] || '';
@@ -92,14 +94,12 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
 
   const authorIds = activeMembers.map(m => m.member_id);
 
-  // 이전 대화를 구조화된 포맷으로 (최근 15개 = 맥락 파악용)
   const recentConvo = recentMessages.slice(-15).map(m => {
     const match = m.author_name?.match(/^\[MEMBER:(\w+)\](.+)/);
     if (!match) return null;
     return `${match[2]}: ${m.content}`;
   }).filter(Boolean).join('\n');
 
-  // 마지막 발언자 파악 → 첫 턴에서 다른 사람이 말하게
   const lastMsg = recentMessages[recentMessages.length - 1];
   const lastAuthorMatch = lastMsg?.author_name?.match(/^\[MEMBER:(\w+)\]/);
   const lastAuthorId = lastAuthorMatch ? lastAuthorMatch[1] : null;
@@ -158,7 +158,7 @@ ${topicChangeRule}
 JSON配列のみ出力（他のテキストなし）:
 [{"author":"メンバーid","content":"セリフ..."},...]`;
 
-  // 최대 3회 retry + 25초 timeout per attempt
+  // 3회 retry, 2초 간격
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       const ctrl = new AbortController();
@@ -184,132 +184,206 @@ JSON配列のみ出力（他のテキストなし）:
       clearTimeout(timer);
 
       if (!res.ok) {
-        console.error(`[attempt ${attempt}] API error: ${res.status} ${res.statusText}`);
-        if (attempt < 3) { await new Promise(r => setTimeout(r, 3000)); continue; }
+        console.error(`[ScriptGen] [attempt ${attempt}] API error: ${res.status} ${res.statusText}`);
+        if (attempt < 3) { await new Promise(r => setTimeout(r, 2000)); continue; }
         return null;
       }
 
       const data = await res.json();
       const raw = data.choices?.[0]?.message?.content?.trim() ?? '';
 
-      // JSON 파싱 (코드블록 제거 후)
       const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
       const parsed = JSON.parse(cleaned);
-      console.log(`✅ [attempt ${attempt}] 파싱 성공`);
+      console.log(`[ScriptGen] [attempt ${attempt}] 파싱 성공`);
       return parsed;
 
     } catch (e) {
-      console.error(`[attempt ${attempt}] 실패: ${e.message}`);
-      if (attempt < 3) { await new Promise(r => setTimeout(r, 3000)); }
+      console.error(`[ScriptGen] [attempt ${attempt}] 실패: ${e.message}`);
+      if (attempt < 3) { await new Promise(r => setTimeout(r, 2000)); }
     }
   }
-  console.error('❌ 3회 시도 모두 실패');
+  console.error('[ScriptGen] 3회 시도 모두 실패');
   return null;
 }
 
-// 4. 메시지 INSERT
+// fallback용 1개 메시지 생성
+async function generateFallbackMessage(memberId) {
+  const persona = MEMBER_PERSONA[memberId] || '';
+  const memberName = MEMBER_NAME[memberId] || memberId;
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 20000);
+
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-4o-mini',
+          max_tokens: 200,
+          temperature: 0.9,
+          messages: [
+            { role: 'system', content: `あなたは${memberName}です。ペルソナ: ${persona} ラジオ放送中にひと言だけ日本語でつぶやいてください。2〜3文。` },
+            { role: 'user', content: `現在の時間帯: ${TIME_CTX} ひと言つぶやく（JSON不要、テキストのみ）:` }
+          ]
+        }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(timer);
+
+      if (!res.ok) {
+        if (attempt < 3) { await new Promise(r => setTimeout(r, 2000)); continue; }
+        return null;
+      }
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content?.trim() ?? null;
+    } catch (e) {
+      console.error(`[ScriptGen] fallback attempt ${attempt} 실패: ${e.message}`);
+      if (attempt < 3) { await new Promise(r => setTimeout(r, 2000)); }
+    }
+  }
+  return null;
+}
+
+// 4. 메시지 INSERT (10초 timeout)
 async function insertMessage(content, memberId) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
-    method: 'POST',
-    headers: { ...headers, Prefer: 'return=minimal' },
-    body: JSON.stringify({
-      content,
-      author_name: `[MEMBER:${memberId}]${MEMBER_NAME[memberId]}`
-    })
-  });
-  return res.ok;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 10000);
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
+      method: 'POST',
+      headers: { ...headers, Prefer: 'return=minimal' },
+      body: JSON.stringify({
+        content,
+        author_name: `[MEMBER:${memberId}]${MEMBER_NAME[memberId]}`
+      }),
+      signal: ctrl.signal,
+    });
+    clearTimeout(timer);
+    return res.ok;
+  } catch (e) {
+    clearTimeout(timer);
+    console.error(`[ScriptGen] INSERT timeout/error: ${e.message} → skip`);
+    return false;
+  }
 }
 
 // ─── 메인 실행 ───────────────────────────────────────────────
 
-console.log('🎙️ OnAir Script Generator 시작');
+console.log('[ScriptGen] 시작', new Date().toISOString());
 
 // 1. 현재 활성 멤버 조회
 const activeSessions = await getActiveSessions();
+
+// ── FALLBACK: 활성 세션이 0명이면 랜덤 멤버로 즉시 메시지 1개 생성 후 종료
 if (!Array.isArray(activeSessions) || activeSessions.length === 0) {
-  console.log('❌ 활성 멤버 없음. 종료.');
+  console.log('[ScriptGen] 활성 멤버 없음. Fallback 모드 진입...');
+  const fallbackId = FALLBACK_MEMBERS[Math.floor(Math.random() * FALLBACK_MEMBERS.length)];
+  console.log(`[ScriptGen] Fallback 멤버: ${fallbackId}`);
+  const fallbackMsg = await generateFallbackMessage(fallbackId);
+  if (fallbackMsg) {
+    const ok = await insertMessage(fallbackMsg, fallbackId);
+    console.log(`[ScriptGen] Fallback INSERT ${ok ? '성공' : '실패'}: ${fallbackMsg.substring(0, 50)}`);
+    console.log('[ScriptGen] 완료', 1, '개 (fallback)');
+  } else {
+    console.log('[ScriptGen] Fallback 메시지 생성 실패');
+    console.log('[ScriptGen] 완료', 0, '개 (fallback 실패)');
+  }
   process.exit(0);
 }
 
-console.log(`✅ 활성 멤버: ${activeSessions.map(s => s.member_name).join(', ')}`);
+console.log(`[ScriptGen] 활성 멤버: ${activeSessions.map(s => s.member_name).join(', ')}`);
 
 // 2. 최근 메시지 40개 조회
 const recentMessages = await getRecentMessages(40);
-console.log(`📜 최근 메시지 ${recentMessages.length}개 로드`);
+console.log(`[ScriptGen] 최근 메시지 ${recentMessages.length}개 로드`);
 
-// 2-b. 마지막 토픽 이후 메시지 수 확인 → 50개 이상이면 화제 전환
+// 2-b. 마지막 토픽 이후 메시지 수 확인 → 77개 이상이면 화제 전환
 const msgCountSinceTopic = await getMessageCountSinceLastTopic();
-const shouldChangeTopic = msgCountSinceTopic >= 77; // 토픽당 77개 메시지
-console.log(`📊 마지막 토픽 이후 멤버 메시지: ${msgCountSinceTopic}개 → 화제전환: ${shouldChangeTopic}`);
+const shouldChangeTopic = msgCountSinceTopic >= 77;
+console.log(`[ScriptGen] 마지막 토픽 이후 멤버 메시지: ${msgCountSinceTopic}개 → 화제전환: ${shouldChangeTopic}`);
 
-// 3. 15턴 배치 대화 생성 (단 1회 LLM 호출)
-console.log('🤖 15턴 배치 대화 생성 중...');
+// 3. 15턴 배치 대화 생성 (단 1회 LLM 호출, 실패 시 retry)
+console.log('[ScriptGen] 15턴 배치 대화 생성 중...');
 const script = await generateScript(activeSessions, recentMessages, shouldChangeTopic);
 
 if (!script || !Array.isArray(script) || script.length === 0) {
-  console.log('❌ 스크립트 생성 실패. 종료.');
+  console.log('[ScriptGen] 스크립트 생성 실패. 종료.');
+  console.log('[ScriptGen] 완료', 0, '개');
   process.exit(1);
 }
 
-console.log(`✅ ${script.length}턴 생성 완료`);
+console.log(`[ScriptGen] ${script.length}턴 생성 완료`);
 
-// 4. 18초마다 1개씩 INSERT
+// 4. 10초마다 1개씩 INSERT (각 INSERT에 10초 timeout)
 const activeMemberIds = new Set(activeSessions.map(s => s.member_id));
-// ⚠️ 이전 배치 마지막 화자로 초기화 — 배치 경계 연속 발화 방지 핵심 수정
 const lastMsg = recentMessages[recentMessages.length - 1];
 const lastMsgMatch = lastMsg?.author_name?.match(/^\[MEMBER:(\w+)\]/);
 let lastInsertedAuthor = lastMsgMatch ? lastMsgMatch[1] : null;
+let insertCount = 0;
 
 for (let i = 0; i < script.length; i++) {
   const turn = script[i];
 
-  // 유효한 멤버인지 확인
   if (!turn.author || !activeMemberIds.has(turn.author)) {
-    console.log(`⚠️ 스킵 (유효하지 않은 멤버: ${turn.author})`);
+    console.log(`[ScriptGen] 스킵 (유효하지 않은 멤버: ${turn.author})`);
     continue;
   }
 
   if (!turn.content || turn.content.trim() === '') {
-    console.log(`⚠️ 스킵 (빈 content, turn ${i + 1})`);
+    console.log(`[ScriptGen] 스킵 (빈 content, turn ${i + 1})`);
     continue;
   }
 
   // 외국어 문자 포함 시 스킵 (아랍어/태국어/러시아어 등 - 단, 일본어·한자는 허용)
   const foreignLangRegex = /[\u0600-\u06FF\u0750-\u077F\u0E00-\u0E7F\u0400-\u04FF]/;
   if (foreignLangRegex.test(turn.content)) {
-    console.log(`⚠️ 스킵 (외국어 감지, turn ${i + 1}): ${turn.content.substring(0, 40)}`);
+    console.log(`[ScriptGen] 스킵 (외국어 감지, turn ${i + 1}): ${turn.content.substring(0, 40)}`);
     continue;
   }
 
-  // 연속 발화 방지: 직전에 같은 멤버가 말했으면 스킵
+  // 연속 발화 방지
   if (turn.author === lastInsertedAuthor) {
-    console.log(`⚠️ 스킵 (연속 발화 방지: ${turn.author}, turn ${i + 1})`);
+    console.log(`[ScriptGen] 스킵 (연속 발화 방지: ${turn.author}, turn ${i + 1})`);
     continue;
   }
 
   // 화제 전환 턴이면 [TOPIC] 메시지 먼저 INSERT
   if (turn.topic_change && turn.new_topic) {
-    const topicRes = await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
-      method: 'POST',
-      headers: { ...headers, Prefer: 'return=minimal' },
-      body: JSON.stringify({ author_name: '[TOPIC]', content: turn.new_topic.slice(0, 10) })
-    });
-    console.log(`🔄 화제 전환: ${turn.new_topic}`);
+    const ctrl = new AbortController();
+    const topicTimer = setTimeout(() => ctrl.abort(), 10000);
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
+        method: 'POST',
+        headers: { ...headers, Prefer: 'return=minimal' },
+        body: JSON.stringify({ author_name: '[TOPIC]', content: turn.new_topic.slice(0, 10) }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(topicTimer);
+      console.log(`[ScriptGen] 화제 전환: ${turn.new_topic}`);
+    } catch (e) {
+      clearTimeout(topicTimer);
+      console.error(`[ScriptGen] TOPIC INSERT timeout/error: ${e.message}`);
+    }
   }
 
   const ok = await insertMessage(turn.content.trim(), turn.author);
-  console.log(`📤 [${i + 1}/${script.length}] ${MEMBER_NAME[turn.author] || turn.author}: ${turn.content.substring(0, 50)}...`);
+  console.log(`[ScriptGen] [${i + 1}/${script.length}] ${MEMBER_NAME[turn.author] || turn.author}: ${turn.content.substring(0, 50)}...`);
 
   if (ok) {
-    lastInsertedAuthor = turn.author; // 연속 발화 추적 업데이트
+    lastInsertedAuthor = turn.author;
+    insertCount++;
   } else {
-    console.log(`⚠️ INSERT 실패 (turn ${i + 1})`);
+    console.log(`[ScriptGen] INSERT 실패 (turn ${i + 1})`);
   }
 
-  // 마지막 턴이 아니면 10초 대기 (끊임없이 흐르는 채팅 속도)
   if (i < script.length - 1) {
     await new Promise(r => setTimeout(r, 10000));
   }
 }
 
-console.log('🎙️ OnAir Script Generator 완료');
+console.log('[ScriptGen] 완료', insertCount, '개');
