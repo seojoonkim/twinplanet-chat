@@ -3,7 +3,7 @@
 // LLM으로 15턴 배치 대화 생성 → 60초마다 1개씩 DB INSERT
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const MEMBER_NAME = {
@@ -53,7 +53,8 @@ async function getActiveSessions() {
     `${SUPABASE_URL}/rest/v1/onair_sessions?is_active=eq.true&ends_at=gt.${encodeURIComponent(now)}&select=*`,
     { headers }
   );
-  return res.json();
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
 }
 
 // 2. 최근 메시지 40개 조회
@@ -225,7 +226,7 @@ console.log('🎙️ OnAir Script Generator 시작');
 
 // 1. 현재 활성 멤버 조회
 const activeSessions = await getActiveSessions();
-if (!activeSessions || activeSessions.length === 0) {
+if (!Array.isArray(activeSessions) || activeSessions.length === 0) {
   console.log('❌ 활성 멤버 없음. 종료.');
   process.exit(0);
 }
