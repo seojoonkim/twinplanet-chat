@@ -883,7 +883,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
             <path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
           </svg>
           <span className="text-[11px] text-gray-500 font-medium">
-            ATARASHII GAKKO! official 님이 재게시함
+            ATARASHII GAKKO! official reposted
             {post.rtAuthorName && (
               <span className="text-gray-400"> · <span className="font-semibold text-gray-600">{post.rtAuthorName}</span> OP</span>
             )}
@@ -1029,13 +1029,13 @@ function FeedCard({ post }: { post: UnifiedPost }) {
             liked ? 'text-violet-600' : 'text-gray-500 hover:bg-gray-50'
           }`}
         >
-          {liked ? '❤️' : '🤍'} 좋아요
+          {liked ? '❤️' : '🤍'} Like
         </button>
         <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-semibold text-gray-500 hover:bg-gray-50">
-          💬 댓글
+          💬 Comment
         </button>
         <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-semibold text-gray-500 hover:bg-gray-50">
-          ↗ 공유
+          ↗ Share
         </button>
       </div>
 
@@ -1085,7 +1085,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
             onClick={() => setExpanded(!expanded)}
             className="text-[12px] text-gray-500 font-semibold ml-10 mt-2"
           >
-            {expanded ? '접기' : `댓글 ${post.comments.length - 2}개 더 보기`}
+            {expanded ? 'Collapse' : `${post.comments.length - 2} more comments`}
           </button>
         )}
       </div>
@@ -1317,10 +1317,10 @@ export default function FeedPage() {
   return (
     <div className="pb-4">
       <div
-        className="px-4 pt-4 pb-3 border-b border-violet-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
-        style={{ background: '#F5F3FF' }}
+        className="px-4 pt-4 pb-3 border-b border-gray-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
+        style={{ background: '#f8f9fa' }}
       >
-          <h1 className="text-sm font-normal text-gray-900 shrink-0">FAN FEED 🌐</h1>
+          <h1 className="text-sm font-normal text-gray-900 shrink-0">Official FEED 🌐</h1>
         <div className="flex items-center gap-2 shrink-0">
           {/* 출처 드랍다운 */}
           <div ref={sourceDropdownRef} className="relative">
