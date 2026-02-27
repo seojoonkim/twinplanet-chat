@@ -4,11 +4,9 @@
 // 같은 멤버 연속 2번 안됨
 // 최근 메시지 맥락 파악 후 AI 응답
 
-import Anthropic from '@anthropic-ai/sdk';
-
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 // 75% 확률로 실행 (3분 간격 → 더 자주)
 if (Math.random() > 0.75) {
@@ -118,14 +116,19 @@ const contextLines = recentMsgs.slice(-10).map(m => {
   return `${name}: ${m.content}`;
 }).join('\n');
 
-// Anthropic으로 자연스러운 응답 생성
-const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
-const response = await anthropic.messages.create({
-  model: 'claude-haiku-4-5',
-  max_tokens: 150,
-  messages: [{
-    role: 'user',
-    content: `あなたはタレントの${memberName}です。
+// OpenRouter으로 자연스러운 응답 생성
+const orRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+    Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    model: 'openai/gpt-4o-mini',
+    max_tokens: 150,
+    messages: [{
+      role: 'user',
+      content: `あなたはタレントの${memberName}です。
 ペルソナ: ${persona}
 ${currentTopic ? `\n現在のトピック: 「${currentTopic}」\n` : ''}
 ファンとのオンエアリアルタイムチャットに自然に参加してください。
@@ -141,10 +144,12 @@ ${contextLines || '（会話なし — 初参加）'}
 - 絵文字はペルソナに合わせて
 
 メッセージだけ出力（説明不要）`
-  }]
+    }]
+  }),
 });
+const orData = await orRes.json();
 
-const content = response.content[0].text.trim();
+const content = orData?.choices?.[0]?.message?.content?.trim() ?? '';
 
 // Supabase에 INSERT (author_name에 멤버 ID 인코딩)
 await fetch(`${SUPABASE_URL}/rest/v1/onair_messages`, {
