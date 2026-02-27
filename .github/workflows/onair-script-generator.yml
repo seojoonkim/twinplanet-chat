@@ -2,6 +2,8 @@ name: OnAir Script Generator
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/13 * * * *'
 
 jobs:
   generate:
