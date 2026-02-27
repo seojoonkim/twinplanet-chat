@@ -380,6 +380,10 @@ export default function CommunityPage() {
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState('');
   const [sourceFilter, setSourceFilter] = useState<SourceFilter>('all');
+  // source별 items를 완전 분리 관리 (Pixiv 필터에 togetter 혼재 방지)
+  const [twitterStore, setTwitterStore] = useState<CommunityItem[]>([]);
+  const [togetterStore, setTogetterStore] = useState<CommunityItem[]>([]);
+  const [pixivStore, setPixivStore] = useState<CommunityItem[]>([]);
   const [filterMember, setFilterMember] = useState<string>('');
   const [sourceDropdownOpen, setSourceDropdownOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -427,6 +431,10 @@ export default function CommunityPage() {
           const safeTwitter = twitterItems.map(i => ({ ...i, source: 'twitter' as const }));
           const safeTogetter = togetterItems.map(i => ({ ...i, source: 'togetter' as const }));
           const safePixiv = pixivItems.map(i => ({ ...i, source: 'pixiv' as const }));
+          // source별 store 분리 저장 (필터 완전 격리용)
+          setTwitterStore(safeTwitter);
+          setTogetterStore(safeTogetter);
+          setPixivStore(safePixiv);
           const merged = [...mainItems, ...safeTwitter, ...safeTogetter, ...safePixiv].sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
@@ -467,20 +475,30 @@ export default function CommunityPage() {
   }, []);
 
   const filteredItems = useMemo(() => {
-    const sourceFiltered = sourceFilter === 'all'
-      ? items
-      : items.filter((item) => item.source === sourceFilter);
+    // source별 store에서 직접 선택 (merged items filter 방식 완전 대체)
+    // → togetter가 pixiv 필터에 나오는 버그 근본 차단
+    let sourceFiltered: CommunityItem[];
+    if (sourceFilter === 'all') {
+      sourceFiltered = items;
+    } else if (sourceFilter === 'twitter') {
+      sourceFiltered = twitterStore;
+    } else if (sourceFilter === 'togetter') {
+      sourceFiltered = togetterStore;
+    } else if (sourceFilter === 'pixiv') {
+      sourceFiltered = pixivStore;
+    } else {
+      sourceFiltered = items;
+    }
 
     if (filterMember) {
       return sourceFiltered.filter((item) => {
         const tags = detectMemberTags((item.title || '') + ' ' + (item.content || ''));
         return tags.includes(filterMember);
-        // 주의: 'all' 태그는 필터 시 포함하지 않음 (멤버 선택 시 전체 태그 제외)
       });
     }
 
     return sourceFiltered;
-  }, [items, sourceFilter, filterMember]);
+  }, [items, twitterStore, togetterStore, pixivStore, sourceFilter, filterMember]);
 
   const memberOptions = [
     { id: 'mizyu',    name: 'MIZYU',    group: 'AG!' },
