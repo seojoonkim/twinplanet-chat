@@ -304,41 +304,6 @@ function CommunityCard({ item }: { item: CommunityItem }) {
         </div>
       ) : null}
 
-      {/* 멤버 댓글 섹션 */}
-      {comments.length > 0 && (
-        <div className="px-3.5 pt-2 pb-1 border-t border-gray-100">
-          {comments.filter(c => !c.is_reply).map(comment => (
-            <div key={comment.id} className="flex items-start gap-2 py-1.5">
-              <img
-                src={`/idols/${comment.idol_id}/profile.jpg?v=2`}
-                className="w-6 h-6 rounded-full object-cover flex-shrink-0 mt-0.5"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="text-[11px] font-bold text-gray-700">{MEMBER_NAME[comment.idol_id] ?? comment.idol_id}</span>
-                </div>
-                <p className="text-[13px] text-gray-700 leading-snug">{comment.content}</p>
-                {/* 대댓글 */}
-                {comments.filter(r => r.reply_to_comment_id === comment.id).map(reply => (
-                  <div key={reply.id} className="flex items-start gap-2 mt-1.5 pl-2 border-l-2 border-violet-100">
-                    <img
-                      src={`/idols/${reply.idol_id}/profile.jpg?v=2`}
-                      className="w-5 h-5 rounded-full object-cover flex-shrink-0 mt-0.5"
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                    />
-                    <div>
-                      <span className="text-[10px] font-bold text-gray-600 mr-1">{MEMBER_NAME[reply.idol_id] ?? reply.idol_id}</span>
-                      <span className="text-[12px] text-gray-600">{reply.content}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
       {/* 원문 보기 링크 */}
       <a
         href={item.url}
@@ -373,6 +338,41 @@ function CommunityCard({ item }: { item: CommunityItem }) {
           ↗ Share
         </button>
       </div>
+
+      {/* 멤버 댓글 섹션 — 액션 버튼 아래 */}
+      {comments.length > 0 && (
+        <div className="px-3.5 pt-2 pb-3 border-t border-gray-100">
+          {comments.filter(c => !c.is_reply).map(comment => (
+            <div key={comment.id} className="flex items-start gap-2 py-1.5">
+              <img
+                src={`/idols/${comment.idol_id}/profile.jpg?v=2`}
+                className="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-0.5"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="text-[11px] font-bold text-gray-700">{MEMBER_NAME[comment.idol_id] ?? comment.idol_id}</span>
+                </div>
+                <p className="text-[13px] text-gray-700 leading-snug">{comment.content}</p>
+                {/* 대댓글 */}
+                {comments.filter(r => r.reply_to_comment_id === comment.id).map(reply => (
+                  <div key={reply.id} className="flex items-start gap-2 mt-1.5 pl-2 border-l-2 border-violet-100">
+                    <img
+                      src={`/idols/${reply.idol_id}/profile.jpg?v=2`}
+                      className="w-5 h-5 rounded-full object-cover flex-shrink-0 mt-0.5"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    <div>
+                      <span className="text-[10px] font-bold text-gray-600 mr-1">{MEMBER_NAME[reply.idol_id] ?? reply.idol_id}</span>
+                      <span className="text-[12px] text-gray-600">{reply.content}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
