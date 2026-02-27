@@ -23,11 +23,11 @@ const IDOL_S_NUMBERS: Record<string, string> = {
   rin: 'AG!',
   suzuka: 'AG!',
   kanon: 'AG!',
-  nako: 'Nako',
-  nana: 'Nana',
-  taiyo: 'Taiyo',
-  yoshiaki: 'よしあき',
-  michi: 'ミチ',
+  nako: '歌手・女優',
+  nana: 'タレント',
+  taiyo: '俳優・歌手',
+  yoshiaki: 'モデル・俳優',
+  michi: 'モデル・タレント',
 };
 
 type Tab = 'group' | 'solo' | 'feed' | 'diary' | 'community' | 'pulse' | 'onair';
