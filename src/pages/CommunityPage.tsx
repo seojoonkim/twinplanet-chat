@@ -20,7 +20,7 @@ function stripUrls(text: string): string {
     .trim();
 }
 
-type Source = 'twitter' | 'togetter';
+type Source = 'twitter' | 'togetter' | 'pixiv';
 type SourceFilter = 'all' | Source;
 
 type CommunityItem = {
@@ -127,20 +127,24 @@ function CommunitySkeleton() {
 const SOURCE_ICON_BG: Record<Source, string> = {
   twitter:  'linear-gradient(135deg,#000,#374151)',
   togetter: 'linear-gradient(135deg,#E05000,#ff6534)',
+  pixiv:    'linear-gradient(135deg,#0096FA,#4f7fff)',
 };
 const SOURCE_ICON_LABEL: Record<Source, string> = {
   twitter:  '𝕏',
   togetter: 'JP',
+  pixiv:    'P',
 };
 
 const COMMUNITY_LINK_LABELS: Record<Source, string> = {
   twitter: '𝕏 View on Twitter →',
   togetter: '↗ View Article →',
+  pixiv: '🎨 Pixivで見る →',
 };
 
 const COMMUNITY_LINK_COLORS: Record<Source, string> = {
   twitter: '#000000',
   togetter: '#E05000',
+  pixiv: '#0096FA',
 };
 
 const MEMBER_KEYWORDS: Record<string, string[]> = {
@@ -377,6 +381,7 @@ function sourceFilterLabel(value: SourceFilter) {
   if (value === 'all') return 'ALL';
   if (value === 'twitter') return 'Twitter (𝕏)';
   if (value === 'togetter') return 'JP News';
+  if (value === 'pixiv') return 'Pixiv 🎨';
   return value;
 }
 
@@ -396,10 +401,11 @@ export default function CommunityPage() {
     async function load() {
       try {
         // Fetch all feeds in parallel
-        const [mainRes, twitterRes, togetterRes] = await Promise.allSettled([
+        const [mainRes, twitterRes, togetterRes, pixivRes] = await Promise.allSettled([
           fetch('/api/community-feed'),
           fetch('/api/feed-twitter-fan'),
           fetch('/api/feed-togetter'),
+          fetch('/api/feed-pixiv'),
         ]);
 
         let mainItems: CommunityItem[] = [];
@@ -421,8 +427,14 @@ export default function CommunityPage() {
           togetterItems = Array.isArray(data.posts) ? data.posts as CommunityItem[] : [];
         }
 
+        let pixivItems: CommunityItem[] = [];
+        if (pixivRes.status === 'fulfilled' && pixivRes.value.ok) {
+          const data = await pixivRes.value.json();
+          pixivItems = Array.isArray(data.posts) ? data.posts as CommunityItem[] : [];
+        }
+
         if (!cancelled) {
-          const merged = [...mainItems, ...twitterItems, ...togetterItems].sort(
+          const merged = [...mainItems, ...twitterItems, ...togetterItems, ...pixivItems].sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
           setItems(merged);
@@ -523,7 +535,7 @@ export default function CommunityPage() {
                 className="absolute top-full right-0 mt-1.5 bg-white rounded-2xl z-50 p-3"
                 style={{ boxShadow: '0 8px 32px -4px rgba(0,0,0,0.14)', width: '252px' }}
               >
-                {(['all', 'twitter', 'togetter'] as SourceFilter[]).map(value => (
+                {(['all', 'twitter', 'togetter', 'pixiv'] as SourceFilter[]).map(value => (
                   <button
                     key={value}
                     onMouseDown={(e) => e.stopPropagation()}
