@@ -561,6 +561,7 @@ export default function CommunityPage() {
                 {(['all', 'twitter', 'reddit', 'togetter'] as SourceFilter[]).map(value => (
                   <button
                     key={value}
+                    onMouseDown={(e) => e.stopPropagation()}
                     onClick={() => { setSourceFilter(value); setSourceDropdownOpen(false); }}
                     className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg transition-colors mb-1.5 last:mb-0 ${sourceFilter === value ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-violet-50'}`}
                   >
@@ -600,6 +601,7 @@ export default function CommunityPage() {
                 style={{ boxShadow: '0 8px 32px -4px rgba(0,0,0,0.14)', width: '252px' }}
               >
                 <button
+                  onMouseDown={(e) => e.stopPropagation()}
                   onClick={() => { setFilterMember(''); setDropdownOpen(false); }}
                   className={`w-full text-left text-sm font-semibold px-3 py-1.5 rounded-lg mb-2 transition-colors ${!filterMember ? 'bg-violet-100 text-violet-700' : 'text-gray-500 hover:bg-violet-50'}`}
                 >
@@ -609,6 +611,7 @@ export default function CommunityPage() {
                   {memberOptions.map((m) => (
                     <button
                       key={m.id}
+                      onMouseDown={(e) => e.stopPropagation()}
                       onClick={() => { setFilterMember(m.id); setDropdownOpen(false); }}
                       className={`flex flex-col items-center py-1.5 px-1 rounded-lg transition-colors ${filterMember === m.id ? 'bg-violet-100 text-violet-700' : 'text-gray-600 hover:bg-violet-50'}`}
                     >

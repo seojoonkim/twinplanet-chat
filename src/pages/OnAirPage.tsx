@@ -73,12 +73,12 @@ function formatTime(isoStr: string): string {
 
 function formatCountdown(isoStr: string, now: Date): string {
   const diff = new Date(isoStr).getTime() - now.getTime();
-  if (diff <= 0) return '곧';
+  if (diff <= 0) return 'まもなく';
   const totalMins = Math.floor(diff / 60000);
   const hrs = Math.floor(totalMins / 60);
   const mins = totalMins % 60;
-  if (hrs > 0) return mins > 0 ? `${hrs}시간 ${mins}분` : `${hrs}시간`;
-  return `${mins}분`;
+  if (hrs > 0) return mins > 0 ? `${hrs}時間${mins}分` : `${hrs}時間`;
+  return `${mins}分`;
 }
 
 function toDisplayItems(messages: OnairMessage[]): DisplayItem[] {
@@ -419,7 +419,7 @@ export default function OnAirPage() {
                         <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-400 border border-white" style={{ animation: 'onair-blink 1.5s ease-in-out infinite' }} />
                       </div>
                       <div className="text-[10px] text-white/90 mt-1">{m.name}</div>
-                      <div className="text-[9px] text-white/60">{formatCountdown(session.ends_at, new Date(now))} left</div>
+                      <div className="text-[9px] text-white/60">残り{formatCountdown(session.ends_at, new Date(now))}</div>
                     </div>
                   );
                 })}
@@ -441,7 +441,7 @@ export default function OnAirPage() {
                     </div>
                   </div>
                   <div className="text-[10px] text-white/70 mt-1">{nextSession.member_name}</div>
-                  <div className="text-[9px] text-white/50">in {formatCountdown(nextSession.started_at, new Date(now))}</div>
+                  <div className="text-[9px] text-white/50">{formatCountdown(nextSession.started_at, new Date(now))}後</div>
                 </div>
               </>
             )}
