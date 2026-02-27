@@ -82,6 +82,26 @@ export default async function handler(req, res) {
       };
     });
 
+    // 댓글 없는 트윗 감지 시 GitHub Actions 트리거 (fire & forget)
+    const emptyCommentPosts = posts.filter(p => (p.comments || []).length === 0);
+    if (emptyCommentPosts.length > 0) {
+      const githubPat = (process.env.GITHUB_PAT || '').trim();
+      if (githubPat) {
+        fetch(
+          'https://api.github.com/repos/seojoonkim/twinplanet-chat/actions/workflows/community-comments.yml/dispatches',
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': `token ${githubPat}`,
+              'Content-Type': 'application/json',
+              'Accept': 'application/vnd.github.v3+json',
+            },
+            body: JSON.stringify({ ref: 'main' }),
+          }
+        ).catch(() => {}); // fire and forget, 절대 응답 기다리지 않음
+      }
+    }
+
     return res.status(200).json({ posts });
   } catch (err) {
     console.error('[feed-twitter-fan] fatal:', err?.message);
