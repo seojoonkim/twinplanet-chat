@@ -537,6 +537,19 @@ Never send one long message — break it up naturally like a real chat.
     enhancedSystem += userMemoryToPrompt(userMemory, relevantMemories);
     enhancedSystem += ragContext;
 
+    // recent-news.md 주입
+    if (idolId) {
+      try {
+        const newsPath = join(process.cwd(), 'public', 'idols', idolId, 'recent-news.md');
+        const recentNews = readFileSync(newsPath, 'utf8');
+        if (recentNews && recentNews.trim()) {
+          enhancedSystem += `\n\n## 最新情報\n${recentNews}`;
+        }
+      } catch {
+        // 파일 없으면 무시
+      }
+    }
+
     // 메시지 카운트 증가 (비동기, 응답 대기 안 함)
     if (userId && idolId && supabase) {
       incrementMessageCount(userId, idolId, supabase).catch(() => {});
