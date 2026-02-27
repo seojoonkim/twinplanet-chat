@@ -646,7 +646,7 @@ export default function GroupChatPage() {
                     <span className="text-[14px] font-bold text-gray-900">{m.name}</span>
                     <span
                       className="text-[11px] font-semibold leading-tight text-center"
-                      style={{ color: m.color, maxWidth: '80px', wordBreak: 'keep-all' }}
+                      style={{ color: m.color, maxWidth: '72px', wordBreak: 'break-word', overflowWrap: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
                     >
                       {m.role}
                     </span>
@@ -677,7 +677,7 @@ export default function GroupChatPage() {
             {/* Date divider */}
             <div className="text-center py-3">
               <span className="inline-block px-3 py-1 rounded-full bg-gray-100 text-[11px] text-gray-500">
-                {new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
+                {new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' })}
               </span>
             </div>
 
