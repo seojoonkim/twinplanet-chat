@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { AppHeader } from '../components/AppHeader';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL ?? '').trim();
 const SUPABASE_ANON_KEY = (import.meta.env.VITE_SUPABASE_ANON_KEY ?? '').trim();
@@ -362,20 +363,7 @@ export default function OnAirPage() {
           <div className="orb orb-2" />
           <div className="orb orb-3" />
           <div className="mx-auto px-4 pt-6 pb-0 relative z-10" style={{ maxWidth: '750px' }}>
-            <div className="text-left mb-5">
-              <button
-                type="button"
-                onClick={() => navigate('/')}
-                className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
-              >
-                <img src="/tp-logo.svg?v=3" alt="tp" style={{ width: '28px', height: '30px' }} />
-                <h1 className="text-[22px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>twinplanet.chat</h1>
-                <span className="ml-1.5 px-2 py-0.5 text-[9px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>Beta</span>
-              </button>
-              <p className="text-xs font-medium tracking-tight" style={{ color: '#3e3a39' }}>
-                TWIN PLANET タレントと AI チャット ✨
-              </p>
-            </div>
+            <AppHeader subtitle="TWIN PLANET タレントと AI チャット ✨" />
             {/* Tab Bar */}
             <div className="flex mb-0 border-b border-gray-200">
               {([
