@@ -125,6 +125,8 @@ const GROUP_SLUG_MAP: Record<string, string> = {
   'æspa': 'aespa',
   '솔로': 'solo',
   Solo: 'solo',
+  'ATARASHII GAKKO!': 'atarashii-gakko',
+  '新しい学校のリーダーズ': 'atarashii-gakko',
 };
 
 export function getGroupSlug(groupName: string): string {
