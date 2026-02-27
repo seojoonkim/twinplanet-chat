@@ -106,6 +106,8 @@ export default function OnAirPage() {
   const pendingQueueRef = useRef<DisplayItem[]>([]);
   const isTypingRef = useRef<boolean>(false);
   const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const idleTypingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const activeSessionsRef = useRef<OnairSession[]>([]);
   const [typingMsg, setTypingMsg] = useState<{ item: OnairMessage; displayed: string } | null>(null);
   const [typingIndicator, setTypingIndicator] = useState<{ memberId: string; memberName: string } | null>(null);
 
@@ -141,10 +143,39 @@ export default function OnAirPage() {
     bottomRef.current?.scrollIntoView({ behavior });
   }, []);
 
+  // idle 중 "누군가 타이핑 중" indicator 예약
+  const scheduleIdleTyping = useCallback(() => {
+    if (idleTypingTimerRef.current) clearTimeout(idleTypingTimerRef.current);
+    idleTypingTimerRef.current = setTimeout(() => {
+      // 아직 큐가 비어있고 타이핑 중이 아닐 때만 표시
+      if (pendingQueueRef.current.length === 0 && !isTypingRef.current) {
+        const sessions = activeSessionsRef.current.filter(s => s.is_active);
+        if (sessions.length > 0) {
+          const s = sessions[Math.floor(Math.random() * sessions.length)];
+          setTypingIndicator({ memberId: s.member_id, memberName: s.member_name });
+          // 8초 후 숨기고 다시 예약 (살아있는 느낌 유지)
+          setTimeout(() => {
+            if (pendingQueueRef.current.length === 0 && !isTypingRef.current) {
+              setTypingIndicator(null);
+              scheduleIdleTyping();
+            }
+          }, 8000);
+        }
+      }
+    }, 6000); // 6초 후 표시
+  }, []);
+
   // 글자별 타이핑 효과 — 새 메시지를 큐에서 하나씩 꺼내 reveal
   // 흐름: typing indicator (1.2초) → 글자별 타이핑 → 완료 후 다음 큐
   const startTypingQueue = useCallback(() => {
-    if (isTypingRef.current || pendingQueueRef.current.length === 0) return;
+    // idle typing indicator 취소
+    if (idleTypingTimerRef.current) clearTimeout(idleTypingTimerRef.current);
+    setTypingIndicator(null);
+    if (isTypingRef.current) return;
+    if (pendingQueueRef.current.length === 0) {
+      scheduleIdleTyping();
+      return;
+    }
     const next = pendingQueueRef.current.shift()!;
 
     // 시스템 메시지 → 즉시 추가
@@ -205,6 +236,7 @@ export default function OnAirPage() {
       data.forEach((s) => {
         memberNameMap.current[s.member_id] = s.member_name;
       });
+      activeSessionsRef.current = data;
       setActiveSessions(data);
       setOnlineMembers(data.map(s => ({ id: s.member_id, name: s.member_name })));
       // 다음 예정 세션 조회
@@ -325,6 +357,7 @@ export default function OnAirPage() {
         const displayItems = toDisplayItems(data);
         const lastPoll = data[data.length - 1];
         if (data.length > 0 && lastPoll) {
+          if (idleTypingTimerRef.current) clearTimeout(idleTypingTimerRef.current);
           pendingQueueRef.current.push(...displayItems);
           lastCreatedAtRef.current = lastPoll.created_at;
           if (!isTypingRef.current) startTypingQueue();
