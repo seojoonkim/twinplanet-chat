@@ -20,15 +20,21 @@ const GroupChatFallback = (
         width: '60px', height: '60px',
         zIndex: 10,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: '#dcff00',
+        borderRadius: '50%',
+        fontWeight: 800,
+        fontSize: '20px',
+        color: '#3e3a39',
+        letterSpacing: '-0.5px',
       }}>
-        <img src="/logo.png" alt="twinplanet.chat" style={{ width: '48px', height: '48px' }} />
+        TP
       </div>
-      <span style={{ position: 'absolute', top: '-4px', left: '50%', transform: 'translateX(-50%)', fontSize: '22px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0s' }}>💜</span>
-      <span style={{ position: 'absolute', top: '10%', right: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0.4s' }}>🌸</span>
+      <span style={{ position: 'absolute', top: '-4px', left: '50%', transform: 'translateX(-50%)', fontSize: '22px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0s' }}>🌟</span>
+      <span style={{ position: 'absolute', top: '10%', right: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0.4s' }}>⭐</span>
       <span style={{ position: 'absolute', bottom: '10%', right: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0.8s' }}>✨</span>
-      <span style={{ position: 'absolute', bottom: '-4px', left: '50%', transform: 'translateX(-50%)', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '1.2s' }}>⭐</span>
-      <span style={{ position: 'absolute', bottom: '10%', left: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '1.6s' }}>🎶</span>
-      <span style={{ position: 'absolute', top: '10%', left: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '2.0s' }}>💫</span>
+      <span style={{ position: 'absolute', bottom: '-4px', left: '50%', transform: 'translateX(-50%)', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '1.2s' }}>💫</span>
+      <span style={{ position: 'absolute', bottom: '10%', left: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '1.6s' }}>🎵</span>
+      <span style={{ position: 'absolute', top: '10%', left: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '2.0s' }}>🌙</span>
     </div>
     <p className="text-sm font-semibold shimmer-text" style={{ marginTop: '8px' }}>twinplanet.chat</p>
   </div>

@@ -27,18 +27,18 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="flex flex-col items-center justify-center h-screen gap-4 px-6 text-center"
-          style={{ background: 'linear-gradient(135deg, #fdf2f8, #faf5ff)' }}>
-          <img src="/logo.png" alt="TWIN PLANET chat" style={{ width: 52 }} />
-          <h2 className="text-lg font-bold text-gray-700">앗, 오류가 발생했어요</h2>
-          <p className="text-sm text-gray-400 max-w-xs">
-            {this.state.error?.message ?? '알 수 없는 오류'}
+          style={{ background: 'linear-gradient(135deg, #f0ff80, #dcff00)' }}>
+          <div style={{ width: 52, height: 52, background: '#3e3a39', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18, color: '#dcff00', letterSpacing: '-0.5px' }}>TP</div>
+          <h2 className="text-lg font-bold" style={{ color: '#3e3a39' }}>エラーが発生しました</h2>
+          <p className="text-sm max-w-xs" style={{ color: '#5a5654' }}>
+            {this.state.error?.message ?? 'Unknown error'}
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-2 px-5 py-2 rounded-full text-sm font-bold text-white"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #EC4899)' }}
+            className="mt-2 px-5 py-2 rounded-full text-sm font-bold"
+            style={{ background: '#3e3a39', color: '#dcff00' }}
           >
-            새로고침
+            Reload
           </button>
         </div>
       );
