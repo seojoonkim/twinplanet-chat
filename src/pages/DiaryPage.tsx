@@ -139,10 +139,10 @@ function getPresetReactions(entry: DiaryEntry): Record<ReactionKey, string[]> {
 
 // 반응별 한마디 풀 (결정론적 할당)
 const REACTION_COMMENTS: Record<ReactionKey, string[]> = {
-  heart: ['공감 백퍼ㅠ', '나도 딱 이랬어', '이게 나야', '맞아맞아ㅠ', '완전 공감됨', '나 거의 울었잖아', '너무 공감돼서 저장함', '이게 맞지'],
-  lol:   ['ㅋㅋㅋ진짜임?', '아 웃겨 죽겠다', '나 빵 터짐ㅋㅋ', '미쳤다ㅋㅋㅋ', '진짜야?ㅋㅋ', '읽다 웃음참음', '아ㅋㅋ 왜이래', '이게 말이 돼?ㅋㅋ'],
-  sad:   ['나도 슬펐는데', '언니 괜찮아?', '마음이 아파...', '힘내!!', '슬프다ㅠ', '눈물 날 뻔', '같이 슬퍼ㅠ'],
-  star:  ['역대급 일기!', '저장해뒀어', '최고야 진짜', '이게 맞지', '감동받았음', '완벽한 하루네', '진짜 좋은 글이다'],
+  heart: ['共感しかない', '私もこうだった', 'これ私じゃん', 'わかるわかる', '超共感した', '泣きそうになった', '保存した', 'これが正解だよ'],
+  lol:   ['えww本当に?', '笑い死にそうwww', 'やばすぎるwww', '吹き出したwww', '本当wwww', '笑いこらえながら読んだ', 'やばww何これ', 'ありえんwww'],
+  sad:   ['私も泣きそうだった', '大丈夫?', '胸が痛い…', '頑張って!!', '悲しいよ…', '泣きそう', '一緒に悲しい'],
+  star:  ['神回日記！', '保存確定', '最高すぎる', 'これが正解', '感動した', '完璧な1日だね', '本当にいい文章だ'],
 };
 
 function DiaryReactions({ entryId, entry }: { entryId: string; entry: DiaryEntry }) {
@@ -258,8 +258,8 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
     : `/idols/${entry.authorId}/profile.jpg`;
 
   const dateObj = new Date(entry.date);
-  const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-  const dateStr = `${dateObj.getFullYear()}년 ${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일 ${weekdays[dateObj.getDay()]}`;
+  const weekdays = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+  const dateStr = `${dateObj.getFullYear()}年${dateObj.getMonth() + 1}月${dateObj.getDate()}日 ${weekdays[dateObj.getDay()]}`;
 
   const paragraphs = entry.content.split('\n\n').filter(Boolean);
 
@@ -274,7 +274,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
           onClick={onBack}
           className="text-violet-600 font-medium text-sm flex items-center gap-1"
         >
-          ‹ 목록
+          ‹ 一覧
         </button>
         <span className="text-gray-400 text-xs">|</span>
         <span className="text-xs text-gray-500 font-medium">{entry.authorName}'s diary</span>
@@ -308,7 +308,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
           onClick={() => navigate('/feed')}
           className="text-xs text-violet-500 underline mb-4 inline-block"
         >
-          📸 이 날의 피드 보기 →
+          📸 この日のフィードを見る →
         </button>
 
         {/* 제목 */}
@@ -384,11 +384,14 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
               className="text-gray-700"
               style={{
                 fontFamily: "'Gowun Dodum', cursive",
-                wordBreak: 'keep-all',
+                wordBreak: 'break-word',
+                overflowWrap: 'anywhere',
                 lineHeight: '32px',
                 paddingBottom: '32px',
                 marginBottom: 0,
                 fontSize: '17px',
+                maxWidth: '100%',
+                overflow: 'hidden',
               }}
             >
               {para}
@@ -413,7 +416,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
             onClick={onBack}
             className="px-6 py-2.5 rounded-full text-sm font-medium text-violet-700 border border-violet-300 bg-violet-50 hover:bg-violet-100 active:bg-violet-200 transition-colors"
           >
-            ‹ 일기 목록으로 돌아가기
+            ‹ 日記一覧に戻る
           </button>
         </div>
 
@@ -458,7 +461,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
           TWIN PLANET chat
         </span>
         <span>
-          Made with 💜 by{' '}
+          Made with ✨ by{' '}
           <a href="mailto:simon@hashed.com" className="underline hover:text-gray-600">
             Simon Kim
           </a>
