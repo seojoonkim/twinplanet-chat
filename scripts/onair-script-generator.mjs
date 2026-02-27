@@ -397,7 +397,7 @@ for (let i = 0; i < script.length; i++) {
   }
 
   if (i < script.length - 1) {
-    await new Promise(r => setTimeout(r, 10000));
+    await new Promise(r => setTimeout(r, 13500)); // 35% 느리게
   }
 }
 

@@ -217,10 +217,10 @@ export default function OnAirPage() {
           setTypingMsg(null);
           isTypingRef.current = false;
           bottomRef.current?.scrollIntoView({ behavior: 'auto' });
-          setTimeout(() => startTypingQueue(), 400);
+          setTimeout(() => startTypingQueue(), 540);
         }
-      }, 65); // 65ms/글자
-    }, memberId ? 1200 : 0);
+      }, 88); // 88ms/글자 (35% 느리게)
+    }, memberId ? 1620 : 0);
   }, []);
 
   // onair_sessions에서 실제 활성 멤버 업데이트
