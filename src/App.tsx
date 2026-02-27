@@ -14,7 +14,7 @@ const GroupChatFallback = (
   >
     <div style={{ position: 'relative', width: '80px', height: '80px' }}>
       {/* center logo */}
-      <img src="/tp-logo.svg?v=2" alt="twinplanet.chat" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '52px', height: '56px', zIndex: 10 }} />
+      <img src="/tp-logo.svg?v=3" alt="twinplanet.chat" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '52px', height: '56px', zIndex: 10 }} />
       <span style={{ position: 'absolute', top: '-4px', left: '50%', transform: 'translateX(-50%)', fontSize: '22px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0s' }}>🌟</span>
       <span style={{ position: 'absolute', top: '10%', right: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0.4s' }}>⭐</span>
       <span style={{ position: 'absolute', bottom: '10%', right: '-6px', fontSize: '20px', animation: 'chat-emoji-pop 2.4s ease-in-out infinite', animationDelay: '0.8s' }}>✨</span>

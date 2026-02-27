@@ -1,14 +1,14 @@
-<svg width="56" height="66" viewBox="0 0 56 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="56" height="58" viewBox="0 0 56 58" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGrad" x1="0" y1="0" x2="56" y2="46" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#2a2a2a"/>
       <stop offset="100%" stop-color="#111111"/>
     </linearGradient>
   </defs>
-  <!-- 귀여운 말풍선 body: rx 크게 → 거의 원형 -->
-  <rect x="2" y="2" width="52" height="44" rx="24" fill="url(#bgGrad)"/>
-  <!-- 귀여운 꼬리: 왼쪽 아래, Q 베지어로 부드럽고 통통하게 -->
-  <path d="M 15 43 Q 8 54 7 65 Q 17 57 24 44 Z" fill="#111111"/>
+  <!-- 사각형에 가까운 귀여운 말풍선 body: rx=14 -->
+  <rect x="2" y="2" width="52" height="44" rx="14" fill="url(#bgGrad)"/>
+  <!-- 짧고 통통한 꼬리 -->
+  <path d="M 12 44 Q 7 50 9 56 Q 18 51 23 44 Z" fill="#111111"/>
   <!-- tp: 동글동글 폰트, 정중앙 -->
   <text
     x="28" y="24"

@@ -375,7 +375,7 @@ export default function OnAirPage() {
                 onClick={() => navigate('/')}
                 className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
               >
-                <img src="/tp-logo.svg?v=2" alt="tp" style={{ width: '36px', height: '38px' }} />
+                <img src="/tp-logo.svg?v=3" alt="tp" style={{ width: '36px', height: '38px' }} />
                 <h1 className="text-[27px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>twinplanet.chat</h1>
                 <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>Beta</span>
               </button>
