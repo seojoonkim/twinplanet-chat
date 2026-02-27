@@ -4,7 +4,7 @@ interface PulsePost {
   id: string;
   title: string;
   content: string;
-  author_name: string;
+  author_nickname: string;
   views: number;
   likes: number;
   comments_count: number;
@@ -15,7 +15,7 @@ interface PulseComment {
   id: string;
   post_id: string;
   content: string;
-  author_name: string;
+  author_nickname: string;
   created_at: string;
   member_id?: string;
   is_member_comment?: boolean;
@@ -206,8 +206,8 @@ const PulsePage = () => {
         body: JSON.stringify({
           title: writeForm.title.trim(),
           content: writeForm.content.trim(),
-          author_name: writeForm.author_name.trim(),
-          author_password: writeForm.author_password.trim(),
+          author_nickname: writeForm.author_name.trim(),
+          author_password_hash: writeForm.author_password.trim(),
         }),
       });
       if (!res.ok) {
@@ -246,8 +246,8 @@ const PulsePage = () => {
         body: JSON.stringify({
           post_id: selectedPost.id,
           content: commentForm.content.trim(),
-          author_name: commentForm.author_name.trim(),
-          author_password: commentForm.author_password.trim(),
+          author_nickname: commentForm.author_name.trim(),
+          author_password_hash: commentForm.author_password.trim(),
         }),
       });
       if (!res.ok) {
@@ -305,7 +305,7 @@ const PulsePage = () => {
               >
                 <span className="w-8 shrink-0 text-center text-[11px] text-gray-400">{posts.length - idx}</span>
                 <span className="flex-1 min-w-0 text-[14px] text-gray-800 truncate pr-2">{post.title}</span>
-                <span className="w-16 shrink-0 text-center text-[11px] text-violet-600 truncate">{post.author_name}</span>
+                <span className="w-16 shrink-0 text-center text-[11px] text-violet-600 truncate">{post.author_nickname}</span>
                 <span className="w-14 shrink-0 text-center text-[11px] text-gray-400">{timeAgo(post.created_at)}</span>
                 <span className="w-10 shrink-0 text-center text-[11px] text-gray-400">{post.views || 0}</span>
                 <span className="w-8 shrink-0 text-center text-[11px] text-gray-400">{post.comments_count}</span>
@@ -353,7 +353,7 @@ const PulsePage = () => {
           <div className="px-4 pt-4 pb-4">
             <h2 className="text-lg font-bold text-gray-900 mb-1.5">{selectedPost.title}</h2>
             <div className="text-xs text-gray-400 mb-4">
-              <span className="font-medium text-violet-600">{selectedPost.author_name}</span>
+              <span className="font-medium text-violet-600">{selectedPost.author_nickname}</span>
               <span> · </span>
               <span>
                 {new Date(selectedPost.created_at).toLocaleString('en-US', {
@@ -389,19 +389,19 @@ const PulsePage = () => {
                 >
                   {comment.is_member_comment && comment.member_id ? (
                     <img
-                      src={`/idols/${comment.member_id}/profile.jpg`}
+                      src={`/idols/${comment.member_id}/profile.jpg?v=2`}
                       className="w-8 h-8 rounded-full object-cover shrink-0"
-                      alt={comment.author_name}
+                      alt={comment.author_nickname}
                     />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 text-xs font-bold flex items-center justify-center shrink-0">
-                      {comment.author_name[0]}
+                      {comment.author_nickname?.[0]}
                     </div>
                   )}
                   <div className="flex-1">
                     <div className="flex items-center">
                       <span className={`text-xs font-semibold ${comment.is_member_comment && comment.member_id ? 'text-violet-600 font-semibold' : 'text-gray-700'}`}>
-                        {comment.author_name}
+                        {comment.author_nickname}
                       </span>
                       <span className="ml-2 text-[10px] text-gray-400">{timeAgo(comment.created_at)}</span>
                     </div>

@@ -5,9 +5,7 @@ import { ALL_MEMBERS } from '../constants/group-rooms';
 import SiteFooter from '../components/SiteFooter';
 
 function DiaryCard({ entry, onClick }: { entry: DiaryEntry; onClick: () => void }) {
-  const imgSrc = entry.authorId === 'jbk'
-    ? '/jungbyeongki.jpg'
-    : `/idols/${entry.authorId}/profile.jpg`;
+  const imgSrc = `/idols/${entry.authorId}/profile.jpg?v=2`;
 
   const dateObj = new Date(entry.date);
   const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
@@ -108,7 +106,7 @@ const REACTIONS: { key: ReactionKey; emoji: string; label: string }[] = [
 const ALL_IDOL_IDS = ['mizyu','rin','suzuka','kanon','nako','nana','taiyo','yoshiaki','michi'];
 
 function memberImgSrc(id: string): string {
-  return id === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${id}/profile.jpg`;
+  return `/idols/${id}/profile.jpg?v=2`;
 }
 
 function hashNum(str: string): number {
@@ -119,7 +117,7 @@ function hashNum(str: string): number {
 
 function getPresetReactions(entry: DiaryEntry): Record<ReactionKey, string[]> {
   // 전체 풀을 한 번만 셔플 → 각 반응에 순서대로 배분 (같은 멤버 중복 없음)
-  const pool = ['jbk', ...ALL_IDOL_IDS].filter(id => id !== entry.authorId);
+  const pool = [...ALL_IDOL_IDS].filter(id => id !== entry.authorId);
   const shuffled = [...pool].sort((a, b) => hashNum(entry.id + 'v2' + a) - hashNum(entry.id + 'v2' + b));
   const h = hashNum(entry.id);
 
@@ -168,7 +166,6 @@ function DiaryReactions({ entryId, entry }: { entryId: string; entry: DiaryEntry
   };
 
   const getMemberName = (id: string): string => {
-    if (id === 'jbk') return '정병기';
     return ALL_MEMBERS[id]?.name ?? id;
   };
 
@@ -253,9 +250,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
   const navigate = useNavigate();
   const [drawingLoaded, setDrawingLoaded] = useState(false);
 
-  const imgSrc = entry.authorId === 'jbk'
-    ? '/jungbyeongki.jpg'
-    : `/idols/${entry.authorId}/profile.jpg`;
+  const imgSrc = `/idols/${entry.authorId}/profile.jpg?v=2`;
 
   const dateObj = new Date(entry.date);
   const weekdays = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
@@ -428,7 +423,7 @@ function DiaryDetail({ entry, onBack, onSelectRelated }: {
               {entry.relatedEntries.map(id => {
                 const related = DIARY_ENTRIES.find(e => e.id === id);
                 if (!related) return null;
-                const relatedImg = related.authorId === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${related.authorId}/profile.jpg`;
+                const relatedImg = `/idols/${related.authorId}/profile.jpg?v=2`;
                 return (
                   <button
                     key={id}
@@ -508,7 +503,6 @@ export default function DiaryPage() {
   // 드롭다운용 멤버 목록 (S번호 순)
   const memberOptions = [
     ...Object.values(ALL_MEMBERS).sort((a, b) => (a.sNumber ?? 99) - (b.sNumber ?? 99)),
-    { id: 'jbk', name: '정병기', sNumber: 25 },
   ];
 
   // URL에 날짜 파라미터가 있으면 상세 보기

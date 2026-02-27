@@ -154,7 +154,7 @@ export default function IdolSelector({ idols }: Props) {
                           style={{ background: m.color, animationDelay: imgLoaded ? undefined : `${imgIdx * 0.08}s` }}
                         >
                           <img
-                              src={`/idols/${m.id}/profile.jpg`}
+                              src={`/idols/${m.id}/profile.jpg?v=2`}
                               alt={m.name}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 idol-photo-breathe"
                               loading={imgIdx === 0 ? 'eager' : 'lazy'}
@@ -252,7 +252,7 @@ export default function IdolSelector({ idols }: Props) {
                       >
                         {(idol.profileImageUrl || idol.id) ? (
                           <img
-                              src={`/idols/${idol.id}/profile.jpg`}
+                              src={`/idols/${idol.id}/profile.jpg?v=2`}
                               alt={idol.nameKo}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 idol-photo-breathe"
                               loading={index < 4 ? 'eager' : 'lazy'}

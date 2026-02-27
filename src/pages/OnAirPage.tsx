@@ -45,7 +45,7 @@ function parseMember(authorName: string): { memberId: string | null; displayName
 }
 
 function getMemberAvatar(memberId: string): string {
-  return `/idols/${memberId}/profile.jpg`;
+  return `/idols/${memberId}/profile.jpg?v=2`;
 }
 
 // タレント別吹き出し色
@@ -342,7 +342,7 @@ export default function OnAirPage() {
                 <h1 className="text-[27px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>twinplanet.chat</h1>
                 <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>Beta</span>
               </button>
-              <p className="text-sm font-normal tracking-tight bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
+              <p className="text-sm font-medium tracking-tight" style={{ color: '#3e3a39' }}>
                 TWIN PLANET タレントと AI チャット ✨
               </p>
             </div>
@@ -431,7 +431,7 @@ export default function OnAirPage() {
                 <div className="flex-col items-center flex">
                   <div className="relative">
                     <img
-                      src={`/idols/${nextSession.member_id}/profile.jpg`}
+                      src={`/idols/${nextSession.member_id}/profile.jpg?v=2`}
                       alt={nextSession.member_name}
                       className="w-10 h-10 rounded-full object-cover border-2 border-dashed border-white/40 grayscale opacity-60"
                       onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
