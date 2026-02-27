@@ -20,7 +20,7 @@ function stripUrls(text: string): string {
     .trim();
 }
 
-type Source = 'theqoo' | 'twitter' | 'dcinside';
+type Source = 'theqoo' | 'twitter' | 'dcinside' | 'reddit';
 type SourceFilter = 'all' | Source;
 
 type CommunityItem = {
@@ -128,23 +128,27 @@ const SOURCE_ICON_BG: Record<Source, string> = {
   theqoo:   'linear-gradient(135deg,#7C3AED,#a855f7)',
   dcinside: 'linear-gradient(135deg,#E81111,#f87171)',
   twitter:  'linear-gradient(135deg,#000,#374151)',
+  reddit:   'linear-gradient(135deg,#FF4500,#ff6534)',
 };
 const SOURCE_ICON_LABEL: Record<Source, string> = {
   theqoo:   'TQ',
   dcinside: 'DC',
   twitter:  '𝕏',
+  reddit:   'RD',
 };
 
 const COMMUNITY_LINK_LABELS: Record<Source, string> = {
   theqoo: 'View on Theqoo →',
   dcinside: 'View on DCInside →',
   twitter: '𝕏 View on Twitter →',
+  reddit: '↗ View on Reddit →',
 };
 
 const COMMUNITY_LINK_COLORS: Record<Source, string> = {
   theqoo: '#7C3AED',
   dcinside: '#E81111',
   twitter: '#000000',
+  reddit: '#FF4500',
 };
 
 const MEMBER_KEYWORDS: Record<string, string[]> = {
@@ -380,6 +384,7 @@ function sourceFilterLabel(value: SourceFilter) {
   if (value === 'all') return 'ALL';
   if (value === 'theqoo') return 'Theqoo';
   if (value === 'twitter') return 'Twitter';
+  if (value === 'reddit') return 'Reddit';
   return 'DCInside';
 }
 
