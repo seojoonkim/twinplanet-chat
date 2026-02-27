@@ -26,7 +26,12 @@ function parseXmlItems(xml) {
 
     if (title) {
       items.push({
-        id: `togetter_${Buffer.from(link).toString('base64').slice(0, 16)}`,
+        // Extract unique article ID from Google News URL (e.g. /articles/CBMi...)
+        // Using base64(link) was broken: all GNews URLs share same 16-char prefix
+        id: (() => {
+          const m = link.match(/\/articles\/([A-Za-z0-9_-]{8,})/);
+          return m ? `togetter_${m[1].slice(0, 24)}` : `togetter_${Buffer.from(link).toString('base64').slice(16, 40)}`;
+        })(),
         source: 'togetter',
         sourceLabel,
         url: link,
