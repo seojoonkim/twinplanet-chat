@@ -108,7 +108,6 @@ export default function OnAirPage() {
   const [typingMsg, setTypingMsg] = useState<{ item: OnairMessage; displayed: string } | null>(null);
   const [typingIndicator, setTypingIndicator] = useState<{ memberId: string; memberName: string } | null>(null);
 
-  const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
   const isTopicDividerItem = (m: DisplayItem) =>
     'type' in m && m.type === 'system' &&
     !m.content.startsWith('[emoji:') &&
@@ -119,12 +118,6 @@ export default function OnAirPage() {
 
   const visibleMessages = messages
     .filter((m) => {
-      // 2시간 이전 메시지 숨김 (DB는 유지, 표시만 제외)
-      const createdAt = (m as { created_at?: string }).created_at
-        ? new Date((m as { created_at: string }).created_at).getTime()
-        : 0;
-      if (createdAt > 0 && now - createdAt > TWO_HOURS_MS) return false;
-
       if ('type' in m && m.type === 'system') {
         // [EMOJI_REACTION] 쿨다운 마커 숨김
         return !m.content.startsWith('[emoji:');
@@ -375,11 +368,11 @@ export default function OnAirPage() {
                 onClick={() => navigate('/')}
                 className="flex items-center justify-start gap-2 mb-3 cursor-pointer hover:opacity-80 transition-opacity"
               >
-                <img src="/tp-logo.svg?v=3" alt="tp" style={{ width: '36px', height: '38px' }} />
-                <h1 className="text-[27px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>twinplanet.chat</h1>
-                <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>Beta</span>
+                <img src="/tp-logo.svg?v=3" alt="tp" style={{ width: '28px', height: '30px' }} />
+                <h1 className="text-[22px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>twinplanet.chat</h1>
+                <span className="ml-1.5 px-2 py-0.5 text-[9px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>Beta</span>
               </button>
-              <p className="text-sm font-medium tracking-tight" style={{ color: '#3e3a39' }}>
+              <p className="text-xs font-medium tracking-tight" style={{ color: '#3e3a39' }}>
                 TWIN PLANET タレントと AI チャット ✨
               </p>
             </div>
