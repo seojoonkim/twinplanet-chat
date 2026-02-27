@@ -109,20 +109,39 @@ export default function OnAirPage() {
   const [typingIndicator, setTypingIndicator] = useState<{ memberId: string; memberName: string } | null>(null);
 
   const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
-  const visibleMessages = messages.filter((m) => {
-    // 2시간 이전 메시지 숨김 (DB는 유지, 표시만 제외)
-    const createdAt = (m as { created_at?: string }).created_at
-      ? new Date((m as { created_at: string }).created_at).getTime()
-      : 0;
-    if (createdAt > 0 && now - createdAt > TWO_HOURS_MS) return false;
+  const isTopicDividerItem = (m: DisplayItem) =>
+    'type' in m && m.type === 'system' &&
+    !m.content.startsWith('[emoji:') &&
+    !m.content.includes('が入場しました') &&
+    !m.content.includes('が退場しました') &&
+    !m.content.includes('입장했습니다') &&
+    !m.content.includes('퇴장했습니다');
 
-    if ('type' in m && m.type === 'system') {
-      // [EMOJI_REACTION] 쿨다운 마커 숨김
-      return !m.content.startsWith('[emoji:');
-    }
-    const msg = m as OnairMessage;
-    return msg.author_name !== '[EMOJI_REACTION]' && msg.author_name !== '[TOPIC]';
-  });
+  const visibleMessages = messages
+    .filter((m) => {
+      // 2시간 이전 메시지 숨김 (DB는 유지, 표시만 제외)
+      const createdAt = (m as { created_at?: string }).created_at
+        ? new Date((m as { created_at: string }).created_at).getTime()
+        : 0;
+      if (createdAt > 0 && now - createdAt > TWO_HOURS_MS) return false;
+
+      if ('type' in m && m.type === 'system') {
+        // [EMOJI_REACTION] 쿨다운 마커 숨김
+        return !m.content.startsWith('[emoji:');
+      }
+      const msg = m as OnairMessage;
+      return msg.author_name !== '[EMOJI_REACTION]' && msg.author_name !== '[TOPIC]';
+    })
+    // 연속된 토픽 divider 중복 제거 — 최신 것만 표시
+    .reduce<DisplayItem[]>((acc, item) => {
+      const prev = acc[acc.length - 1];
+      if (isTopicDividerItem(item) && prev && isTopicDividerItem(prev)) {
+        acc[acc.length - 1] = item; // 이전 것을 최신 것으로 교체
+        return acc;
+      }
+      acc.push(item);
+      return acc;
+    }, []);
 
   const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
     bottomRef.current?.scrollIntoView({ behavior });
@@ -481,7 +500,7 @@ export default function OnAirPage() {
               const isTopicDivider = !item.content.includes('が入場しました') && !item.content.includes('が退場しました') && !item.content.includes('입장했습니다') && !item.content.includes('퇴장했습니다') && !item.content.startsWith('[emoji:');
               if (isTopicDivider) {
                 return (
-                  <div key={item.id} className="py-3 px-1 my-1" style={{ userSelect: 'none' }}>
+                  <div key={item.id} className="pt-8 pb-3 px-1 my-1" style={{ userSelect: 'none' }}>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-px" style={{ background: 'linear-gradient(90deg, transparent, #A855F7, #EC4899)' }} />
                       <div
