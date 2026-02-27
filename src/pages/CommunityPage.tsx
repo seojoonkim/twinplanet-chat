@@ -157,7 +157,6 @@ const MEMBER_KEYWORDS: Record<string, string[]> = {
   taiyo:    ['太陽', '杉浦太陽', 'taiyo', 'たいよう', '타이요', '스기우라타이요'],
   yoshiaki: ['よしあき', 'yoshiaki', '요시아키', 'ONSENSE'],
   michi:    ['ミチ', 'michi', '미치', 'よしミチ'],
-  jbk:      ['정병기', '병기', '병기형', '제이든', '병기햄', 'jbk', 'JBK', 'Jayden'],
 };
 
 // 그룹 별칭 → 멤버 ID 배열
@@ -169,7 +168,7 @@ const GROUP_KEYWORDS: Array<{ keywords: string[]; members: string[] }> = [
 const MEMBER_NAME: Record<string, string> = {
   mizyu: 'MIZYU', rin: 'RIN', suzuka: 'SUZUKA', kanon: 'KANON',
   nako: '奈子', nana: '奈々', taiyo: '太陽', yoshiaki: 'よしあき',
-  michi: 'ミチ', jbk: '정병기',
+  michi: 'ミチ',
 };
 
 function detectMemberTags(text: string): string[] {
@@ -309,7 +308,7 @@ function CommunityCard({ item }: { item: CommunityItem }) {
           {comments.filter(c => !c.is_reply).map(comment => (
             <div key={comment.id} className="flex items-start gap-2 py-1.5">
               <img
-                src={comment.idol_id === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${comment.idol_id}/profile.jpg`}
+                src={`/idols/${comment.idol_id}/profile.jpg?v=2`}
                 className="w-6 h-6 rounded-full object-cover flex-shrink-0 mt-0.5"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
               />
@@ -322,7 +321,7 @@ function CommunityCard({ item }: { item: CommunityItem }) {
                 {comments.filter(r => r.reply_to_comment_id === comment.id).map(reply => (
                   <div key={reply.id} className="flex items-start gap-2 mt-1.5 pl-2 border-l-2 border-violet-100">
                     <img
-                      src={reply.idol_id === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${reply.idol_id}/profile.jpg`}
+                      src={`/idols/${reply.idol_id}/profile.jpg?v=2`}
                       className="w-5 h-5 rounded-full object-cover flex-shrink-0 mt-0.5"
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                     />
