@@ -105,6 +105,9 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
   const lastAuthorId = lastAuthorMatch ? lastAuthorMatch[1] : null;
   const lastAuthorName = lastAuthorId ? MEMBER_NAME[lastAuthorId] : null;
 
+  const memberNameList = activeMembers.map(m => m.member_name).join('、');
+  const memberIdList = activeMembers.map(m => m.member_id).join(', ');
+
   const systemPrompt = `あなたはTWIN PLANETタレントのラジオ番組台本ライターです。本物のバラエティラジオのように面白く自然な会話を書いてください。
 
 🚨 絶対ルール（1つでも違反したら全体無効）:
@@ -113,8 +116,19 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
 3. すべてのセリフ100% 日本語。外国語単語の挿入絶対禁止。
 4. 必ず前の会話の内容を受けて続けること。唐突に新しい話を始めるのは禁止。
 
+👥 出演メンバー厳守:
+- 現在ON AIRのメンバーは【${memberNameList}】(id: ${memberIdList}) のみ。
+- この15ターン中、上記メンバー以外の人物（不在メンバー含む）を一切言及・呼びかけ・話題にしてはいけない。
+- 不在メンバーへの「〜いたらよかったのに」「〜はどう思う？」なども完全禁止。
+
+🔄 自然な会話ルール:
+- 同じ単語・フレーズを3回以上繰り返してはいけない（特定の食べ物・物の名前など）。
+- 「笑」は本当に面白いと感じた瞬間にだけ使用。毎文末への機械的な「笑」付加は禁止。
+- 10ターン以上同じ主題が続いていると感じたら、自然な形で話題を切り替えること（ただし topic_change ルールに従う）。
+- 各メッセージは新しい角度からアプローチし、前のターンの繰り返しにならないこと。
+
 🎭 面白さ要素（必須 — なければクオリティ不足）:
-- メンバーの名前を呼んでいじる: "え、[名前]それどういうこと？笑", "[名前]さんまたそれ言ってる〜"
+- メンバーの名前を呼んでいじる: "え、[名前]それどういうこと？", "[名前]さんまたそれ言ってる〜"
 - 大げさなリアクション: "えっ本当に！？", "もう信じられない〜", "笑いすぎてやばい"
 - 受け継ぎ: "[名前]が言ったみたいに〜", "さっき[名前]が言ってたじゃないですか"
 - リスナー巻き込み: "みなさんはどうですか？", "コメントで教えてください！"
@@ -122,7 +136,7 @@ async function generateScript(activeMembers, recentMessages, shouldChangeTopic =
 
 🎙️ ラジオ話し方:
 - 各メンバーの個性ある話し方を維持（ペルソナ参照）
-- 1ターン2〜4文（短すぎると面白くない）
+- 1ターン3〜5文（短すぎると面白くない。必ず3文以上書くこと）
 - 前の発言を直接引用: "さっきの[内容]の話ですけど"
 
 出演メンバー:
@@ -132,7 +146,7 @@ ${memberDescriptions}
 ケミ: yoshiaki↔michi 姉弟コンビ; nako↔nana 前向きコンビ; mizyu/rin/suzuka/kanon AG!4人ケミ; taiyo 落ち着き担当`;
 
   const topicChangeRule = shouldChangeTopic
-    ? `⚠️ 話題転換必須（7〜9ターン目の中で正確に1回）:
+    ? `⚠️ 話題転換必須（10〜12ターン目の中で正確に1回）:
 - 自然に「[名前]ちゃん、そういえば[新トピック]の話しない？」みたいに
 - そのターンのみ: "topic_change": true, "new_topic": "新トピック(8文字以内)" を追加
 - 転換後の残りのターンは完全に新しいトピックのみ、前のトピックへの言及禁止`
@@ -146,13 +160,14 @@ ${recentConvo || '(放送開始直後)'}
 上記の会話に続けて、さらに面白く15ターン生成。前に出た内容をメンバーが覚えて言及すること。
 
 構成ルール:
-- 出演: ${authorIds.join(', ')} のみ使用
-- 3人がそれぞれ4〜5回発言（均等に）
+- 出演: ${authorIds.join(', ')} のみ使用。これ以外のメンバーは発言も言及も絶対禁止。
+- ${activeMembers.length}人がそれぞれ均等に発言
 - ❌ 連続発話絶対禁止 ❌（再度: index[N].author ≠ index[N-1].author）
-- 1ターン2〜4文（短すぎたらNG、十分な長さで）
+- 1ターン3〜5文（必ず3文以上。短すぎたらNG）
 - お互いの名前を呼んでいじる/ツッコミ/相槌必須（3ターンごとに1回以上）
 - 前に出たエピソード/発言を直接言及（5ターンごとに1回）
 - すべて日本語のみ
+- 同じ単語を3回以上使わない。「笑」は文末への機械的付加禁止、自然な場面のみ。
 ${topicChangeRule}
 
 JSON配列のみ出力（他のテキストなし）:
@@ -227,7 +242,7 @@ async function generateFallbackMessage(memberId) {
           max_tokens: 200,
           temperature: 0.9,
           messages: [
-            { role: 'system', content: `あなたは${memberName}です。ペルソナ: ${persona} ラジオ放送中にひと言だけ日本語でつぶやいてください。2〜3文。` },
+            { role: 'system', content: `あなたは${memberName}です。ペルソナ: ${persona} ラジオ放送中にひと言だけ日本語でつぶやいてください。3〜4文。` },
             { role: 'user', content: `現在の時間帯: ${TIME_CTX} ひと言つぶやく（JSON不要、テキストのみ）:` }
           ]
         }),
