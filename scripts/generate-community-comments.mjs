@@ -248,11 +248,17 @@ async function main() {
   }
 
   // 4. 포스트별 처리
-  for (const item of newItems) {
+  for (const rawItem of newItems) {
+    // 필드 정규화 (Twitter: text, Reddit: title+selftext, News: title+content)
+    const item = {
+      ...rawItem,
+      title: rawItem.title || rawItem.text?.slice(0, 60) || '',
+      content: rawItem.content || rawItem.selftext || rawItem.text || rawItem.body || '',
+    };
     const text = (item.title || '') + ' ' + (item.content || '');
     const taggedMembers = detectMemberTags(text);
 
-    console.log(`\n📌 [${item.id}] "${item.title || item.content?.slice(0, 30)}"`);
+    console.log(`\n📌 [${item.id}] "${item.title?.slice(0, 40)}"`);
     console.log(`   태그된 멤버: ${taggedMembers.map(id => MEMBER_NAME[id]).join(', ') || '없음'}`);
 
     const insertedComments = [];
