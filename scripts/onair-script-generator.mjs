@@ -256,8 +256,8 @@ for (let i = 0; i < script.length; i++) {
     continue;
   }
 
-  // 외국어 문자 포함 시 스킵 (아랍어/중국어/일본어가나/태국어/러시아어 등)
-  const foreignLangRegex = /[\u0600-\u06FF\u0750-\u077F\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF\u0E00-\u0E7F\u0400-\u04FF]/;
+  // 외국어 문자 포함 시 스킵 (아랍어/태국어/러시아어 등 - 단, 일본어·한자는 허용)
+  const foreignLangRegex = /[\u0600-\u06FF\u0750-\u077F\u0E00-\u0E7F\u0400-\u04FF]/;
   if (foreignLangRegex.test(turn.content)) {
     console.log(`⚠️ 스킵 (외국어 감지, turn ${i + 1}): ${turn.content.substring(0, 40)}`);
     continue;
