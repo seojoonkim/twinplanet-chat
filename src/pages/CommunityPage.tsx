@@ -189,7 +189,9 @@ function detectMemberTags(text: string): string[] {
       }
     }
   }
-  return found.length > 0 ? found : ['all'];
+  // 태그 미감지 시 → AG! 4명 기본 태그 (RADAR 콘텐츠는 모두 AG! 관련)
+  if (found.length === 0) return ['mizyu', 'rin', 'suzuka', 'kanon'];
+  return found;
 }
 
 function CommunityCard({ item }: { item: CommunityItem }) {
