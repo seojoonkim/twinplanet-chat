@@ -19,10 +19,10 @@ function getInitials(name: string): string {
 }
 
 const IDOL_S_NUMBERS: Record<string, string> = {
-  mizyu: 'MIZYU',
-  rin: 'RIN',
-  suzuka: 'SUZUKA',
-  kanon: 'KANON',
+  mizyu: 'AG!',
+  rin: 'AG!',
+  suzuka: 'AG!',
+  kanon: 'AG!',
   nako: 'Nako',
   nana: 'Nana',
   taiyo: 'Taiyo',
