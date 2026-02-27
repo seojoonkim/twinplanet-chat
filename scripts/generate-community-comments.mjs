@@ -198,6 +198,7 @@ async function fetchLiveFeedItems() {
     { url: `${BASE}/api/feed-togetter`, key: 'items' },
     { url: `${BASE}/api/feed-community`, key: 'posts' },
     { url: `${BASE}/api/feed-twitter`, key: 'tweets' },
+    { url: `${BASE}/api/feed-twitter-fan`, key: 'posts' },
   ];
   const allItems = [];
   for (const { url, key } of endpoints) {
