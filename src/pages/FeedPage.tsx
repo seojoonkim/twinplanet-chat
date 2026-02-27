@@ -140,7 +140,8 @@ function detectPoster(body: string, seed: number): string {
   for (const [id, pattern] of MEMBER_NAME_PATTERNS) {
     if (pattern.test(body)) matched.push(id);
   }
-  if (matched.length === 0) return 'jbk';
+  const ALL_IDS = ['mizyu', 'rin', 'suzuka', 'kanon', 'nako', 'nana', 'taiyo', 'yoshiaki', 'michi'];
+  if (matched.length === 0) return ALL_IDS[Math.abs(seed) % ALL_IDS.length]!;
   if (matched.length === 1) return matched[0]!;
   return matched[Math.abs(seed) % matched.length]!;
 }
@@ -400,18 +401,6 @@ const THREADS: Thread[] = [
   },
 ];
 
-// ── 정병기 대표 댓글 ──────────────────────────────────────────
-const JBK_REPLIES = [
-  "メンバーたちお疲れ様でした 🙏",
-  "みんなよくやってるよ！誇らしいです",
-  "ㅋㅋㅋ こんなの上げてもいいのかな",
-  "そうそう、その通り",
-  "一生懸命準備しました。たくさん見てね!",
-  "メンバーたちが本当に頑張ったよ。よろしくお願いします 🙇",
-  "こういう反応見ると力が湧いてくるよ、ありがとう",
-  "ㅋㅋ 正しいことを言ってる",
-];
-
 // ── Like 친화도 ──────────────────────────────────────────────
 const LIKE_AFFINITY: [string, string[]][] = [
   ['mizyu',    ['rin', 'suzuka', 'kanon']],
@@ -596,17 +585,6 @@ function buildSmartComments(postId: string, source: FeedSource, title: string, b
     remaining--;
   }
 
-  // 정병기 대표 (20% chance)
-  if (rng() < 0.2 && comments.length > 2) {
-    const targetIdx = 1 + Math.floor(rng() * (comments.length - 1));
-    const jbkContent = JBK_REPLIES[Math.abs(hashStr(postId + 'jbk')) % JBK_REPLIES.length]!;
-    comments[targetIdx]!.replies.push({
-      memberId: 'jbk',
-      content: jbkContent,
-      likes: buildLikes('jbk', hashStr(postId + 'jbk-likes')),
-    });
-  }
-
   return comments;
 }
 
@@ -685,13 +663,13 @@ function LikeDisplay({ likes }: { likes: CommentLike[] }) {
           const lm = ALL_MEMBERS[l.memberId];
           return (
             <div key={l.memberId} className="w-4 h-4 rounded-full overflow-hidden border border-white" style={{ background: lm?.color || '#ddd' }} title={lm?.name || l.memberId}>
-              <img src={l.memberId === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${l.memberId}/profile.jpg`} alt={lm?.name || ''} className="w-full h-full object-cover" onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
+              <img src={`/idols/${l.memberId}/profile.jpg?v=2`} alt={lm?.name || ''} className="w-full h-full object-cover" onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
             </div>
           );
         })}
       </div>
       <span className="text-[11px] text-gray-400">
-        {likes.slice(0, 3).map(l => ALL_MEMBERS[l.memberId]?.name || (l.memberId === 'jbk' ? 'JBK' : l.memberId)).join(', ')}
+        {likes.slice(0, 3).map(l => ALL_MEMBERS[l.memberId]?.name || l.memberId).join(', ')}
         {likes.length > 3 ? ` and ${likes.length - 3} more` : ''}
       </span>
     </div>
@@ -700,24 +678,21 @@ function LikeDisplay({ likes }: { likes: CommentLike[] }) {
 
 // ── Reply 렌더 ───────────────────────────────────────────────
 function ReplyBubble({ r }: { r: Reply }) {
-  const isJBK = r.memberId === 'jbk';
-  const m = isJBK ? null : ALL_MEMBERS[r.memberId];
-  const name = isJBK ? '정병기' : m?.name || r.memberId;
-  const sNum = isJBK ? '' : S_NUMBERS[r.memberId] || '';
-  const avatarSrc = isJBK ? '/jungbyeongki.jpg' : `/idols/${r.memberId}/profile.jpg`;
+  const m = ALL_MEMBERS[r.memberId];
+  const name = m?.name || r.memberId;
+  const sNum = S_NUMBERS[r.memberId] || '';
+  const avatarSrc = `/idols/${r.memberId}/profile.jpg?v=2`;
 
   return (
     <div className="flex items-start gap-2 ml-10 mt-2">
-      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-gray-100" style={{ background: isJBK ? '#1a1a2e' : m?.color || '#ddd' }}>
+      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-gray-100" style={{ background: m?.color || '#ddd' }}>
         <img src={avatarSrc} alt={name} className="w-full h-full object-cover" onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
       </div>
       <div className="flex-1 min-w-0">
         <div className="bg-gray-100 rounded-2xl px-3 py-2 inline-block max-w-full">
           <div className="flex items-baseline gap-1.5 mb-0.5">
             <span className="font-bold text-[12px] text-gray-900">{name}</span>
-            {isJBK ? (
-              <span className="text-[9px] bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full font-bold">MODHAUS</span>
-            ) : sNum ? (
+            {sNum ? (
               <span className="text-[10px] text-violet-500 font-semibold">{sNum}</span>
             ) : null}
           </div>
@@ -894,7 +869,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
       <div className="flex items-center gap-3 px-3.5 pt-3.5 pb-2.5">
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 shadow-sm border border-gray-200"
           style={{ background: ALL_MEMBERS[post.posterId]?.color || '#ddd' }}>
-          <img src={post.source === 'twitter' && post.authorAvatarUrl ? `/api/proxy-image?url=${encodeURIComponent(post.authorAvatarUrl)}` : post.posterId === 'jbk' ? '/jungbyeongki.jpg' : `/idols/${post.posterId}/profile.jpg`} alt={ALL_MEMBERS[post.posterId]?.name || post.posterId}
+          <img src={post.source === 'twitter' && post.authorAvatarUrl ? `/api/proxy-image?url=${encodeURIComponent(post.authorAvatarUrl)}` : `/idols/${post.posterId}/profile.jpg?v=2`} alt={ALL_MEMBERS[post.posterId]?.name || post.posterId}
             className="w-full h-full object-cover"
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
           />
@@ -1053,7 +1028,7 @@ function FeedCard({ post }: { post: UnifiedPost }) {
                   style={{ background: m?.color || '#ddd' }}
                 >
                   <img
-                    src={`/idols/${c.memberId}/profile.jpg`}
+                    src={`/idols/${c.memberId}/profile.jpg?v=2`}
                     alt={c.memberName}
                     className="w-full h-full object-cover"
                     onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
