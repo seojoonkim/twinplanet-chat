@@ -11,7 +11,7 @@ const MEMBER_IDS = [
   'nana', 'taiyo', 'yoshiaki', 'michi'
 ];
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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';
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://frlrowwjvapdnrcgotca.supabase.co';
 const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZybHJvd3dqdmFwZG5yY2dvdGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNDMzMzksImV4cCI6MjA4NzcxOTMzOX0.tlk5l1K4tqkd4fG17J7Wr9swOkQb1QWK1q8xpMVs_yM';
 

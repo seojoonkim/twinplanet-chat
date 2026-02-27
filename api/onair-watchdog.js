@@ -5,7 +5,10 @@
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://frlrowwjvapdnrcgotca.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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';
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+if (!OPENROUTER_API_KEY) {
+  console.error('[Watchdog] OPENROUTER_API_KEY not set — aborting');
+}
 
 const FALLBACK_MEMBERS = ['mizyu', 'rin', 'suzuka'];
 const SILENCE_THRESHOLD_SEC = 5 * 60; // 5분
