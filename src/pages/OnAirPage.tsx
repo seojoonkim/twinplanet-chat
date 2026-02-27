@@ -460,7 +460,7 @@ export default function OnAirPage() {
         ) : (
           visibleMessages.map((item, i) => {
             if (item.type === 'system' || ('author_name' in item && (item as OnairMessage).author_name === '[SYSTEM]')) {
-              const isTopicDivider = !item.content.includes('입장했습니다') && !item.content.includes('퇴장했습니다') && !item.content.startsWith('[emoji:');
+              const isTopicDivider = !item.content.includes('が入場しました') && !item.content.includes('が退場しました') && !item.content.includes('입장했습니다') && !item.content.includes('퇴장했습니다') && !item.content.startsWith('[emoji:');
               if (isTopicDivider) {
                 return (
                   <div key={item.id} className="py-3 px-1 my-1" style={{ userSelect: 'none' }}>

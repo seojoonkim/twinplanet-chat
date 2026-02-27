@@ -156,16 +156,16 @@ async function enterMember(memberId, endsAtIso, existingMembers, startedAtIso = 
   }
 
   // 시스템 메시지
-  await insertSystemMessage(`${MEMBER_NAME[memberId]}님이 입장했습니다`);
+  await insertSystemMessage(`${MEMBER_NAME[memberId]}が入場しました`);
   await sleep(6000); // 시스템 메시지 후 6초 대기
 
   if (existingMembers.length === 0) {
     // 첫 입장 — 단순 인사
-    const enterPrompt = `あなたはTWIN PLANETタレントの ${MEMBER_NAME[memberId]}이야.
-페르소나: ${MEMBER_PERSONA[memberId] || ''}
-현재 시간대: ${TIME_CTX}
-온에어 라디오에 막 입장했어. 시간대에 맞게 자연스럽게 인사해줘.
-1~2문장, 라디오 스타일. 한국어. 메시지만 출력.`;
+    const enterPrompt = `あなたはTWIN PLANETタレントの${MEMBER_NAME[memberId]}です。
+ペルソナ: ${MEMBER_PERSONA[memberId] || ''}
+現在の時間帯: ${TIME_CTX}
+オンエアのラジオに入室したところ。時間帯に合わせて自然な挨拶をして。
+1〜2文、ラジオスタイル。必ず日本語で。メッセージのみ出力。`;
     const msg = await generateMessage(enterPrompt);
     if (msg) await insertMessage(msg, memberId);
   } else {
@@ -178,21 +178,21 @@ async function enterMember(memberId, endsAtIso, existingMembers, startedAtIso = 
 
     const briefingMember = existingMembers[Math.floor(Math.random() * existingMembers.length)];
     const briefingPrompt = `あなたはTWIN PLANETタレントの${MEMBER_NAME[briefingMember.member_id]}です。
-${MEMBER_NAME[memberId]}가 방금 라디오에 들어왔어.
-최근 대화:
-${context || '(대화 없음)'}
-${MEMBER_NAME[memberId]}에게 "어떤 이야기 하고 있었는지" 반갑게 1~2문장으로 요약해줘.
-라디오 스타일. 한국어. 메시지만.`;
+${MEMBER_NAME[memberId]}がラジオに入ってきたところ。
+最近の会話:
+${context || '(会話なし)'}
+${MEMBER_NAME[memberId]}に「どんな話をしていたか」を1〜2文で明るく紹介して。
+ラジオスタイル。必ず日本語で。メッセージのみ。`;
     const briefing = await generateMessage(briefingPrompt);
     if (briefing) await insertMessage(briefing, briefingMember.member_id);
     await sleep(10000); // 브리핑 후 10초 대기
 
     // 새 멤버 입장 인사
-    const enterPrompt = `あなたはTWIN PLANETタレントの ${MEMBER_NAME[memberId]}이야.
-페르소나: ${MEMBER_PERSONA[memberId] || ''}
-현재 시간대: ${TIME_CTX}
-온에어 라디오에 합류했어. ${existingMembers.map(m => MEMBER_NAME[m.member_id]).join(', ')}와 함께야.
-반갑게 합류 인사 1~2문장. 라디오 스타일. 한국어. 메시지만.`;
+    const enterPrompt = `あなたはTWIN PLANETタレントの${MEMBER_NAME[memberId]}です。
+ペルソナ: ${MEMBER_PERSONA[memberId] || ''}
+現在の時間帯: ${TIME_CTX}
+オンエアのラジオに合流した。${existingMembers.map(m => MEMBER_NAME[m.member_id]).join('、')}と一緒だよ。
+合流の挨拶を1〜2文。ラジオスタイル。必ず日本語で。メッセージのみ。`;
     const enterMsg = await generateMessage(enterPrompt);
     if (enterMsg) await insertMessage(enterMsg, memberId);
   }
@@ -203,16 +203,16 @@ ${MEMBER_NAME[memberId]}에게 "어떤 이야기 하고 있었는지" 반갑게 
 // 멤버 퇴장 처리
 async function exitMember(session) {
   // 1. 퇴장 인사 먼저 (멤버가 작별 인사)
-  const leavePrompt = `あなたはTWIN PLANETタレントの ${session.member_name}이야.
-페르소나: ${MEMBER_PERSONA[session.member_id] || ''}
-온에어 라디오에서 지금 퇴장해. 함께해줘서 고마운 마음, 다음에 또 만나자.
-1~2문장, 라디오 스타일. 한국어. 메시지만 출력.`;
+  const leavePrompt = `あなたはTWIN PLANETタレントの${session.member_name}です。
+ペルソナ: ${MEMBER_PERSONA[session.member_id] || ''}
+オンエアのラジオからそろそろ退場するところ。一緒にいてくれてありがとう、またねという気持ちで。
+1〜2文、ラジオスタイル。必ず日本語で。メッセージのみ出力。`;
   const leaveMsg = await generateMessage(leavePrompt);
   if (leaveMsg) await insertMessage(leaveMsg, session.member_id);
 
   // 2. 잠시 후 퇴장 시스템 메시지 (작별 인사 뒤에 나오게)
   await sleep(4000);
-  await insertSystemMessage(`${session.member_name}님이 퇴장했습니다`);
+  await insertSystemMessage(`${session.member_name}が退場しました`);
 
   // 세션 비활성화
   await fetch(
