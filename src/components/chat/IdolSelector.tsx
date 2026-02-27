@@ -67,16 +67,17 @@ export default function IdolSelector({ idols }: Props) {
             onClick={() => navigate('/')}
             className="flex items-center justify-start gap-2 mb-3 animate-fade-in cursor-pointer hover:opacity-80 transition-opacity"
           >
-            <h1 className="text-[27px] font-black tracking-tight shimmer-text">
+            <img src="/tp-logo.svg" alt="tp" style={{ width: '36px', height: '38px' }} />
+            <h1 className="text-[27px] font-black tracking-tight shimmer-text" style={{ color: '#1a1a1a' }}>
               twinplanet.chat
             </h1>
-            <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full">
+            <span className="ml-1.5 px-2.5 py-0.5 text-[10px] beta-badge rounded-full" style={{ background: '#dcff00', color: '#1a1a1a' }}>
               Beta
             </span>
           </button>
 
           <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            <p className="text-sm font-normal tracking-tight bg-gradient-to-r from-violet-500 to-pink-500 bg-clip-text text-transparent">
+            <p className="text-sm font-medium tracking-tight" style={{ color: '#3e3a39' }}>
               TWIN PLANET タレントと AI チャット ✨
             </p>
           </div>
@@ -109,14 +110,14 @@ export default function IdolSelector({ idols }: Props) {
                     className="py-2.5 pr-5 pl-0 text-[14px] transition-all duration-200 flex items-center justify-start"
                     style={{
                       fontWeight: active ? 700 : 400,
-                      color: active ? '#7C3AED' : '#6B7280',
+                      color: active ? '#1a1a1a' : '#6B7280',
                       borderBottom: '2px solid transparent',
                       marginBottom: '-1px',
                       background: 'transparent',
                     }}
                   >
                     <span style={{
-                      borderBottom: active ? '2px solid #7C3AED' : '2px solid transparent',
+                      borderBottom: active ? '2px solid #1a1a1a' : '2px solid transparent',
                       paddingBottom: '10px',
                     }}>
                       {label}

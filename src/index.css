@@ -16,10 +16,10 @@
 @theme {
   --font-family-sans: 'SUITE Variable', 'SUITE', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
   
-  /* Brand colors - Refined Lavender/Pink */
-  --color-brand: #9F7AEA;
-  --color-brand-light: #E9D5FF;
-  --color-brand-dark: #7C3AED;
+  /* Brand colors - Lime */
+  --color-brand: #dcff00;
+  --color-brand-light: #f7ffd0;
+  --color-brand-dark: #3e3a39;
   
   /* New premium palette */
   --color-cream: #FEFCFB;
@@ -45,7 +45,7 @@ html, body, #root {
   padding: 0;
   max-width: 100vw;
   /* Premium background */
-  background: linear-gradient(135deg, #FEFCFB 0%, #F5F3FF 25%, #FDF2F8 50%, #EDE9FE 75%, #FAF5FF 100%);
+  background: linear-gradient(160deg, #f7ffd0 0%, #fffff0 40%, #f0fff0 70%, #ffffff 100%);
   background-attachment: fixed;
 }
 
@@ -100,7 +100,7 @@ body {
 /* ===== Premium Background Effects ===== */
 .premium-bg {
   position: relative;
-  background: linear-gradient(135deg, #FEFCFB 0%, #F5F3FF 25%, #FDF2F8 50%, #EDE9FE 75%, #FAF5FF 100%);
+  background: linear-gradient(160deg, #f7ffd0 0%, #fffff0 40%, #f0fff0 70%, #ffffff 100%);
   background-attachment: fixed;
   -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
 }
@@ -113,11 +113,11 @@ body {
   width: 100vw;
   height: 100vh;
   height: 100dvh;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(167, 139, 250, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(236, 72, 153, 0.06) 0%, transparent 35%),
-    radial-gradient(circle at 40% 80%, rgba(192, 132, 252, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(244, 114, 182, 0.05) 0%, transparent 30%);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(220, 255, 0, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(180, 230, 0, 0.08) 0%, transparent 35%),
+    radial-gradient(circle at 40% 80%, rgba(220, 255, 0, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(200, 240, 0, 0.05) 0%, transparent 30%);
   animation: float-bg 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -142,7 +142,8 @@ body {
 .orb-1 {
   width: 300px;
   height: 300px;
-  background: linear-gradient(135deg, #C4B5FD, #F9A8D4);
+  background: linear-gradient(135deg, #dcff00, #b8e600);
+  opacity: 0.25;
   top: -100px;
   right: -100px;
   animation-delay: 0s;
@@ -151,7 +152,8 @@ body {
 .orb-2 {
   width: 200px;
   height: 200px;
-  background: linear-gradient(135deg, #DDD6FE, #FBCFE8);
+  background: linear-gradient(135deg, #e8ff60, #dcff00);
+  opacity: 0.2;
   bottom: 20%;
   left: -80px;
   animation-delay: -3s;
@@ -160,7 +162,8 @@ body {
 .orb-3 {
   width: 150px;
   height: 150px;
-  background: linear-gradient(135deg, #A78BFA, #F472B6);
+  background: linear-gradient(135deg, #c8f000, #a8d800);
+  opacity: 0.18;
   bottom: -50px;
   right: 20%;
   animation-delay: -5s;
@@ -277,38 +280,39 @@ body {
 .subtle-shimmer-text {
   background: linear-gradient(
     90deg,
-    #4B5563 0%,
-    #7C3AED 30%,
-    #EC4899 55%,
-    #7C3AED 75%,
-    #4B5563 100%
+    #1a1a1a 0%,
+    #3e3a39 30%,
+    #1a1a1a 50%,
+    #3e3a39 75%,
+    #1a1a1a 100%
   );
   background-size: 300% auto;
-  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: subtle-shimmer 8s ease-in-out infinite;
 }
 
 .shimmer-text {
   background: linear-gradient(
     90deg,
-    #7C3AED 0%,
-    #9F7AEA 25%,
-    #EC4899 50%,
-    #9F7AEA 75%,
-    #7C3AED 100%
+    #1a1a1a 0%,
+    #3e3a39 20%,
+    #1a1a1a 40%,
+    #1a1a1a 60%,
+    #3e3a39 80%,
+    #1a1a1a 100%
   );
   background-size: 200% auto;
-  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: shimmer 4s linear infinite;
 }
 
 @keyframes logo-pulse {
   0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
-  50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.4)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(220, 255, 0, 0.4)); }
 }
 
 .logo-glow {
@@ -317,13 +321,13 @@ body {
 
 /* ── 로딩 스핀 (귀엽게 빙글빙글 + 살짝 흔들림) ── */
 @keyframes logo-spin-cute {
-  0%   { transform: rotate(0deg)   scale(1);    filter: drop-shadow(0 4px 12px rgba(139,92,246,0.25)); }
+  0%   { transform: rotate(0deg)   scale(1);    filter: drop-shadow(0 4px 12px rgba(180,230,0,0.25)); }
   15%  { transform: rotate(15deg)  scale(1.06); }
   30%  { transform: rotate(-8deg)  scale(1.02); }
-  50%  { transform: rotate(185deg) scale(1.1);  filter: drop-shadow(0 8px 20px rgba(167,139,250,0.5)); }
+  50%  { transform: rotate(185deg) scale(1.1);  filter: drop-shadow(0 8px 20px rgba(220,255,0,0.5)); }
   70%  { transform: rotate(355deg) scale(1.06); }
   85%  { transform: rotate(368deg) scale(1.03); }
-  100% { transform: rotate(360deg) scale(1);    filter: drop-shadow(0 4px 12px rgba(139,92,246,0.25)); }
+  100% { transform: rotate(360deg) scale(1);    filter: drop-shadow(0 4px 12px rgba(180,230,0,0.25)); }
 }
 
 /* ── 주변 채팅 이모지 — 팝인 → 둥실 → 페이드아웃 ── */
@@ -381,7 +385,7 @@ body {
   content: '✦';
   position: absolute;
   font-size: 12px;
-  color: #A78BFA;
+  color: #dcff00;
   animation: sparkle 2s ease-in-out infinite;
 }
 
@@ -564,8 +568,8 @@ body {
 .loading-spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid #e9d5ff;
-  border-top-color: #a855f7;
+  border: 3px solid #f0ffe0;
+  border-top-color: #dcff00;
   border-radius: 50%;
   animation: spinner 0.7s linear infinite;
 }
@@ -646,18 +650,18 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(167, 139, 250, 0.45);
+  background: rgba(62, 58, 57, 0.35);
   border-radius: 99px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(139, 92, 246, 0.7);
+  background: rgba(62, 58, 57, 0.6);
 }
 
 /* Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(167, 139, 250, 0.45) transparent;
+  scrollbar-color: rgba(62, 58, 57, 0.35) transparent;
 }
 
 /* Hide scrollbar for input textarea */
@@ -1026,11 +1030,11 @@ body {
 
 /* ===== Premium Badge ===== */
 .beta-badge {
-  background: linear-gradient(135deg, #EDE9FE, #FCE7F3);
-  color: #7C3AED;
+  background: #dcff00;
+  color: #1a1a1a;
   font-weight: 700;
   letter-spacing: 0.05em;
-  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 2px 8px rgba(220, 255, 0, 0.3);
 }
 
 /* ===== Group tag pill ===== */
