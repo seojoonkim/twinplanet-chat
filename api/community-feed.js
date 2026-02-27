@@ -1,8 +1,8 @@
 export default async function handler(req, res) {
   try {
     const ghToken = process.env.GITHUB_TOKEN;
-    const supabaseUrl = (process.env.SUPABASE_URL ?? process.env.VITE_SUPABASE_URL || '').trim();
-    const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY || '').trim();
+    const supabaseUrl = ( process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
+    const supabaseKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '').trim();
 
     // 1. GitHub에서 최신 feed 가져오기
     const feedUrl = 'https://raw.githubusercontent.com/seojoonkim/twinplanet-chat/main/public/community-feed.json';
