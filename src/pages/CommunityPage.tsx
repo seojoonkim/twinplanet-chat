@@ -402,7 +402,7 @@ export default function CommunityPage() {
         const [mainRes, redditRes, twitterRes, togetterRes] = await Promise.allSettled([
           fetch('/api/community-feed'),
           fetch('/api/feed-community'),
-          fetch('/api/feed-twitter'),
+          fetch('/api/feed-twitter-fan'),
           fetch('/api/feed-togetter'),
         ]);
 
@@ -421,33 +421,8 @@ export default function CommunityPage() {
         let twitterItems: CommunityItem[] = [];
         if (twitterRes.status === 'fulfilled' && twitterRes.value.ok) {
           const data = await twitterRes.value.json();
-          const tweets = Array.isArray(data.tweets) ? data.tweets : [];
-          twitterItems = tweets.map((t: {
-            id: string;
-            text: string;
-            createdAt: string;
-            url: string;
-            likes: number;
-            retweets: number;
-            images: string[];
-            rtAuthorName: string | null;
-            rtAuthorUsername: string | null;
-          }) => ({
-            id: `twitter_${t.id}`,
-            source: 'twitter' as Source,
-            sourceLabel: t.rtAuthorName ? `RT @${t.rtAuthorUsername}` : '𝕏',
-            url: t.url,
-            title: '',
-            content: t.text,
-            imageUrl: t.images?.[0] || null,
-            images: t.images || [],
-            date: t.createdAt,
-            likes: t.likes || 0,
-            replies: t.retweets || 0,
-            authorName: t.rtAuthorName || 'ATARASHII GAKKO!',
-            topComments: [],
-            comments: [],
-          }));
+          // feed-twitter-fan returns { posts: [...] }
+          twitterItems = Array.isArray(data.posts) ? data.posts as CommunityItem[] : [];
         }
 
         let togetterItems: CommunityItem[] = [];
