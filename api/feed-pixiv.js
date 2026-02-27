@@ -31,7 +31,11 @@ export default async function handler(req, res) {
       // network timeout or fetch error — return empty
     }
 
-    const posts = artworks.slice(0, 20).map(item => {
+    const validArtworks = artworks
+      .filter(item => item.id && item.title && item.url)
+      .slice(0, 20);
+
+    const posts = validArtworks.map(item => {
       // Replace i.pximg.net with i.pixiv.cat to bypass Referer restriction
       const rawThumb = item.url || '';
       const imageUrl = rawThumb

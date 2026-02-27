@@ -424,7 +424,10 @@ export default function CommunityPage() {
         }
 
         if (!cancelled) {
-          const merged = [...mainItems, ...twitterItems, ...togetterItems, ...pixivItems].sort(
+          const safeTwitter = twitterItems.map(i => ({ ...i, source: 'twitter' as const }));
+          const safeTogetter = togetterItems.map(i => ({ ...i, source: 'togetter' as const }));
+          const safePixiv = pixivItems.map(i => ({ ...i, source: 'pixiv' as const }));
+          const merged = [...mainItems, ...safeTwitter, ...safeTogetter, ...safePixiv].sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
           setItems(merged);

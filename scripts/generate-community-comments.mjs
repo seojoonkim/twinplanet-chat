@@ -196,9 +196,8 @@ async function fetchLiveFeedItems() {
   const BASE = 'https://twinplanet.chat';
   const endpoints = [
     { url: `${BASE}/api/feed-togetter`, key: 'posts' },
-    { url: `${BASE}/api/feed-community`, key: 'posts' },
-    { url: `${BASE}/api/feed-twitter`, key: 'tweets' },
     { url: `${BASE}/api/feed-twitter-fan`, key: 'posts' },
+    { url: `${BASE}/api/feed-pixiv`, key: 'posts' },
   ];
   const allItems = [];
   for (const { url, key } of endpoints) {
