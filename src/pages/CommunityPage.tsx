@@ -71,20 +71,20 @@ function formatDateLabel(iso: string) {
 
   const nowTs = Date.now();
   const diffMs = nowTs - targetTs;
-  if (diffMs < 60 * 1000) return '방금';
+  if (diffMs < 60 * 1000) return 'Just now';
 
   const minute = Math.floor(diffMs / (1000 * 60));
-  if (minute < 60) return `${minute}분 전`;
+  if (minute < 60) return `${minute}m ago`;
 
   const hour = Math.floor(diffMs / (1000 * 60 * 60));
-  if (hour < 24) return `${hour}시간 전`;
+  if (hour < 24) return `${hour}h ago`;
 
   const day = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  if (day < 7) return `${day}일 전`;
+  if (day < 7) return `${day}d ago`;
 
   const dt = new Date(targetTs);
   const parts = kstDateParts(dt);
-  return `${parts.month}월 ${parts.day}일`;
+  return `${parts.month}/${parts.day}`;
 }
 
 const cardShadow = { boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06), 0 2px 8px -2px rgba(0,0,0,0.04)' };
@@ -130,8 +130,8 @@ const SOURCE_ICON_BG: Record<Source, string> = {
   twitter:  'linear-gradient(135deg,#000,#374151)',
 };
 const SOURCE_ICON_LABEL: Record<Source, string> = {
-  theqoo:   '더쿠',
-  dcinside: '디씨',
+  theqoo:   'TQ',
+  dcinside: 'DC',
   twitter:  '𝕏',
 };
 
@@ -360,16 +360,16 @@ function CommunityCard({ item }: { item: CommunityItem }) {
       {/* 액션 버튼 */}
       <div className="flex items-center px-1 py-0.5">
         <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-semibold text-gray-500 hover:bg-gray-50">
-          🤍 좋아요
+          🤍 Like
         </button>
         <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-semibold text-gray-500 hover:bg-gray-50">
-          💬 댓글
+          💬 Comment
         </button>
         <button
           type="button"
           className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-semibold text-gray-500 hover:bg-gray-50"
         >
-          ↗ 공유
+          ↗ Share
         </button>
       </div>
     </div>
@@ -407,7 +407,7 @@ export default function CommunityPage() {
       } catch {
         if (!cancelled) {
           setItems([]);
-          setFetchError('피드 정보를 불러오지 못했습니다.');
+          setFetchError('Failed to load feed.');
         }
       } finally {
         if (!cancelled) setLoading(false);

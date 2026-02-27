@@ -155,15 +155,15 @@ function getTimeAwareGreeting(idol: IdolMeta, isFirstVisit: boolean): string {
   const pool = TALENT_GREETINGS[idol.id]?.[slot];
   if (pool) return pick(isFirstVisit ? pool.first : pool.returning);
 
-  // 한국어 일반 fallback
+  // English general fallback
   if (isFirstVisit) {
-    return idol.firstVisitGreeting ?? `안녕! 나 ${idol.nameKo}야~ 여기서 직접 얘기할 수 있어 ㅎㅎ 이름이 뭐야?`;
+    return idol.firstVisitGreeting ?? `Hey! I'm ${idol.nameKo}~ Nice to meet you! What's your name?`;
   }
   const h = new Date().getHours();
-  if (h >= 6 && h < 12) return pick([`좋은 아침~ 잘 잤어?`, `아침부터 왔네! 반가워`]);
-  if (h >= 18 && h < 23) return pick([`하루 어땠어? 밥 먹었어?`, `저녁에 왔네~ 수고했어`]);
-  if (h >= 23 || h < 6) return pick([`이 시간에..? 잠 안 와?`, `밤늦게 왔네`]);
-  return pick([`왔어? 반가워~`, `오 왔네! 뭐해?`]);
+  if (h >= 6 && h < 12) return pick([`Good morning~ Sleep well?`, `You're up early! Welcome 😊`]);
+  if (h >= 18 && h < 23) return pick([`How was your day? Did you eat?`, `Evening~ Good work today!`]);
+  if (h >= 23 || h < 6) return pick([`Up so late? Can't sleep?`, `Burning the midnight oil~`]);
+  return pick([`Hey, you're here! 😊`, `Oh, you came! What's up?`]);
 }
 
 export default function ChatLayout({ idol }: Props) {
@@ -277,7 +277,7 @@ export default function ChatLayout({ idol }: Props) {
           <div className="flex flex-col items-center gap-3">
             <div className="loading-spinner" />
             <div className="text-gray-300 text-sm">
-              {idol.language === 'ja' ? '読み込み中...' : idol.language === 'en' ? 'Loading...' : '로딩중...'}
+              {idol.language === 'ja' ? '読み込み中...' : 'Loading...'}
             </div>
           </div>
         </div>

@@ -141,18 +141,12 @@ export default function SiteFooter() {
         </div>
       </div>
 
-      <div className="text-center text-xs text-gray-400 flex flex-col gap-2">
-        <a
-          href="mailto:hello@twinplanet.chat"
-          className="text-violet-500 hover:text-violet-700 transition-colors font-medium"
-        >
-          hello@twinplanet.chat
-        </a>
-        <span>Made with 💜</span>
+      <div className="text-center text-xs text-gray-400">
+        <span>Made with ✨</span>
       </div>
 
       <p className="mt-5 px-6 text-[10px] leading-relaxed text-gray-400 text-center">
-        ⚠️ 이 서비스는 TWIN PLANET ENTERTAINMENT 타레인트를 사랑하는 팬이 개인적으로 만든 AI 팬 프로젝트입니다. タレントの公開発言・インタビュー・SNS等を基に学習したAIが生成した仮想の会話コンテンツで、実際のタレントの公式見解や現在の考えとは異なる場合があります。AI特性上、事実と異なる内容が含まれる可能性がありますので、公式チャンネルの内容と混同しないでください。본 서비스 이용 중 발생하는 오해나 판단에 대해 운영자는 법적 책임을 지지 않습니다.
+        ⚠️ 本サービスは、TWIN PLANET ENTERTAINMENTのタレントを応援するファンが個人で制作したAIファンプロジェクトです。タレントの公開発言・インタビュー・SNS等をもとに学習したAIが生成した仮想の会話コンテンツであり、実際のタレントの公式見解や現在の考えとは異なる場合があります。AI特性上、事実と異なる内容が含まれる可能性がありますので、公式チャンネルの内容と混同しないでください。本サービスの利用により生じたいかなる誤解や判断についても、運営者は法的責任を負いません。
       </p>
     </div>
   );

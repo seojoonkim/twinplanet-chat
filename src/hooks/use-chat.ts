@@ -248,9 +248,9 @@ export function useChat(systemPrompt: string, knowledge?: Record<KnowledgeCatego
           // Still persist the user message
           setTimeout(() => persistMessages(), 50);
           if (err.message.includes('401')) {
-            setError('API 키가 유효하지 않습니다. 서버 설정을 확인해주세요.');
+            setError('Invalid API key. Please check server configuration.');
           } else {
-            setError(`오류가 발생했습니다: ${err.message}`);
+            setError(`An error occurred: ${err.message}`);
           }
         },
       });

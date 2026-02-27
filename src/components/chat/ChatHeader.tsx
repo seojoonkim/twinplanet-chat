@@ -168,9 +168,7 @@ export default function ChatHeader({ idol }: Props) {
                 </svg>
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">
-                {idol.language === 'ja' ? 'チャットをリセットしますか？' : 
-                 idol.language === 'en' ? 'Reset this chat?' : 
-                 '채팅을 리셋할까요?'}
+                {idol.language === 'ja' ? 'チャットをリセットしますか？' : 'Reset this chat?'}
               </h3>
               <p className="text-sm text-gray-500 mb-6">
                 {idol.language === 'ja' ? (
@@ -178,7 +176,7 @@ export default function ChatHeader({ idol }: Props) {
                 ) : idol.language === 'en' ? (
                   <>All messages with {idol.nameKo} will be deleted<br />and start fresh.</>
                 ) : (
-                  <>{idol.nameKo}와의 모든 메시지가 삭제되고<br />처음부터 다시 시작합니다.</>
+                  <>All messages with {idol.nameKo} will be deleted<br />and start fresh.</>
                 )}
               </p>
               <div className="flex gap-3">
@@ -186,13 +184,13 @@ export default function ChatHeader({ idol }: Props) {
                   onClick={() => setShowResetModal(false)}
                   className="flex-1 py-2.5 px-4 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-gray-200 transition-colors"
                 >
-                  {idol.language === 'ja' ? 'キャンセル' : idol.language === 'en' ? 'Cancel' : '취소'}
+                  {idol.language === 'ja' ? 'キャンセル' : 'Cancel'}
                 </button>
                 <button
                   onClick={handleReset}
                   className="flex-1 py-2.5 px-4 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
                 >
-                  {idol.language === 'ja' ? 'リセット' : idol.language === 'en' ? 'Reset' : '리셋'}
+                  {idol.language === 'ja' ? 'リセット' : 'Reset'}
                 </button>
               </div>
             </div>

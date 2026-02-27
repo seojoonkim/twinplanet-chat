@@ -504,9 +504,9 @@ function pickLength(rng: () => number): CommentLength {
 
 function pickCommentByLength(memberId: string, ctx: Ctx, length: CommentLength, seed: number): string {
   const pool = COMMENT_POOL[memberId];
-  if (!pool) return '기대돼요!';
+  if (!pool) return '楽しみです！';
   const ctxEntries = [...(pool[ctx] || []), ...(pool.default || [])];
-  if (ctxEntries.length === 0) return '기대돼요!';
+  if (ctxEntries.length === 0) return '楽しみです！';
 
   const shortOnes = ctxEntries.filter(c => c.length < 25);
   const mediumOnes = ctxEntries.filter(c => c.length >= 25 && c.length < 70);
@@ -517,7 +517,7 @@ function pickCommentByLength(memberId: string, ctx: Ctx, length: CommentLength, 
   else if (length === 'medium') candidates = mediumOnes.length > 0 ? mediumOnes : ctxEntries;
   else candidates = longOnes.length > 0 ? longOnes : ctxEntries;
 
-  return candidates[Math.abs(seed) % candidates.length] || ctxEntries[0] || '기대돼요!';
+  return candidates[Math.abs(seed) % candidates.length] || ctxEntries[0] || '楽しみです！';
 }
 
 function buildSmartComments(postId: string, source: FeedSource, title: string, body: string, posterId: string): Comment[] {
@@ -616,11 +616,11 @@ function timeAgo(ms: number): string {
   const mins = Math.floor(diff / 60000);
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
-  if (mins < 2) return '방금';
-  if (mins < 60) return `${mins}분 전`;
-  if (hours < 24) return `${hours}시간 전`;
-  if (days < 7) return `${days}일 전`;
-  return new Date(ms).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' });
+  if (mins < 2) return 'Just now';
+  if (mins < 60) return `${mins}m ago`;
+  if (hours < 24) return `${hours}h ago`;
+  if (days < 7) return `${days}d ago`;
+  return new Date(ms).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 // ── SourceBadge ──────────────────────────────────────────────
@@ -691,8 +691,8 @@ function LikeDisplay({ likes }: { likes: CommentLike[] }) {
         })}
       </div>
       <span className="text-[11px] text-gray-400">
-        {likes.slice(0, 3).map(l => ALL_MEMBERS[l.memberId]?.name || (l.memberId === 'jbk' ? '정병기' : l.memberId)).join(', ')}
-        {likes.length > 3 ? ` 외 ${likes.length - 3}명` : ''}
+        {likes.slice(0, 3).map(l => ALL_MEMBERS[l.memberId]?.name || (l.memberId === 'jbk' ? 'JBK' : l.memberId)).join(', ')}
+        {likes.length > 3 ? ` and ${likes.length - 3} more` : ''}
       </span>
     </div>
   );
