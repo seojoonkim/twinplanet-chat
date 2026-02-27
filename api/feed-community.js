@@ -1,7 +1,11 @@
-const REDDIT_USER_AGENT = 'twinplanet-chat/1.0 (fan app; contact via github)';
+const REDDIT_USER_AGENT = 'Mozilla/5.0 (compatible; twinplanet-chat/1.0; +https://twinplanet.chat)';
 
-const PRIMARY_URL = 'https://www.reddit.com/r/atarashiigakko.json?limit=10';
-const FALLBACK_URL = 'https://www.reddit.com/search.json?q=ATARASHII+GAKKO&sort=new&limit=10';
+const URLS_TO_TRY = [
+  'https://old.reddit.com/r/atarashiigakko.json?limit=10',
+  'https://www.reddit.com/r/atarashiigakko.json?limit=10',
+  'https://old.reddit.com/search.json?q=ATARASHII+GAKKO&sort=new&limit=10',
+  'https://www.reddit.com/search.json?q=ATARASHII+GAKKO&sort=new&limit=10',
+];
 
 function parsePost(child) {
   const d = child.data;
@@ -34,39 +38,41 @@ function parsePost(child) {
 }
 
 async function fetchReddit(url) {
-  const res = await fetch(url, {
-    headers: {
-      'User-Agent': REDDIT_USER_AGENT,
-      'Accept': 'application/json',
-    },
-  });
-  if (!res.ok) throw new Error(`Reddit fetch failed: ${res.status}`);
-  const json = await res.json();
-  const children = json?.data?.children || [];
-  return children.map(parsePost).filter(Boolean);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6000);
+  try {
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': REDDIT_USER_AGENT,
+        'Accept': 'application/json',
+      },
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error(`Reddit fetch failed: ${res.status}`);
+    const json = await res.json();
+    const children = json?.data?.children || [];
+    return children.map(parsePost).filter(Boolean);
+  } catch (e) {
+    clearTimeout(timeout);
+    throw e;
+  }
 }
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 's-maxage=180, stale-while-revalidate=600');
 
-  try {
-    let posts = [];
+  for (const url of URLS_TO_TRY) {
     try {
-      posts = await fetchReddit(PRIMARY_URL);
-    } catch {
-      // Fallback to search if subreddit doesn't exist or errors out
-      try {
-        posts = await fetchReddit(FALLBACK_URL);
-      } catch {
-        // Return empty array — never 500
-        return res.status(200).json({ posts: [] });
+      const posts = await fetchReddit(url);
+      if (posts.length > 0) {
+        return res.status(200).json({ posts });
       }
+    } catch (_) {
+      // try next URL
     }
-
-    return res.status(200).json({ posts });
-  } catch {
-    // Safety net — never 500
-    return res.status(200).json({ posts: [] });
   }
+
+  return res.status(200).json({ posts: [] });
 }
