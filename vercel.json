@@ -38,6 +38,18 @@
     "api/onair-watchdog.js": {
       "maxDuration": 55,
       "memory": 512
+    },
+    "api/feed-twitter-fan.js": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "api/feed-togetter.js": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "api/feed-pixiv.js": {
+      "maxDuration": 30,
+      "memory": 512
     }
   }
 }

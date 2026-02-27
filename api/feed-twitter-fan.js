@@ -5,8 +5,9 @@ export default async function handler(req, res) {
   const BEARER = (process.env.TWITTER_BEARER_TOKEN || '').trim();
   if (!BEARER) return res.status(200).json({ posts: [] });
 
-  const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
-  const supabaseKey = (process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '').trim();
+  const cleanEnv = s => (s || '').replace(/\\n/g, '').trim();
+  const supabaseUrl = cleanEnv(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL);
+  const supabaseKey = cleanEnv(process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY);
 
   try {
     const query = encodeURIComponent('#新しい学校のリーダーズ OR #ATARASHIIGAKKO -is:retweet');
@@ -85,7 +86,7 @@ export default async function handler(req, res) {
     // 댓글 없는 트윗 감지 시 GitHub Actions 트리거 (fire & forget)
     const emptyCommentPosts = posts.filter(p => (p.comments || []).length === 0);
     if (emptyCommentPosts.length > 0) {
-      const githubPat = (process.env.GITHUB_PAT || '').trim();
+      const githubPat = cleanEnv(process.env.GITHUB_PAT);
       if (githubPat) {
         fetch(
           'https://api.github.com/repos/seojoonkim/twinplanet-chat/actions/workflows/community-comments.yml/dispatches',
@@ -103,8 +104,8 @@ export default async function handler(req, res) {
     }
 
     // 댓글 없는 트윗에 즉시 댓글 생성 (병렬, fire-and-forget 아님 — 완료 후 반환)
-    const OPENROUTER_KEY = (process.env.OPENROUTER_API_KEY || '').trim();
-    const supabaseServiceKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+    const OPENROUTER_KEY = cleanEnv(process.env.OPENROUTER_API_KEY);
+    const supabaseServiceKey = cleanEnv(process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY);
 
     if (OPENROUTER_KEY && supabaseServiceKey && supabaseUrl && posts.length > 0) {
       const emptyPosts = posts.filter(p => (p.comments || []).length === 0).slice(0, 5); // 최대 5개만 처리 (타임아웃 방지)
