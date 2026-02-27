@@ -1320,7 +1320,7 @@ export default function FeedPage() {
         className="px-4 pt-4 pb-3 border-b border-gray-200 mb-4 flex items-center justify-between gap-2 rounded-xl"
         style={{ background: '#f8f9fa' }}
       >
-          <h1 className="text-sm font-normal text-gray-900 shrink-0">Official FEED 🌐</h1>
+          <h1 className="text-sm font-normal text-gray-900 shrink-0">OFFICIAL FEED 🌐</h1>
         <div className="flex items-center gap-2 shrink-0">
           {/* 출처 드랍다운 */}
           <div ref={sourceDropdownRef} className="relative">
