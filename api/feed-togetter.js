@@ -63,7 +63,7 @@ export default async function handler(req, res) {
   const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
   const supabaseKey = (process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '').trim();
   const OPENROUTER_KEY = (process.env.OPENROUTER_API_KEY || '').trim();
-  const supabaseServiceKey = (process.env.SUPABASE_SERVICE_KEY || '').trim();
+  const supabaseServiceKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
   try {
     const q = encodeURIComponent('新しい学校のリーダーズ OR ATARASHII GAKKO');

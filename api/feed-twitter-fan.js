@@ -104,7 +104,7 @@ export default async function handler(req, res) {
 
     // 댓글 없는 트윗에 즉시 댓글 생성 (병렬, fire-and-forget 아님 — 완료 후 반환)
     const OPENROUTER_KEY = (process.env.OPENROUTER_API_KEY || '').trim();
-    const supabaseServiceKey = (process.env.SUPABASE_SERVICE_KEY || '').trim();
+    const supabaseServiceKey = (process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
     if (OPENROUTER_KEY && supabaseServiceKey && supabaseUrl && posts.length > 0) {
       const emptyPosts = posts.filter(p => (p.comments || []).length === 0).slice(0, 5); // 최대 5개만 처리 (타임아웃 방지)
