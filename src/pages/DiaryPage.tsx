@@ -65,7 +65,7 @@ function DiaryCard({ entry, onClick }: { entry: DiaryEntry; onClick: () => void 
           {/* Row 2: 일 + 요일 */}
           <div className="flex-1 bg-white flex items-center justify-center gap-1">
             <span className="text-gray-600 font-black leading-none" style={{ fontSize: '22px' }}>{calDay}</span>
-            <span className="text-gray-500 font-medium" style={{ fontSize: '9px' }}>{calWeekday}</span>
+            <span lang="ja" className="text-gray-500 font-medium" style={{ fontSize: '9px' }}>{calWeekday}</span>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@ function SecretNote({ text }: { text: string }) {
           onClick={() => setRevealed(true)}
           className="w-full py-3 rounded-2xl border-2 border-dashed border-pink-300 text-pink-500 text-sm font-medium hover:bg-pink-50 transition-colors"
         >
-          🙈 비밀이 하나 더 있어요... (탭해서 확인)
+          🙈 秘密がもう一つ… (タップして確認)
         </button>
       ) : (
         <div className="p-4 rounded-2xl bg-pink-50 border border-pink-200">
@@ -100,7 +100,7 @@ function SecretNote({ text }: { text: string }) {
 type ReactionKey = 'heart' | 'lol' | 'sad' | 'star';
 const REACTIONS: { key: ReactionKey; emoji: string; label: string }[] = [
   { key: 'heart', emoji: '❤️', label: 'Love' },
-  { key: 'lol', emoji: '😂', label: 'ㅋㅋ' },
+  { key: 'lol', emoji: '😂', label: '笑' },
   { key: 'sad', emoji: '😢', label: 'Sad' },
   { key: 'star', emoji: '✨', label: 'Best' },
 ];
