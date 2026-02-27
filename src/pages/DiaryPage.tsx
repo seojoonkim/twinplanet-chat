@@ -8,7 +8,7 @@ function DiaryCard({ entry, onClick }: { entry: DiaryEntry; onClick: () => void 
   const imgSrc = `/idols/${entry.authorId}/profile.jpg?v=2`;
 
   const dateObj = new Date(entry.date);
-  const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const calYear = dateObj.getFullYear();
   const calMonth = months[dateObj.getMonth()];
