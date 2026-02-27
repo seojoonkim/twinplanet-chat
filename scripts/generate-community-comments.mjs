@@ -10,10 +10,10 @@ const PROJECT_ROOT = join(__dirname, '..');
 // ── 환경변수 ──────────────────────────────────────────────────────────────────
 const SUPABASE_URL = (process.env.SUPABASE_URL || '').trim();
 const SUPABASE_SERVICE_KEY = (process.env.SUPABASE_SERVICE_KEY || '').trim();
-const ANTHROPIC_API_KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
+const OPENROUTER_API_KEY = (process.env.OPENROUTER_API_KEY || '').trim();
 
-if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !ANTHROPIC_API_KEY) {
-  console.error('❌ 필수 환경변수 누락: SUPABASE_URL, SUPABASE_SERVICE_KEY, ANTHROPIC_API_KEY');
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !OPENROUTER_API_KEY) {
+  console.error('❌ 필수 환경변수 누락: SUPABASE_URL, SUPABASE_SERVICE_KEY, OPENROUTER_API_KEY');
   process.exit(1);
 }
 
@@ -103,28 +103,29 @@ ${speechPatterns || '(ファイルなし)'}
 - 自分の名前を言わない ❌
 - 「ファンの皆さん」のような公式な表現 ❌`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
+      model: 'openai/gpt-4o-mini',
       max_tokens: 150,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }],
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ],
     }),
   });
 
   if (!response.ok) {
     const errText = await response.text();
-    throw new Error(`Anthropic API 오류 ${response.status}: ${errText}`);
+    throw new Error(`OpenRouter API 오류 ${response.status}: ${errText}`);
   }
 
   const data = await response.json();
-  const text = data.content?.[0]?.text?.trim() || '';
+  const text = data.choices?.[0]?.message?.content?.trim() || '';
   return text;
 }
 
@@ -138,28 +139,29 @@ For each chosen member, write a short natural comment (1-2 sentences, under 60 c
 Return JSON: [{"idol_id": "nako", "content": "comment"}, ...]
 Member IDs: mizyu=MIZYU, rin=RIN, suzuka=SUZUKA, kanon=KANON, nako=矢吹奈子, nana=鈴木奈々, taiyo=杉浦太陽, yoshiaki=よしあき, michi=ミチ.`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
+      model: 'openai/gpt-4o-mini',
       max_tokens: 250,
-      system: 'あなたはTWIN PLANETタレントのファン向けコメント生成器です。投稿を見てタレントの自然な反応を選びJSONのみで回答してください。',
-      messages: [{ role: 'user', content: userPrompt }],
+      messages: [
+        { role: 'system', content: 'あなたはTWIN PLANETタレントのファン向けコメント生成器です。投稿を見てタレントの自然な反応を選びJSONのみで回答してください。' },
+        { role: 'user', content: userPrompt },
+      ],
     }),
   });
 
   if (!response.ok) {
     const errText = await response.text();
-    throw new Error(`Anthropic API 오류 ${response.status}: ${errText}`);
+    throw new Error(`OpenRouter API 오류 ${response.status}: ${errText}`);
   }
 
   const data = await response.json();
-  const raw = data.content?.[0]?.text?.trim() || '';
+  const raw = data.choices?.[0]?.message?.content?.trim() || '';
   let text = raw;
 
   if (!text.startsWith('[')) {
@@ -189,20 +191,34 @@ function pickRandom(arr, n) {
   return shuffled.slice(0, n);
 }
 
+// ── 라이브 RADAR 피드 fetch ───────────────────────────────────────────────────
+async function fetchLiveFeedItems() {
+  const BASE = 'https://twinplanet.chat';
+  const endpoints = [
+    { url: `${BASE}/api/feed-togetter`, key: 'items' },
+    { url: `${BASE}/api/feed-community`, key: 'posts' },
+    { url: `${BASE}/api/feed-twitter`, key: 'tweets' },
+  ];
+  const allItems = [];
+  for (const { url, key } of endpoints) {
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': 'twinplanet-comment-bot/1.0' } });
+      if (!res.ok) { console.log(`[feed] ${url} → ${res.status}`); continue; }
+      const data = await res.json();
+      const items = data[key] || data.items || (Array.isArray(data) ? data : []);
+      console.log(`[feed] ${url.split('/').pop()} → ${items.length}개`);
+      allItems.push(...items);
+    } catch (e) {
+      console.log(`[feed] ${url.split('/').pop()} 오류: ${e.message}`);
+    }
+  }
+  return allItems;
+}
+
 // ── 메인 ──────────────────────────────────────────────────────────────────────
 async function main() {
-  // 1. community-feed.json 읽기
-  const feedPath = join(PROJECT_ROOT, 'public', 'community-feed.json');
-  let feed;
-  try {
-    const raw = await readFile(feedPath, 'utf-8');
-    feed = JSON.parse(raw);
-  } catch (e) {
-    console.error('❌ community-feed.json 읽기 실패:', e.message);
-    process.exit(1);
-  }
-
-  const allItems = feed.items || [];
+  // 1. 라이브 RADAR 피드 fetch
+  const allItems = await fetchLiveFeedItems();
   console.log(`📋 전체 포스트: ${allItems.length}개`);
 
   // 2. 이미 처리된 post_id 목록 조회
