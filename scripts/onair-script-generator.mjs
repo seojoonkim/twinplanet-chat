@@ -157,36 +157,53 @@ ${topicChangeRule}
 JSON配列のみ出力（他のテキストなし）:
 [{"author":"メンバーid","content":"セリフ..."},...]`;
 
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'openai/gpt-4o',
-      max_tokens: 4000,
-      temperature: 0.85,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ]
-    })
-  });
+  // 최대 3회 retry + 25초 timeout per attempt
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 25000);
 
-  const data = await res.json();
-  const raw = data.choices?.[0]?.message?.content?.trim() ?? '';
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-4o-mini',
+          max_tokens: 3000,
+          temperature: 0.85,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt }
+          ]
+        }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(timer);
 
-  // JSON 파싱
-  try {
-    // 코드블록 제거
-    const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-    return JSON.parse(cleaned);
-  } catch (e) {
-    console.error('JSON 파싱 실패:', e.message);
-    console.error('Raw response:', raw.substring(0, 500));
-    return null;
+      if (!res.ok) {
+        console.error(`[attempt ${attempt}] API error: ${res.status} ${res.statusText}`);
+        if (attempt < 3) { await new Promise(r => setTimeout(r, 3000)); continue; }
+        return null;
+      }
+
+      const data = await res.json();
+      const raw = data.choices?.[0]?.message?.content?.trim() ?? '';
+
+      // JSON 파싱 (코드블록 제거 후)
+      const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+      const parsed = JSON.parse(cleaned);
+      console.log(`✅ [attempt ${attempt}] 파싱 성공`);
+      return parsed;
+
+    } catch (e) {
+      console.error(`[attempt ${attempt}] 실패: ${e.message}`);
+      if (attempt < 3) { await new Promise(r => setTimeout(r, 3000)); }
+    }
   }
+  console.error('❌ 3회 시도 모두 실패');
+  return null;
 }
 
 // 4. 메시지 INSERT
