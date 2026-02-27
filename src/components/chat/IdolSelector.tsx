@@ -250,15 +250,22 @@ export default function IdolSelector({ idols }: Props) {
                           animationDelay: soloLoaded ? undefined : `${index * 0.04}s`,
                         }}
                       >
-                        {idol.profileImageUrl ? (
+                        {(idol.profileImageUrl || idol.id) ? (
                           <img
-                              src={idol.profileImageUrl}
+                              src={`/idols/${idol.id}/profile.jpg`}
                               alt={idol.nameKo}
                               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 idol-photo-breathe"
                               loading={index < 4 ? 'eager' : 'lazy'}
                               {...(index < 4 ? { fetchPriority: 'high' } : {})}
                               decoding="async"
-                              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                              onError={(e) => {
+                                const img = e.currentTarget;
+                                if (idol.profileImageUrl && img.src !== idol.profileImageUrl) {
+                                  img.src = idol.profileImageUrl;
+                                } else {
+                                  img.style.display = 'none';
+                                }
+                              }}
                               onLoad={() => markLoaded(soloKey)}
                               style={{
                                 animationName: 'idol-breathe-1',

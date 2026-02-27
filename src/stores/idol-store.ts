@@ -5,7 +5,7 @@ import * as db from '@/lib/db';
 import { loadAllIdols, loadIdolKnowledge } from '@/lib/idol-loader';
 
 // ─── localStorage cache helpers ──────────────────────────────
-const CACHE_KEY = 'tsc_idol_cache';
+const CACHE_KEY = 'tsc_idol_cache_v2';
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
 interface IdolCache {
