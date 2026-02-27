@@ -106,6 +106,7 @@ export default function OnAirPage() {
   const isTypingRef = useRef<boolean>(false);
   const typingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [typingMsg, setTypingMsg] = useState<{ item: OnairMessage; displayed: string } | null>(null);
+  const [typingIndicator, setTypingIndicator] = useState<{ memberId: string; memberName: string } | null>(null);
 
   const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
   const visibleMessages = messages.filter((m) => {
@@ -127,7 +128,8 @@ export default function OnAirPage() {
     bottomRef.current?.scrollIntoView({ behavior });
   }, []);
 
-  // 글자별 타이핑 효과 — 새 메시지를 큐에서 하나씩 꺼내 25ms/글자로 reveal
+  // 글자별 타이핑 효과 — 새 메시지를 큐에서 하나씩 꺼내 reveal
+  // 흐름: typing indicator (1.2초) → 글자별 타이핑 → 완료 후 다음 큐
   const startTypingQueue = useCallback(() => {
     if (isTypingRef.current || pendingQueueRef.current.length === 0) return;
     const next = pendingQueueRef.current.shift()!;
@@ -141,29 +143,40 @@ export default function OnAirPage() {
 
     const msg = next as OnairMessage;
     const fullContent = msg.content;
-    let i = 0;
+    const { memberId, displayName } = parseMember(msg.author_name);
     isTypingRef.current = true;
-    setTypingMsg({ item: msg, displayed: '' });
 
-    if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
-    typingIntervalRef.current = setInterval(() => {
-      i++;
-      setTypingMsg({ item: msg, displayed: fullContent.slice(0, i) });
-      // 6글자마다 하단 스크롤 (타이핑 중 말풍선 짤림 방지)
-      if (i % 6 === 0) {
-        bottomRef.current?.scrollIntoView({ behavior: 'auto' });
-      }
-      if (i >= fullContent.length) {
-        clearInterval(typingIntervalRef.current!);
-        typingIntervalRef.current = null;
-        // 깜빡임 방지: messages 추가 + typingMsg 제거를 동시에 (단일 렌더링 사이클)
-        setMessages(prev => [...prev, next]);
-        setTypingMsg(null);
-        isTypingRef.current = false;
-        bottomRef.current?.scrollIntoView({ behavior: 'auto' });
-        setTimeout(() => startTypingQueue(), 500);
-      }
-    }, 78); // 78ms/글자 (65ms → 20% 더 느리게)
+    // 1. typing indicator 먼저 표시
+    if (memberId) {
+      setTypingIndicator({ memberId, memberName: displayName });
+    }
+
+    // 2. 1.2초 후 실제 타이핑 시작
+    setTimeout(() => {
+      setTypingIndicator(null);
+      let i = 0;
+      setTypingMsg({ item: msg, displayed: '' });
+
+      if (typingIntervalRef.current) clearInterval(typingIntervalRef.current);
+      typingIntervalRef.current = setInterval(() => {
+        i++;
+        setTypingMsg({ item: msg, displayed: fullContent.slice(0, i) });
+        // 6글자마다 하단 스크롤 (타이핑 중 말풍선 짤림 방지)
+        if (i % 6 === 0) {
+          bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+        }
+        if (i >= fullContent.length) {
+          clearInterval(typingIntervalRef.current!);
+          typingIntervalRef.current = null;
+          // 깜빡임 방지: messages 추가 + typingMsg 제거를 동시에 (단일 렌더링 사이클)
+          setMessages(prev => [...prev, next]);
+          setTypingMsg(null);
+          isTypingRef.current = false;
+          bottomRef.current?.scrollIntoView({ behavior: 'auto' });
+          setTimeout(() => startTypingQueue(), 400);
+        }
+      }, 65); // 65ms/글자
+    }, memberId ? 1200 : 0);
   }, []);
 
   // onair_sessions에서 실제 활성 멤버 업데이트
@@ -276,6 +289,11 @@ export default function OnAirPage() {
     if (nowTyping && !prevTypingRef.current) scrollToBottom();
     prevTypingRef.current = nowTyping;
   }, [typingMsg, scrollToBottom]);
+
+  // typing indicator 등장 시 스크롤
+  useEffect(() => {
+    if (typingIndicator) scrollToBottom();
+  }, [typingIndicator, scrollToBottom]);
 
   // 폴링 (5초마다 새 메시지)
   useEffect(() => {
@@ -550,6 +568,43 @@ export default function OnAirPage() {
             return null;
           })
         )}
+
+        {/* typing indicator — 말풍선 나오기 전 점 바운스 애니메이션 */}
+        {typingIndicator && (() => {
+          const mc = getMemberColor(typingIndicator.memberId);
+          const lastVisible = visibleMessages.length > 0 ? visibleMessages[visibleMessages.length - 1] : null;
+          const lastParsed = lastVisible && !('type' in lastVisible) ? parseMember((lastVisible as OnairMessage).author_name) : null;
+          const showIndName = !lastParsed || lastParsed.memberId !== typingIndicator.memberId;
+          return (
+            <div className={showIndName ? 'mt-3' : 'mt-2'}>
+              <div className="flex items-end gap-2">
+                <div className="w-10 shrink-0 self-end">
+                  <img
+                    src={getMemberAvatar(typingIndicator.memberId)}
+                    alt={typingIndicator.memberName}
+                    className="w-10 h-10 rounded-full object-cover shadow-sm"
+                    onError={(e) => { (e.target as HTMLImageElement).src = '/favicon.ico'; }}
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  {showIndName && (
+                    <span className="text-[12px] font-bold ml-1 mb-1 block" style={{ color: mc.name }}>
+                      {typingIndicator.memberName}
+                    </span>
+                  )}
+                  <div
+                    className="inline-flex items-center gap-1.5 px-4 py-3 rounded-2xl rounded-bl-sm shadow-sm"
+                    style={{ backgroundColor: mc.bg }}
+                  >
+                    <span className="w-2 h-2 rounded-full" style={{ background: mc.name, opacity: 0.5, animation: 'typing-bounce 1s ease-in-out infinite' }} />
+                    <span className="w-2 h-2 rounded-full" style={{ background: mc.name, opacity: 0.5, animation: 'typing-bounce 1s ease-in-out infinite 0.2s' }} />
+                    <span className="w-2 h-2 rounded-full" style={{ background: mc.name, opacity: 0.5, animation: 'typing-bounce 1s ease-in-out infinite 0.4s' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* 타이핑 중인 말풍선 */}
         {typingMsg && (() => {

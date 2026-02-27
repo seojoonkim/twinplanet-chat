@@ -288,9 +288,9 @@ for (let i = 0; i < script.length; i++) {
     console.log(`⚠️ INSERT 실패 (turn ${i + 1})`);
   }
 
-  // 마지막 턴이 아니면 18초 대기 (자연스러운 채팅 속도)
+  // 마지막 턴이 아니면 10초 대기 (끊임없이 흐르는 채팅 속도)
   if (i < script.length - 1) {
-    await new Promise(r => setTimeout(r, 18000));
+    await new Promise(r => setTimeout(r, 10000));
   }
 }
 
