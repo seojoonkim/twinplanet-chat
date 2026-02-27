@@ -20,7 +20,7 @@ function stripUrls(text: string): string {
     .trim();
 }
 
-type Source = 'twitter' | 'reddit' | 'togetter';
+type Source = 'twitter' | 'togetter';
 type SourceFilter = 'all' | Source;
 
 type CommunityItem = {
@@ -126,24 +126,20 @@ function CommunitySkeleton() {
 
 const SOURCE_ICON_BG: Record<Source, string> = {
   twitter:  'linear-gradient(135deg,#000,#374151)',
-  reddit:   'linear-gradient(135deg,#FF4500,#ff6534)',
   togetter: 'linear-gradient(135deg,#E05000,#ff6534)',
 };
 const SOURCE_ICON_LABEL: Record<Source, string> = {
   twitter:  '𝕏',
-  reddit:   'RD',
   togetter: 'JP',
 };
 
 const COMMUNITY_LINK_LABELS: Record<Source, string> = {
   twitter: '𝕏 View on Twitter →',
-  reddit: '↗ View on Reddit →',
   togetter: '↗ View Article →',
 };
 
 const COMMUNITY_LINK_COLORS: Record<Source, string> = {
   twitter: '#000000',
-  reddit: '#FF4500',
   togetter: '#E05000',
 };
 
@@ -380,7 +376,6 @@ function CommunityCard({ item }: { item: CommunityItem }) {
 function sourceFilterLabel(value: SourceFilter) {
   if (value === 'all') return 'ALL';
   if (value === 'twitter') return 'Twitter (𝕏)';
-  if (value === 'reddit') return 'Reddit';
   if (value === 'togetter') return 'JP News';
   return value;
 }
@@ -401,9 +396,8 @@ export default function CommunityPage() {
     async function load() {
       try {
         // Fetch all feeds in parallel
-        const [mainRes, redditRes, twitterRes, togetterRes] = await Promise.allSettled([
+        const [mainRes, twitterRes, togetterRes] = await Promise.allSettled([
           fetch('/api/community-feed'),
-          fetch('/api/feed-community'),
           fetch('/api/feed-twitter-fan'),
           fetch('/api/feed-togetter'),
         ]);
@@ -412,12 +406,6 @@ export default function CommunityPage() {
         if (mainRes.status === 'fulfilled' && mainRes.value.ok) {
           const data = await mainRes.value.json() as CommunityFeed;
           mainItems = Array.isArray(data.items) ? data.items : [];
-        }
-
-        let redditItems: CommunityItem[] = [];
-        if (redditRes.status === 'fulfilled' && redditRes.value.ok) {
-          const data = await redditRes.value.json();
-          redditItems = Array.isArray(data.posts) ? data.posts as CommunityItem[] : [];
         }
 
         let twitterItems: CommunityItem[] = [];
@@ -434,7 +422,7 @@ export default function CommunityPage() {
         }
 
         if (!cancelled) {
-          const merged = [...mainItems, ...twitterItems, ...redditItems, ...togetterItems].sort(
+          const merged = [...mainItems, ...twitterItems, ...togetterItems].sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           );
           setItems(merged);
@@ -535,7 +523,7 @@ export default function CommunityPage() {
                 className="absolute top-full right-0 mt-1.5 bg-white rounded-2xl z-50 p-3"
                 style={{ boxShadow: '0 8px 32px -4px rgba(0,0,0,0.14)', width: '252px' }}
               >
-                {(['all', 'twitter', 'reddit', 'togetter'] as SourceFilter[]).map(value => (
+                {(['all', 'twitter', 'togetter'] as SourceFilter[]).map(value => (
                   <button
                     key={value}
                     onMouseDown={(e) => e.stopPropagation()}

@@ -76,7 +76,28 @@ export default async function handler(req, res) {
     }
 
     const xml = await response.text();
-    const posts = parseXmlItems(xml).slice(0, 15);
+    let posts = parseXmlItems(xml).slice(0, 15);
+
+    // Batch-fetch comments from community_comments
+    const supabaseUrl = (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').trim();
+    const supabaseKey = (process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '').trim();
+    if (supabaseUrl && supabaseKey && posts.length > 0) {
+      try {
+        const ids = posts.map(p => p.id).join(',');
+        const cr = await fetch(
+          `${supabaseUrl}/rest/v1/community_comments?post_id=in.(${ids})&select=id,post_id,idol_id,content,is_reply,reply_to_comment_id,created_at&order=created_at.asc&limit=500`,
+          { headers: { 'apikey': supabaseKey, 'Authorization': `Bearer ${supabaseKey}` } }
+        );
+        if (cr.ok) {
+          const rows = await cr.json();
+          if (Array.isArray(rows)) {
+            const map = {};
+            rows.forEach(c => { if (!map[c.post_id]) map[c.post_id] = []; map[c.post_id].push(c); });
+            posts = posts.map(p => ({ ...p, comments: map[p.id] || [] }));
+          }
+        }
+      } catch (_) {}
+    }
 
     return res.status(200).json({ posts });
   } catch (e) {

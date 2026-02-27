@@ -31,15 +31,51 @@ async function fetchActiveSessions() {
 
 async function fetchRecentMessages() {
   const res = await fetch(
-    `${SUPABASE_URL}/rest/v1/onair_messages?order=created_at.desc&limit=10&select=author_name,content`,
+    `${SUPABASE_URL}/rest/v1/onair_messages?order=created_at.desc&limit=100&select=author_name,content,created_at`,
     { headers }
   );
   if (!res.ok) return [];
-  const data = await res.json();
-  // [TOPIC], [EMOJI_REACTION], [SYSTEM] 제외
-  return data.filter(
-    (m) => m.author_name !== '[TOPIC]' && m.author_name !== '[EMOJI_REACTION]' && m.author_name !== '[SYSTEM]'
+  return await res.json();
+}
+
+// 마지막 [TOPIC] 이후 메시지 수 확인
+// 최소 40개 메시지 + 30분 경과 후에만 새 주제 생성
+async function shouldGenerateTopic() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/onair_messages?order=created_at.desc&limit=200&select=author_name,created_at`,
+    { headers }
   );
+  if (!res.ok) return true; // 에러 시 일단 생성
+
+  const msgs = await res.json();
+  
+  // 마지막 [TOPIC] 메시지 찾기
+  const lastTopicIdx = msgs.findIndex(m => m.author_name === '[TOPIC]');
+  
+  if (lastTopicIdx === -1) return true; // 주제 없으면 생성
+  
+  const lastTopicMsg = msgs[lastTopicIdx];
+  const lastTopicTime = new Date(lastTopicMsg.created_at);
+  const minutesSinceLastTopic = (Date.now() - lastTopicTime.getTime()) / 60000;
+  
+  // 마지막 주제 이후 실제 대화 메시지 수
+  const msgsSinceLastTopic = msgs.slice(0, lastTopicIdx).filter(
+    m => m.author_name !== '[TOPIC]' && m.author_name !== '[EMOJI_REACTION]' && m.author_name !== '[SYSTEM]'
+  ).length;
+  
+  console.log(`[topic-gen] 마지막 주제로부터 ${minutesSinceLastTopic.toFixed(1)}분, ${msgsSinceLastTopic}개 메시지`);
+  
+  // 최소 40개 메시지 AND 30분 경과
+  if (msgsSinceLastTopic < 40) {
+    console.log(`[topic-gen] 스킵: 메시지 부족 (${msgsSinceLastTopic}/40)`);
+    return false;
+  }
+  if (minutesSinceLastTopic < 30) {
+    console.log(`[topic-gen] 스킵: 시간 부족 (${minutesSinceLastTopic.toFixed(1)}/30분)`);
+    return false;
+  }
+  
+  return true;
 }
 
 function getTimeBasedTopic() {
@@ -115,10 +151,22 @@ async function insertTopic(topic) {
 async function main() {
   console.log('[onair-topic-generator] Starting...');
 
-  const [sessions, messages] = await Promise.all([
+  // 40개 메시지 + 30분 경과 조건 확인
+  const should = await shouldGenerateTopic();
+  if (!should) {
+    console.log('[onair-topic-generator] 조건 미달 — 주제 생성 스킵');
+    process.exit(0);
+  }
+
+  const [sessions, allMessages] = await Promise.all([
     fetchActiveSessions(),
     fetchRecentMessages(),
   ]);
+
+  // [TOPIC]/[SYSTEM]/[EMOJI_REACTION] 제외한 실제 대화 메시지만
+  const messages = allMessages.filter(
+    (m) => m.author_name !== '[TOPIC]' && m.author_name !== '[EMOJI_REACTION]' && m.author_name !== '[SYSTEM]'
+  );
 
   console.log(`Active sessions: ${sessions.length}, Recent messages: ${messages.length}`);
 
