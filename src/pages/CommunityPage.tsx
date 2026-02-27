@@ -403,11 +403,30 @@ export default function CommunityPage() {
     let cancelled = false;
     async function load() {
       try {
-        const res = await fetch('/api/community-feed');
-        if (!res.ok) throw new Error('feed-not-found');
-        const data = await res.json() as CommunityFeed;
+        // Fetch community feed and Reddit feed in parallel
+        const [mainRes, redditRes] = await Promise.allSettled([
+          fetch('/api/community-feed'),
+          fetch('/api/feed-community'),
+        ]);
+
+        let mainItems: CommunityItem[] = [];
+        if (mainRes.status === 'fulfilled' && mainRes.value.ok) {
+          const data = await mainRes.value.json() as CommunityFeed;
+          mainItems = Array.isArray(data.items) ? data.items : [];
+        }
+
+        let redditItems: CommunityItem[] = [];
+        if (redditRes.status === 'fulfilled' && redditRes.value.ok) {
+          const data = await redditRes.value.json();
+          redditItems = Array.isArray(data.posts) ? data.posts as CommunityItem[] : [];
+        }
+
         if (!cancelled) {
-          setItems(Array.isArray(data.items) ? data.items : []);
+          const merged = [...mainItems, ...redditItems].sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
+          setItems(merged);
+          if (merged.length === 0) setFetchError('Failed to load feed.');
         }
       } catch {
         if (!cancelled) {
@@ -504,7 +523,7 @@ export default function CommunityPage() {
                 className="absolute top-full right-0 mt-1.5 bg-white rounded-2xl z-50 p-3"
                 style={{ boxShadow: '0 8px 32px -4px rgba(0,0,0,0.14)', width: '252px' }}
               >
-                {(['all', 'theqoo', 'dcinside', 'twitter'] as SourceFilter[]).map(value => (
+                {(['all', 'theqoo', 'dcinside', 'twitter', 'reddit'] as SourceFilter[]).map(value => (
                   <button
                     key={value}
                     onClick={() => { setSourceFilter(value); setSourceDropdownOpen(false); }}
