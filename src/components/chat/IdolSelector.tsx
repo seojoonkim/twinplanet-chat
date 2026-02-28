@@ -62,7 +62,7 @@ export default function IdolSelector({ idols }: Props) {
         style={{ maxWidth: '750px', minHeight: '100%' }}
       >
         {/* Hero */}
-        <AppHeader subtitle="TWIN PLANET タレントと AI チャット ✨" />
+        <AppHeader subtitle="TWIN PLANET 탤런트와 AI 채팅 ✨" />
 
         {/* Tabs — order: ON AIR / FEED / CHAT / 1:1 Chat / DIARY / RADAR / Pulse */}
         {(() => {

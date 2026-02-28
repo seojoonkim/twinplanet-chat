@@ -26,7 +26,7 @@ export interface GroupRoom {
   topics: GroupTopic[];
 }
 
-// TWIN PLANET タレント メンバーデータ
+// TWIN PLANET 탤런트 멤버 데이터
 export const ALL_MEMBERS: Record<string, RoomMember> = {
   mizyu: {
     id: 'mizyu',
@@ -34,7 +34,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'MIZYU',
     color: '#FF6B9D',
     bg: 'from-pink-400 to-pink-600',
-    role: 'リーダー。ミジュコプターで魅せる',
+    role: '리더. 미쥬콥터로 매료시키는',
     initials: 'M',
   },
   rin: {
@@ -43,7 +43,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'RIN',
     color: '#9B59B6',
     bg: 'from-violet-400 to-violet-600',
-    role: 'ヒップホップ&ラップ担当。料理が趣味',
+    role: '힙합&랩 담당. 요리가 취미',
     initials: 'R',
   },
   suzuka: {
@@ -52,7 +52,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'SUZUKA',
     color: '#E67E22',
     bg: 'from-orange-400 to-orange-600',
-    role: '関西弁×パワフルボイス×MC',
+    role: '간사이 사투리×파워풀 보이스×MC',
     initials: 'S',
   },
   kanon: {
@@ -61,7 +61,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'KANON',
     color: '#3498DB',
     bg: 'from-sky-400 to-sky-600',
-    role: 'クラシックダンス×アニオタ',
+    role: '클래식 댄스×애니 덕후',
     initials: 'K',
   },
   nako: {
@@ -70,7 +70,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: '矢吹奈子',
     color: '#ff9eb5',
     bg: 'from-pink-300 to-pink-500',
-    role: '元HKT48/IZ*ONE。アイドル×女優',
+    role: '전 HKT48/IZ*ONE. 아이돌×배우',
     initials: '奈',
   },
   nana: {
@@ -79,7 +79,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: '鈴木奈々',
     color: '#ffe66d',
     bg: 'from-yellow-300 to-amber-400',
-    role: 'バラエティを笑顔にするエンターテイナー',
+    role: '버라이어티를 웃음으로 물들이는 엔터테이너',
     initials: '奈々',
   },
   taiyo: {
@@ -88,7 +88,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: '杉浦太陽',
     color: '#4fc3f7',
     bg: 'from-sky-300 to-sky-500',
-    role: '俳優・タレント・ミュージシャン',
+    role: '배우·탤런트·뮤지션',
     initials: '太',
   },
   yoshiaki: {
@@ -97,7 +97,7 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'よしあき',
     color: '#a78bfa',
     bg: 'from-violet-300 to-violet-500',
-    role: 'Z世代ファッションアイコン。ミチの弟',
+    role: 'Z세대 패션 아이콘. 미치의 남동생',
     initials: 'よ',
   },
   michi: {
@@ -106,12 +106,12 @@ export const ALL_MEMBERS: Record<string, RoomMember> = {
     fullName: 'ミチ',
     color: '#f472b6',
     bg: 'from-pink-400 to-fuchsia-500',
-    role: 'Z世代が注目するIt GIRL。よしあきの姉',
+    role: 'Z세대가 주목하는 It GIRL. 요시아키의 언니',
     initials: 'ミ',
   },
 };
 
-// TWIN PLANET グループ チャットルーム
+// TWIN PLANET 그룹 채팅룸
 export const GROUP_ROOMS: GroupRoom[] = [
   {
     id: 'ag',
@@ -120,18 +120,18 @@ export const GROUP_ROOMS: GroupRoom[] = [
     gradient: 'linear-gradient(135deg, #dcff00, #FF6B9D)',
     memberIds: ['mizyu', 'rin', 'suzuka', 'kanon'],
     topics: [
-      { id: 'ag_intro', emoji: '👋', label: 'メンバー紹介', starter: 'みんな自己紹介してみて！個性爆発の自己紹介期待してます！' },
-      { id: 'ag_dance', emoji: '💃', label: 'ダンスの話', starter: '最近練習してる振り付けや、好きな曲の話をしよう！' },
-      { id: 'ag_style', emoji: '👗', label: 'セーラー服スタイル', starter: 'AG!のセーラー服スタイルについて語ろう！コンセプトの意味とか。' },
-      { id: 'ag_world', emoji: '🌍', label: '世界ツアーの話', starter: 'コーチェラ、Jimmy Kimmel、海外ツアー…一番印象的な公演はどこ？' },
-      { id: 'ag_music', emoji: '🎵', label: 'オトナブルー', starter: 'TikTokで大バズりしたオトナブルー！あの首振りダンスどうやって生まれたの？' },
+      { id: 'ag_intro', emoji: '👋', label: '멤버 소개', starter: '모두 자기소개 해봐! 개성 넘치는 자기소개 기대할게!' },
+      { id: 'ag_dance', emoji: '💃', label: '댄스 이야기', starter: '최근 연습하고 있는 안무나 좋아하는 곡 얘기해봐!' },
+      { id: 'ag_style', emoji: '👗', label: '세일러복 스타일', starter: 'AG!의 세일러복 스타일에 대해 이야기해봐! 컨셉의 의미 같은 것도!' },
+      { id: 'ag_world', emoji: '🌍', label: '월드 투어 이야기', starter: '코첼라, Jimmy Kimmel, 해외 투어… 가장 인상 깊었던 공연은 어디야?' },
+      { id: 'ag_music', emoji: '🎵', label: '오토나 블루', starter: 'TikTok에서 엄청 바이럴된 오토나 블루! 그 고개 흔들기 댄스는 어떻게 탄생했어?' },
     ],
   },
 ];
 
 export const DEFAULT_ROOM_ID = 'ag';
 
-// ─── ヘルパー関数 ────────────────────────────────────────────────
+// ─── 헬퍼 함수 ────────────────────────────────────────────────
 
 export function getRoomById(roomId: string): GroupRoom | undefined {
   return GROUP_ROOMS.find((r) => r.id === roomId);

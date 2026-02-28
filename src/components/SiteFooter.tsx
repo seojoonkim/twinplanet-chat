@@ -86,18 +86,17 @@ export default function SiteFooter() {
       const presences = Object.values(state).flat();
 
       // 접속 중 (전체)
-      setOnline(Math.max(1, presences.length));
+      setOnline(presences.length);
 
-      // 오늘 방문자: Presence에서 date === today 인 유저
-      // date 없는 구형 클라이언트도 오늘 방문으로 간주 (지금 온라인 = 오늘 방문)
+      // 오늘 방문자: Presence에서 date === today 인 유저만 집계
       const todayDate = today();
       const todayUniqueIds = new Set(
         presences
-          .filter(p => !p.date || p.date === todayDate)
+          .filter(p => p.date === todayDate)
           .map(p => p.userId)
           .filter(Boolean)
       );
-      const presenceCount = Math.max(1, todayUniqueIds.size);
+      const presenceCount = todayUniqueIds.size;
 
       // DB 누적(이탈 유저)과 Presence(현재 유저) 중 큰 값
       setTodayVisitors(Math.max(dbCountRef.current, presenceCount));
@@ -146,7 +145,7 @@ export default function SiteFooter() {
       </div>
 
       <p className="mt-5 px-6 text-[10px] leading-relaxed text-gray-400 text-center">
-        ⚠️ 本サービスは、TWIN PLANET ENTERTAINMENTのタレントを応援するファンが個人で制作したAIファンプロジェクトです。タレントの公開発言・インタビュー・SNS等をもとに学習したAIが生成した仮想の会話コンテンツであり、実際のタレントの公式見解や現在の考えとは異なる場合があります。AI特性上、事実と異なる内容が含まれる可能性がありますので、公式チャンネルの内容と混同しないでください。本サービスの利用により生じたいかなる誤解や判断についても、運営者は法的責任を負いません。
+        ⚠️ 본 서비스는 TWIN PLANET ENTERTAINMENT 소속 탤런트를 응원하는 팬이 개인적으로 제작한 AI 팬 프로젝트입니다. 탤런트의 공개 발언·인터뷰·SNS 등을 바탕으로 학습한 AI가 생성한 가상의 대화 콘텐츠이며, 실제 탤런트의 공식 견해나 현재 생각과 다를 수 있습니다. AI 특성상 사실과 다른 내용이 포함될 수 있으므로, 공식 채널의 내용과 혼동하지 마십시오. 본 서비스 이용으로 인한 어떠한 오해나 판단에 대해서도 운영자는 법적 책임을 지지 않습니다.
       </p>
     </div>
   );

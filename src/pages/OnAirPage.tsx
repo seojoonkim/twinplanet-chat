@@ -152,7 +152,7 @@ export default function OnAirPage() {
         const sessions = activeSessionsRef.current.filter(s => s.is_active);
         if (sessions.length > 0) {
           const s = sessions[Math.floor(Math.random() * sessions.length)];
-          setTypingIndicator({ memberId: s.member_id, memberName: s.member_name });
+          if (s) setTypingIndicator({ memberId: s.member_id, memberName: s.member_name });
           // 8초 후 숨기고 다시 예약 (살아있는 느낌 유지)
           setTimeout(() => {
             if (pendingQueueRef.current.length === 0 && !isTypingRef.current) {
