@@ -345,7 +345,7 @@ try {
       const existRes = await fetch(`${SUPABASE_URL}/rest/v1/onair_sessions?member_id=eq.${nextPick}&select=member_id`, { headers });
       const existData = await existRes.json();
       if (Array.isArray(existData) && existData.length > 0) {
-        await fetch(`${SUPABASE_URL}/rest/v1/onair_sessions?member_id=eq.${nextPick}`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/onair_sessions?member_id=eq.${nextPick}&is_active=eq.false`, {
           method: 'PATCH',
           headers: { ...headers, Prefer: 'return=minimal' },
           body: JSON.stringify(nextPayload)

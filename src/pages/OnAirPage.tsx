@@ -241,7 +241,7 @@ export default function OnAirPage() {
       setOnlineMembers(data.map(s => ({ id: s.member_id, name: s.member_name })));
       // 다음 예정 세션 조회
       const nextRes = await fetch(
-        `${SUPABASE_URL}/rest/v1/onair_sessions?is_active=eq.false&started_at=gte.${encodeURIComponent(new Date().toISOString())}&order=started_at.asc&limit=1`,
+        `${SUPABASE_URL}/rest/v1/onair_sessions?is_active=eq.false&ends_at=gt.${encodeURIComponent(new Date().toISOString())}&order=started_at.asc&limit=1`,
         { headers: getHeaders() }
       );
       const nextData = await nextRes.json();
