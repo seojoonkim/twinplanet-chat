@@ -379,7 +379,6 @@ const THREADS: Thread[] = [
   { ctx: 'photo', comments: [{ memberId: 'yoshiaki', content: 'この写真のスタイリング、めちゃくちゃいいんだけど。どこの??' }],
     replyChain: [
       { memberId: 'michi', content: 'よしあきまたファッションの話 ㅋㅋ でも私も気になるわ ㅎ' },
-      { memberId: 'yoshiaki', content: '姉さんも気になってるじゃないですか ㅋㅋ' },
       { memberId: 'kanon', content: 'このコーデ私の好きなアニメキャラのスタイルだ!!' },
     ],
   },
@@ -535,7 +534,12 @@ function buildSmartComments(postId: string, source: FeedSource, title: string, b
     const mainMsg = thread.comments[0]!;
     usedMembers.add(mainMsg.memberId);
     const m = ALL_MEMBERS[mainMsg.memberId];
-    const replies: Reply[] = thread.replyChain.filter(r => r.memberId !== mainMsg.memberId).map(r => ({
+    const seenInReply = new Set([mainMsg.memberId]);
+    const replies: Reply[] = thread.replyChain.filter(r => {
+      if (seenInReply.has(r.memberId)) return false;
+      seenInReply.add(r.memberId);
+      return true;
+    }).map(r => ({
       memberId: r.memberId,
       content: r.content,
       likes: buildLikes(r.memberId, hashStr(postId + r.memberId + r.content)),
