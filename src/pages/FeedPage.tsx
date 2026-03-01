@@ -535,7 +535,7 @@ function buildSmartComments(postId: string, source: FeedSource, title: string, b
     const mainMsg = thread.comments[0]!;
     usedMembers.add(mainMsg.memberId);
     const m = ALL_MEMBERS[mainMsg.memberId];
-    const replies: Reply[] = thread.replyChain.map(r => ({
+    const replies: Reply[] = thread.replyChain.filter(r => r.memberId !== mainMsg.memberId).map(r => ({
       memberId: r.memberId,
       content: r.content,
       likes: buildLikes(r.memberId, hashStr(postId + r.memberId + r.content)),
