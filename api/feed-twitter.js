@@ -57,8 +57,19 @@ function parseTweet(tweet, maps, username) {
     urls = tweetUrls.map(u => ({ url: u.url, expanded: u.expanded_url, display: u.display_url }));
   }
 
+  // Extract best video URL from video/animated_gif media
+  let videoUrl = null;
+  const videoMedia = media.find(m => m.type === 'video' || m.type === 'animated_gif');
+  if (videoMedia) {
+    const variants = videoMedia.variants || [];
+    // Pick highest bitrate mp4
+    const mp4s = variants.filter(v => v.content_type === 'video/mp4').sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0));
+    videoUrl = mp4s[0]?.url || videoMedia.preview_image_url || null;
+  }
+
+  // Only include photo thumbnails in images; video thumbnails shown via videoUrl
   const images = media
-    .filter(m => m.type === 'photo' || m.type === 'animated_gif' || m.type === 'video')
+    .filter(m => m.type === 'photo')
     .map(m => m.url || m.preview_image_url)
     .filter(Boolean);
 
@@ -71,6 +82,7 @@ function parseTweet(tweet, maps, username) {
     retweets: tweet.public_metrics?.retweet_count || 0,
     media,
     images,
+    videoUrl,
     urls,
     isRetweet,
     rtAuthorName,
@@ -89,7 +101,7 @@ export default async function handler(req, res) {
     '?max_results=10' +
     '&tweet.fields=created_at,text,note_tweet,attachments,public_metrics,referenced_tweets,author_id,entities' +
     '&expansions=attachments.media_keys,referenced_tweets.id,referenced_tweets.id.author_id,referenced_tweets.id.attachments.media_keys' +
-    '&media.fields=url,preview_image_url,type,width,height' +
+    '&media.fields=url,preview_image_url,type,width,height,variants' +
     '&user.fields=name,username,profile_image_url';
 
   try {
