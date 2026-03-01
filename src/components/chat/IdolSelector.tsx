@@ -1,3 +1,4 @@
+import { APP_SUBTITLE } from '@/constants/idol-defaults';
 import { useState } from 'react';
 import type { IdolMeta } from '@/types/idol';
 import { useChatStore } from '@/stores/chat-store';
@@ -62,7 +63,7 @@ export default function IdolSelector({ idols }: Props) {
         style={{ maxWidth: '750px', minHeight: '100%' }}
       >
         {/* Hero */}
-        <AppHeader subtitle="TWIN PLANETタレントとAIチャット ✨" />
+        <AppHeader subtitle={APP_SUBTITLE} />
 
         {/* Tabs — order: ON AIR / FEED / CHAT / 1:1 Chat / DIARY / RADAR / Pulse */}
         {(() => {

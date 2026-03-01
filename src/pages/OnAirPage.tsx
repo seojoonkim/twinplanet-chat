@@ -1,3 +1,4 @@
+import { APP_SUBTITLE } from '@/constants/idol-defaults';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { AppHeader } from '../components/AppHeader';
@@ -396,7 +397,7 @@ export default function OnAirPage() {
           <div className="orb orb-2" />
           <div className="orb orb-3" />
           <div className="mx-auto px-4 pt-6 pb-0 relative z-10" style={{ maxWidth: '750px' }}>
-            <AppHeader subtitle="TWIN PLANET タレントと AI チャット ✨" />
+            <AppHeader subtitle={APP_SUBTITLE} />
             {/* Tab Bar */}
             <div className="flex mb-0 border-b border-gray-200">
               {([

@@ -1,3 +1,5 @@
+export const APP_SUBTITLE = "TWIN PLANET タレントと AI チャット ✨";
+
 export const BUILT_IN_IDOL_IDS = [
   'mizyu',
   'rin',
