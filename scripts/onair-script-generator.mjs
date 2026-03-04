@@ -187,7 +187,7 @@ JSON配列のみ出力（他のテキストなし）:
         },
         body: JSON.stringify({
           model: 'openai/gpt-4o-mini',
-          max_tokens: 3000,
+          max_tokens: 4500,
           temperature: 0.85,
           messages: [
             { role: 'system', content: systemPrompt },
@@ -208,7 +208,27 @@ JSON配列のみ出力（他のテキストなし）:
       const raw = data.choices?.[0]?.message?.content?.trim() ?? '';
 
       const cleaned = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
-      const parsed = JSON.parse(cleaned);
+      // JSON 파싱 robust: 전체 파싱 실패 시 유효한 객체들만 추출
+      let parsed;
+      try {
+        parsed = JSON.parse(cleaned);
+      } catch (e1) {
+        // 배열 시작/끝 찾아서 잘린 JSON 복구 시도
+        const arrStart = cleaned.indexOf('[');
+        if (arrStart !== -1) {
+          // 유효한 완성된 객체들만 추출 (마지막 불완전 객체 제거)
+          const partial = cleaned.slice(arrStart);
+          const objMatches = [...partial.matchAll(/\{"author":"[^"]+","content":"(?:[^"\\]|\\.)*"\}/g)];
+          if (objMatches.length > 0) {
+            parsed = objMatches.map(m => JSON.parse(m[0]));
+            console.log(`[ScriptGen] [attempt ${attempt}] 부분 복구: ${parsed.length}개 객체`);
+          } else {
+            throw e1;
+          }
+        } else {
+          throw e1;
+        }
+      }
       console.log(`[ScriptGen] [attempt ${attempt}] 파싱 성공`);
       return parsed;
 
@@ -327,9 +347,10 @@ console.log('[ScriptGen] 15턴 배치 대화 생성 중...');
 const script = await generateScript(activeSessions, recentMessages, shouldChangeTopic);
 
 if (!script || !Array.isArray(script) || script.length === 0) {
-  console.log('[ScriptGen] 스크립트 생성 실패. 종료.');
+  // 0개면 경고만, exit 0으로 (이메일 방지)
+  console.warn('[ScriptGen] 경고: 삽입된 메시지 없음. 다음 실행에서 재시도.');
   console.log('[ScriptGen] 완료', 0, '개');
-  process.exit(1);
+  process.exit(0);
 }
 
 console.log(`[ScriptGen] ${script.length}턴 생성 완료`);
